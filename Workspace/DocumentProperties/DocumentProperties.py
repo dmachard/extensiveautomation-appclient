@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -48,21 +48,12 @@ from Libs import QtHelper, Logger
 try:
     import Descriptions
     import Parameters
-    import Probes
     import Agents
-    # new in v10
-    import Steps
-    import Adapters
-    import Libraries
     import CacheViewer
 except ImportError as e: # support python3
     from . import Descriptions
     from . import Parameters
-    from . import Probes
     from . import Agents
-    from . import Steps
-    from . import Adapters
-    from . import Libraries
     from . import CacheViewer
 
 import Workspace.TestData as TestData
@@ -70,7 +61,6 @@ import Workspace.TestConfig as TestConfig
 
 import Workspace.TestUnit as TestUnit
 import Workspace.TestSuite as TestSuite
-import Workspace.TestAbstract as TestAbstract
 import Workspace.TestPlan as TestPlan
 
 import Workspace.FileModels.TestConfig as FileModelTestConfig
@@ -85,12 +75,12 @@ import base64
 DEFAULT_NAME = 'Noname'
 
 TAB_DESCRIPTION     =   0
-TAB_STEPS           =   1
+# TAB_STEPS           =   1
 
 
 
 TAB_AGENTS          =   0
-TAB_PROBES          =   1
+# TAB_PROBES          =   1
 
 class WDocumentProperties(QWidget, Logger.ClassLogger):
     """
@@ -121,12 +111,7 @@ class WDocumentProperties(QWidget, Logger.ClassLogger):
             
         self.descrs = None
         self.parameters = None
-        self.probes = None
         self.agents = None
-        self.steps = None
-        self.adapters = None
-        self.libraries = None
-        self.parametersTab = None
         self.currentDoc = None
         self.currentTab = None
         self.iRepo = iRepo
@@ -150,45 +135,12 @@ class WDocumentProperties(QWidget, Logger.ClassLogger):
         | ______________________________________|
         """
         self.cacheViewer = CacheViewer.CacheViewerQWidget(self)
-        
-        self.steps = Steps.StepsQWidget(self)
+
         self.descrs = Descriptions.DescriptionsQWidget(self)
         self.parameters = Parameters.ParametersQWidget(self, 
                                                        cacheViewer=self.cacheViewer)
-                                                       
-        self.parametersOutput = Parameters.ParametersQWidget(self, 
-                                                             forParamsOutput=True,
-                                                             cacheViewer=self.cacheViewer)
-        self.probes = Probes.ProbesQWidget(self)
+
         self.agents = Agents.AgentsQWidget(self)
-        self.adapters = Adapters.AdaptersQWidget(self, 
-                                                 testParams=self, 
-                                                 testDescrs=self.descrs)
-        self.libraries = Libraries.LibrariesQWidget(self, 
-                                                    testParams=self, 
-                                                    testDescrs=self.descrs)
-        
-        self.parametersTab = QTabWidget()
-        self.parametersTab.setTabPosition(QTabWidget.North)
-        self.parametersTab.setStyleSheet("QTabWidget { border: 0px; }") # remove 3D border
-        self.parametersTab.addTab(self.descrs, QIcon(":/test-config.png"), "Description")
-        self.parametersTab.addTab(self.steps, QIcon(":/run-state.png"), "Steps")
-
-        self.paramsTab = QTabWidget()
-        self.paramsTab.setStyleSheet("QTabWidget { border: 0px; }") # remove 3D border
-        self.paramsTab.setTabPosition(QTabWidget.North)
-        self.paramsTab.addTab(self.parameters, QIcon(":/test-input.png"), "Inputs")
-        if Settings.instance().readValue( key = 'TestProperties/outputs-enabled' ) == "True":
-            self.paramsTab.addTab(self.parametersOutput, QIcon(":/test-output.png"), "Outputs")
-
-        self.paramsTab.addTab(self.adapters, QIcon(":/adapters.png"), "Adapters")
-        self.paramsTab.addTab(self.libraries, QIcon(":/libraries.png"), "Libraries")
-
-        self.miscsTab = QTabWidget()
-        self.miscsTab.setStyleSheet("QTabWidget { border: 0px; }") # remove 3D border
-        self.miscsTab.setTabPosition(QTabWidget.North)
-        self.miscsTab.addTab(self.agents, QIcon(":/agent.png"), "Agents")
-        self.miscsTab.addTab(self.probes, QIcon(":/probe.png"), "Probes")
 
         self.title = QLabel("Test Properties")
         font = QFont()
@@ -203,21 +155,18 @@ class WDocumentProperties(QWidget, Logger.ClassLogger):
         self.mainTab = QTabWidget()
         self.mainTab.setTabPosition(QTabWidget.South)
         
-        self.mainTab.addTab(self.parametersTab, QIcon(":/test-description.png"), "Test Design")
-        self.mainTab.addTab(self.paramsTab, QIcon(":/repository.png"), "Test Data")
-        self.mainTab.addTab(self.miscsTab, QIcon(":/server-config.png"), "Miscellaneous")
+        self.mainTab.addTab(self.descrs, QIcon(":/test-description.png"), "Test Description")
+        self.mainTab.addTab(self.cacheViewer, QIcon(":/repository.png"), "Cache Preview")
+        self.mainTab.addTab(self.parameters, QIcon(":/test-input.png"), "Inputs")
+        #self.mainTab.addTab(self.agents, QIcon(":/agent.png"), "Agents")
 
-
-        if Settings.instance().readValue( key = 'TestProperties/inputs-default-tab' ) == "True":
-            self.mainTab.setCurrentIndex(1)
-            self.paramsTab.setCurrentIndex(self.TAB_INPUTS)
+        self.mainTab.setCurrentIndex(2)
 
         layout = QVBoxLayout()
         layout.addWidget( self.title )
         layout.addWidget( self.labelHelp )
 
         layout.addWidget(self.mainTab)
-        layout.addWidget(self.cacheViewer)
         layout.setContentsMargins(0,0,0,0)
 
         self.setLayout(layout)
@@ -249,20 +198,8 @@ class WDocumentProperties(QWidget, Logger.ClassLogger):
         if Settings.instance().readValue( key = 'TestProperties/parameters-rename-auto' ) == "True":
             self.parameters.table().NameParameterUpdated.connect(self.inputNameChanged)
         self.parameters.table().NbParameters.connect(self.onUpdateInputsNumber)
-        
-        if Settings.instance().readValue( key = 'TestProperties/outputs-enabled' ) == "True":
-            self.parametersOutput.table().DataChanged.connect(self.dataChanged)
-            if Settings.instance().readValue( key = 'TestProperties/parameters-rename-auto' ) == "True":
-                self.parametersOutput.table().NameParameterUpdated.connect(self.outputNameChanged)
-            self.parametersOutput.table().NbParameters.connect(self.onUpdateOutputsNumber)
-        
-        self.probes.table().DataChanged.connect(self.dataChanged)
-        self.agents.table().DataChanged.connect(self.dataChanged)
 
-        # to support test abstract
-        self.steps.table().DataChanged.connect(self.dataChanged)
-        self.adapters.table().DataChanged.connect(self.dataChanged)
-        self.libraries.table().DataChanged.connect(self.dataChanged)
+        self.agents.table().DataChanged.connect(self.dataChanged)
 
     def createActions (self):
         """
@@ -274,28 +211,16 @@ class WDocumentProperties(QWidget, Logger.ClassLogger):
                     icon = QIcon(":/tc-import.png"), tip = 'Import inputs from Test Config' )
         self.exportAction = QtHelper.createAction(self, "&Export inputs", self.exportInputs, 
                     icon = QIcon(":/tc-export.png"), tip = 'Export inputs as Test Config' )
-        self.importOutputsAction = QtHelper.createAction(self, "&Import outputs", self.importOutputs, 
-                    icon = QIcon(":/tc-import.png"), tip = 'Import outputs from Test Config' )
-        self.exportOutputsAction = QtHelper.createAction(self, "&Export outputs", self.exportOutputs,
-                    icon = QIcon(":/tc-export.png"), tip = 'Export outputs as Test Config' )
-                    
+    
         self.markUnusedAction = QtHelper.createAction(self, "&Mark unused inputs", self.markUnusedInputs,
                     icon = QIcon(":/input-unused.png"), tip = 'Marks all unused inputs' )
-        self.markUnusedOutputsAction = QtHelper.createAction(self, "&Mark unused ouputs", self.markUnusedOutputs,
-                    icon = QIcon(":/input-unused.png"), tip = 'Marks all unused outputs' )
 
     def onUpdateInputsNumber(self, nbParams):
         """
         On update the number of inputs in the tabulation name
         """
-        self.paramsTab.setTabText(self.TAB_INPUTS, "Inputs (%s)" % nbParams )
+        self.mainTab.setTabText(2, "Inputs (%s)" % nbParams )
 
-    def onUpdateOutputsNumber(self, nbParams):
-        """
-        On update the number of outputs in the tabulation name
-        """
-        self.paramsTab.setTabText(self.TAB_OUTPUTS, "Outputs (%s)" % nbParams )
-        
     def initToolbarParameters(self):
         """
         Init toolbar parameters
@@ -306,12 +231,6 @@ class WDocumentProperties(QWidget, Logger.ClassLogger):
         self.parameters.toolbar().addAction(self.importAction)
         self.parameters.toolbar().addAction(self.exportAction)
 
-        self.parametersOutput.toolbar().addSeparator()
-        self.parametersOutput.toolbar().addAction(self.markUnusedOutputsAction)
-        self.parametersOutput.toolbar().addSeparator()
-        self.parametersOutput.toolbar().addAction(self.importOutputsAction)
-        self.parametersOutput.toolbar().addAction(self.exportOutputsAction)
-        
     def setDocument(self, wdoc):
         """
         Save the address to the document
@@ -322,8 +241,7 @@ class WDocumentProperties(QWidget, Logger.ClassLogger):
         self.cacheViewer.clear()
         self.cacheViewer.setEnabled(False)
         
-        if isinstance(wdoc, TestUnit.WTestUnit) or isinstance(wdoc, TestSuite.WTestSuite) \
-                or isinstance(wdoc, TestAbstract.WTestAbstract) or isinstance(wdoc, TestPlan.WTestPlan):
+        if isinstance(wdoc, TestUnit.WTestUnit) or isinstance(wdoc, TestSuite.WTestSuite) or isinstance(wdoc, TestPlan.WTestPlan):
             self.cacheViewer.setEnabled(True)
             self.cacheViewer.loadItems(wdoc = wdoc)
         
@@ -332,15 +250,13 @@ class WDocumentProperties(QWidget, Logger.ClassLogger):
         Active the button mark inputs as unused
         """
         self.markUnusedAction.setEnabled(True)
-        self.markUnusedOutputsAction.setEnabled(True)
-        
+
     def disableMarkUnused(self):
         """
         Disable the mark button
         """
         self.markUnusedAction.setEnabled(False)
-        self.markUnusedOutputsAction.setEnabled(False)
- 
+
     def markUnusedInputs(self):
         """
         Mark all inputs unused
@@ -358,25 +274,7 @@ class WDocumentProperties(QWidget, Logger.ClassLogger):
             editorExec = self.wdoc.execEditor
         
         self.parameters.markUnusedInputs(editorSrc=editorSrc, editorExec=editorExec)
-        
-    def markUnusedOutputs(self):
-        """
-        Mark all outputs unused
-        """
-        if self.wdoc is None: return
-        
-        editorExec = None
-        editorSrc = None
-        
-        if isinstance(self.wdoc, TestUnit.WTestUnit):
-            editorSrc = self.wdoc.srcEditor
-            
-        if isinstance(self.wdoc, TestSuite.WTestSuite):
-            editorSrc = self.wdoc.srcEditor
-            editorExec = self.wdoc.execEditor
-        
-        self.parameters.markUnusedOutputs(editorSrc=editorSrc, editorExec=editorExec)
-        
+
     def addNew(self):
         """
         Add item on parameters or probes 
@@ -388,12 +286,6 @@ class WDocumentProperties(QWidget, Logger.ClassLogger):
         Delete selected item on parameters or probes 
         """
         self.currentTab.removeItem()
-
-    def exportOutputs (self):
-        """
-        Export all outputs
-        """
-        return self.export(inputs=False)
 
     def exportInputs (self):
         """
@@ -449,11 +341,12 @@ class WDocumentProperties(QWidget, Logger.ClassLogger):
             fileName = dialog.getSelection()
             path, filename = self.splitFileName(fileName=fileName)
  
-            doc = TestConfig.WTestConfig(self, path = path, filename=filename, extension=self.rRepo.EXTENSION_TCX) 
+            doc = TestConfig.WTestConfig(self, 
+                                         path = path, 
+                                         filename=filename, 
+                                         extension=self.rRepo.EXTENSION_TCX) 
             if inputs:
                 doc.dataModel.properties['properties']['parameters']['parameter'] = self.parameters.table().model.getData()
-            else:
-                doc.dataModel.properties['properties']['parameters']['parameter'] = self.parametersOutput.table().model.getData()
             ret = doc.write(force = True, fromExport=True)
             if ret:
                 self.RefreshLocalRepository.emit()
@@ -477,8 +370,6 @@ class WDocumentProperties(QWidget, Logger.ClassLogger):
                                          remoteFile=True)
             if inputs:
                 doc.dataModel.properties['properties']['parameters']['parameter'] = self.parameters.table().model.getData()
-            else:
-                doc.dataModel.properties['properties']['parameters']['parameter'] = self.parametersOutput.table().model.getData()
             
             # rest call
             RCI.instance().uploadTestFile(filePath=doc.path, 
@@ -508,16 +399,8 @@ class WDocumentProperties(QWidget, Logger.ClassLogger):
         config = FileModelTestConfig.DataModel()
         if inputs:
             config.properties['properties']['parameters']['parameter'] = self.parameters.table().model.getData()
-        else:
-            config.properties['properties']['parameters']['parameter'] = self.parametersOutput.table().model.getData()
         config.write( absPath=fileName )
         del config
-
-    def importOutputs(self):
-        """
-        Import all outputs
-        """
-        self.import__(inputs=False)
 
     def importInputs(self):
         """
@@ -626,9 +509,6 @@ class WDocumentProperties(QWidget, Logger.ClassLogger):
         if inputs:
             self.parameters.table().loadData(  data = config.properties['properties']['parameters'] )
             self.currentDoc.dataModel.properties['properties']['inputs-parameters'] = config.properties['properties']['parameters']
-        else:
-            self.parametersOutput.table().loadData(  data = config.properties['properties']['parameters'] )
-            self.currentDoc.dataModel.properties['properties']['outputs-parameters'] = config.properties['properties']['parameters']
 
         self.currentDoc.setModify()
 
@@ -653,9 +533,6 @@ class WDocumentProperties(QWidget, Logger.ClassLogger):
         if inputs:
             self.parameters.table().loadData(  data = config.properties['properties']['parameters'] )
             self.currentDoc.dataModel.properties['properties']['inputs-parameters'] = config.properties['properties']['parameters']
-        else:
-            self.parametersOutput.table().loadData(  data = config.properties['properties']['parameters'] )
-            self.currentDoc.dataModel.properties['properties']['outputs-parameters'] = config.properties['properties']['parameters']
         self.currentDoc.setModify()
         del config
 
@@ -691,14 +568,7 @@ class WDocumentProperties(QWidget, Logger.ClassLogger):
         self.descrs.table().defaultActions()
         
         self.parameters.clear()
-        self.parametersOutput.clear()
-        
-        self.probes.clear()
         self.agents.clear()
-        
-        self.steps.clear()
-        self.adapters.clear()
-        self.libraries.clear()
         
         self.cacheViewer.clear()
 
@@ -757,142 +627,18 @@ class WDocumentProperties(QWidget, Logger.ClassLogger):
             data = wdoc.dataModel.properties['properties']['inputs-parameters']
             self.parameters.table().loadData( data = data )
 
-    def addParametersOutput (self, wdoc):
-        """
-        Add parameters
-
-        @param wdoc: 
-        @type wdoc:
-        """
-        if isinstance(wdoc, TestData.WTestData):
-            self.parametersOutput.table().setDatasetView()
-        else:
-            self.parametersOutput.table().setDefaultView()
-        if type(wdoc) == dict:
-            self.parametersOutput.table().loadData( data = wdoc['outputs-parameters'] )
-        else:
-            self.currentDoc = wdoc
-            data = wdoc.dataModel.properties['properties']['outputs-parameters']
-            self.parametersOutput.table().loadData( data = data )
-
-    def addProbes (self, wdoc):
-        """
-        Add probes
-
-        @param wdoc: 
-        @type wdoc:
-        """
-        if type(wdoc) == dict:
-            self.probes.table().loadData( data = wdoc['probes'] )
-        else:
-            self.currentDoc = wdoc
-            data = wdoc.dataModel.properties['properties']['probes']
-            self.probes.table().loadData(data = data)
-
-    def addSteps (self, wdoc):
-        """
-        Add steps
-
-        @param wdoc: 
-        @type wdoc:
-        """
-        self.steps.table().setSteps(steps=wdoc.dataModel.steps['steps']['step'] )
-
-    def addAdapters (self, wdoc):
-        """
-        Add adapters
-
-        @param wdoc: 
-        @type wdoc:
-        """
-        self.adapters.table().setAdapters(adapters=wdoc.dataModel.adapters['adapters']['adapter'] )
-
-    def addLibraries (self, wdoc):
-        """
-        Add libraries
-
-        @param wdoc: 
-        @type wdoc:
-        """
-        self.libraries.table().setLibraries(libraries=wdoc.dataModel.libraries['libraries']['library'] )
-
-    def disableOutputParameters(self):
-        """
-        Disable output parameters tabulation
-        """
-        self.parametersOutput.clear()
-        self.paramsTab.setTabEnabled(self.TAB_OUTPUTS, False)
-
-    def enableOutputParameters(self):
-        """
-        Enable output parameters tabulation
-        """
-        self.paramsTab.setTabEnabled(self.TAB_OUTPUTS, True)
-
     def disableAgents(self):
         """
         Disable agents tabulation
         """
         self.agents.clear()
-        self.miscsTab.setTabEnabled(TAB_AGENTS, False)
+        self.mainTab.setTabEnabled(3, False)
 
     def enableAgents(self):
         """
         Enable agents tabulation
         """
-        self.miscsTab.setTabEnabled(TAB_AGENTS, True)
-
-    def disableProbes(self):
-        """
-        Disable probes tabulation
-        """
-        self.probes.clear()
-        self.miscsTab.setTabEnabled(TAB_PROBES, False)
-
-    def enableProbes(self):
-        """
-        Enable probes tabulation
-        """
-        self.miscsTab.setTabEnabled(TAB_PROBES, True)
-
-    def disableSteps(self):
-        """
-        Disable steps tabulation
-        """
-        self.steps.clear()
-        self.parametersTab.setTabEnabled(TAB_STEPS, False)
-
-    def enableSteps(self):
-        """
-        Enable steps tabulation
-        """
-        self.parametersTab.setTabEnabled(TAB_STEPS, True)
-
-    def disableAdapters(self):
-        """
-        Disable adapters tabulation
-        """
-        self.adapters.clear()
-        self.paramsTab.setTabEnabled(self.TAB_ADAPTERS, False)
-
-    def enableAdapters(self):
-        """
-        Enable adapters tabulation
-        """
-        self.paramsTab.setTabEnabled(self.TAB_ADAPTERS, True)
-
-    def disableLibraries(self):
-        """
-        Disable libraries tabulation
-        """
-        self.libraries.clear()
-        self.paramsTab.setTabEnabled(self.TAB_LIBRARIES, False)
-
-    def enableLibraries(self):
-        """
-        Enable libraries tabulation
-        """
-        self.paramsTab.setTabEnabled(self.TAB_LIBRARIES, True)
+        self.mainTab.setTabEnabled(3, True)
 
     def inputNameChanged(self, oldName, newName):
         """
@@ -908,23 +654,6 @@ class WDocumentProperties(QWidget, Logger.ClassLogger):
                 editorExec = self.currentDoc.execEditor
                 editorSrc.setText( editorSrc.text().replace("input('%s')" % oldName, "input('%s')" % newName) )
                 editorExec.setText( editorExec.text().replace("input('%s')" % oldName, "input('%s')" % newName) )
-            else:
-                self.error('unknown file type')
-
-    def outputNameChanged(self, oldName, newName):
-        """
-        On output name changed
-        """
-        if self.currentDoc is not None:
-            if isinstance(self.currentDoc, TestUnit.WTestUnit):
-                editor = self.currentDoc.srcEditor
-                newText = editor.text().replace("output('%s')" % oldName, "output('%s')" % newName)
-                editor.setText(newText)
-            elif isinstance(self.currentDoc, TestSuite.WTestSuite):
-                editorSrc = self.currentDoc.srcEditor
-                editorExec = self.currentDoc.execEditor
-                editorSrc.setText( editorSrc.text().replace("output('%s')" % oldName, "output('%s')" % newName) )
-                editorExec.setText( editorExec.text().replace("output('%s')" % oldName, "output('%s')" % newName) )
             else:
                 self.error('unknown file type')
 

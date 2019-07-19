@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -41,7 +41,7 @@ import time
 import ssl
 import struct
 import sys
-
+import errno
 
 # unicode = str with python3
 if sys.version_info > (3,):
@@ -509,6 +509,13 @@ class TcpClientThread(threading.Thread):
                     self.onDisconnection(byServer=True)
                     self.event.clear()
                 # end of new
+                
+                # new in v20, for alpine support
+                except select.error as e:
+                    _errno, _ = e
+                    if _errno != errno.EINTR:
+                        raise
+                # end of new 
                 
                 except Exception as e:
                     if "[Errno 10054]" in str(e):

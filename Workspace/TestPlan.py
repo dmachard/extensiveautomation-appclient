@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -449,11 +449,11 @@ class WTestPlan(Document.WDocument):
     Test plan widget
     """
     CONDITION_IF            = "IF"
-    CONDITION_OK            = ") IS PASSED"
-    CONDITION_KO            = ") IS FAILED"
-    CONDITION_PARENTHESE    = ")"
+    CONDITION_OK            = " IS PASSED"
+    CONDITION_KO            = " IS FAILED"
+    CONDITION_PARENTHESE    = ""
     CONDITION_IS            = "IS"
-    CONDITION_RUN           = "RUN ("
+    CONDITION_RUN           = ""
     CONDITION_THEN          = "THEN"
     CONDITION_DO            = "DO"
     CONDITION_DONT          = "DONT"
@@ -484,24 +484,14 @@ class WTestPlan(Document.WDocument):
         
         self.loaderDialog = QtHelper.MessageBoxDialog(dialogName = self.tr("Loading"))
         
+        self.docViewer = parent
         self.iRepo = iRepo
         self.lRepo = lRepo
         
         userName = Settings.instance().readValue( key = 'Server/last-username' )
-        if not 'default-library' in Settings.instance().serverContext:
-            if not Settings.instance().offlineMode:
-                QMessageBox.critical(self, self.tr("Open") , 
-                    self.tr("Server context incomplete (default library is missing), please to reconnect!") )
-            defLibrary = 'v000'
-        else:
-            defLibrary = Settings.instance().serverContext['default-library']
-        if not 'default-adapter' in Settings.instance().serverContext:
-            if not Settings.instance().offlineMode:
-                QMessageBox.critical(self, self.tr("Open") , 
-                    self.tr("Server context incomplete (default adapter is missing), please to reconnect!") )
-            defAdapter = 'v000'
-        else:
-            defAdapter = Settings.instance().serverContext['default-adapter']
+        
+        defLibrary = 'deprecated'
+        defAdapter = 'deprecated'
 
         # new in v17
         defaultTimeout = Settings.instance().readValue( key = 'TestProperties/default-timeout' )
@@ -513,17 +503,16 @@ class WTestPlan(Document.WDocument):
             _defaults_inputs = json.loads(defaultInputs)
         except Exception as e:
             self.error("bad default inputs provided: %s - %s" % (e,defaultInputs))
-        try:
-            defaultOutputs = Settings.instance().readValue( key = 'TestProperties/default-outputs')
-            _defaults_outputs = json.loads(defaultOutputs)
-        except Exception as e:
-            self.error("bad default outputs provided: %s - %s" % (e,defaultOutputs))
+        # try:
+            # defaultOutputs = Settings.instance().readValue( key = 'TestProperties/default-outputs')
+            # _defaults_outputs = json.loads(defaultOutputs)
+        # except Exception as e:
+            # self.error("bad default outputs provided: %s - %s" % (e,defaultOutputs))
         # end of new
         
         self.dataModel = FileModelTestPlan.DataModel(userName=userName, defLibrary=defLibrary, 
                                                     defAdapter=defAdapter, isGlobal=testGlobal,
-                                                    timeout=defaultTimeout, inputs=_defaults_inputs, 
-                                                     outputs=_defaults_outputs)
+                                                    timeout=defaultTimeout, inputs=_defaults_inputs )
 
         self.tp = None
         self.tpRoot = None
@@ -575,6 +564,14 @@ class WTestPlan(Document.WDocument):
         """
         Create qt widget
         """
+        self.dockToolbarFile = QToolBar(self)
+        self.dockToolbarFile.setStyleSheet("QToolBar { border: 0px; margin: 0px; }") # remove 3D border
+        self.dockToolbarFile.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        
+        self.dockToolbarRun = QToolBar(self)
+        self.dockToolbarRun.setStyleSheet("QToolBar { border: 0px; margin: 0px; }") # remove 3D border
+        self.dockToolbarRun.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        
         self.dockToolbarMove = QToolBar(self)
         self.dockToolbarMove.setStyleSheet("QToolBar { border: 0px; margin: 0px; }") # remove 3D border
         self.dockToolbarMove.setOrientation(Qt.Vertical)
@@ -601,8 +598,7 @@ class WTestPlan(Document.WDocument):
 
         self.dockToolbarParams = QToolBar(self)
         self.dockToolbarParams.setStyleSheet("QToolBar { border: 0px }") # remove 3D border
-        self.dockToolbarParams.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
-        
+
         self.dockToolbarMass = QToolBar(self)
         self.dockToolbarMass.setStyleSheet("QToolBar { border: 0px }") # remove 3D border
         self.dockToolbarMass.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
@@ -644,6 +640,30 @@ class WTestPlan(Document.WDocument):
         title.setFont(font)
 
         # toolbars init
+        self.fileBox = QGroupBox("Run")
+        self.fileBox.setStyleSheet( """
+                                   QGroupBox { font: normal; border: 1px solid silver; border-radius: 2px; } 
+                                   QGroupBox { padding-bottom: 10px; background-color: #FAFAFA; } 
+                                   QGroupBox::title { subcontrol-position: bottom center;}
+                               """ )
+                                        
+        layoutFileBox = QHBoxLayout()
+        layoutFileBox.addWidget(self.dockToolbarFile)
+        layoutFileBox.setContentsMargins(0,0,0,0)
+        self.fileBox.setLayout(layoutFileBox)
+        
+        self.runBox = QGroupBox("Run")
+        self.runBox.setStyleSheet( """
+                                   QGroupBox { font: normal; border: 1px solid silver; border-radius: 2px; } 
+                                   QGroupBox { padding-bottom: 10px; background-color: #FAFAFA; } 
+                                   QGroupBox::title { subcontrol-position: bottom center;}
+                               """ )
+                                        
+        layoutRunBox = QHBoxLayout()
+        layoutRunBox.addWidget(self.dockToolbarRun)
+        layoutRunBox.setContentsMargins(0,0,0,0)
+        self.runBox.setLayout(layoutRunBox)
+        
         self.testsBox = QGroupBox("Tests")
         self.testsBox.setStyleSheet( """
                                    QGroupBox { font: normal; border: 1px solid silver; border-radius: 2px; } 
@@ -691,7 +711,7 @@ class WTestPlan(Document.WDocument):
         layoutMiscBox.setContentsMargins(0,0,0,0)
         self.miscBox.setLayout(layoutMiscBox)
         
-        self.paramsBox = QGroupBox("Inputs/Outputs")
+        self.paramsBox = QGroupBox("Inputs")
         self.paramsBox.setStyleSheet( """
                                    QGroupBox { font: normal; border: 1px solid silver; border-radius: 2px; } 
                                    QGroupBox { padding-bottom: 10px; background-color: #FAFAFA; } 
@@ -718,12 +738,14 @@ class WTestPlan(Document.WDocument):
         self.currentEdit.setStyleSheet("QLineEdit { background-color : #F0F0F0; color: grey; }")
         
         layoutToolbars = QHBoxLayout()
+        layoutToolbars.addWidget(self.fileBox)
+        layoutToolbars.addWidget(self.runBox)
         layoutToolbars.addWidget(self.testsBox)
         layoutToolbars.addWidget(self.updateBox)
         layoutToolbars.addWidget(self.massBox)
-        layoutToolbars.addWidget(self.paramsBox)
-        layoutToolbars.addWidget(self.clipBox)
-        layoutToolbars.addWidget(self.miscBox)
+        # layoutToolbars.addWidget(self.paramsBox)
+        # layoutToolbars.addWidget(self.clipBox)
+        # layoutToolbars.addWidget(self.miscBox)
         layoutToolbars.addStretch(1)
         layoutToolbars.setContentsMargins(5,0,0,0)
         
@@ -759,7 +781,9 @@ class WTestPlan(Document.WDocument):
             self.tp.hideColumn(COL_TAG_COLOR)
         if Settings.instance().readValue( key = 'TestPlan/hide-run-column' ):
             self.tp.hideColumn(COL_ENABLE)
-            
+        
+        self.tp.hideColumn(COL_ACTION)
+        
     def createConnections (self):
         """
         create qt connection
@@ -780,6 +804,20 @@ class WTestPlan(Document.WDocument):
         || Add  |  |||
         ||------|--|||
         """
+        self.dockToolbarFile.setObjectName("Test Plan toolbar")
+        if self.docViewer is not None:
+            self.dockToolbarFile.addAction(self.docViewer.saveAction)
+            self.dockToolbarFile.addAction(self.docViewer.printAction)
+            # self.dockToolbarFile.addAction(self.docViewer.checkAction)
+        self.dockToolbarFile.setIconSize(QSize(16, 16))
+        
+        self.dockToolbarRun.setObjectName("Test Plan toolbar")
+        if self.docViewer is not None:
+            self.dockToolbarRun.addAction(self.docViewer.runAction)
+            self.dockToolbarRun.addAction(self.docViewer.schedAction)
+            self.dockToolbarRun.addAction(self.docViewer.checkAction)
+        self.dockToolbarRun.setIconSize(QSize(16, 16))
+        
         self.dockToolbar.setObjectName("Test Plan toolbar")
         self.dockToolbar.addAction( self.addAction )
         self.dockToolbar.addAction( self.insertAboveAction )
@@ -837,7 +875,7 @@ class WTestPlan(Document.WDocument):
         self.dockToolbarMove.addAction(self.ifOkAction)
         self.dockToolbarMove.addAction(self.ifKoAction)
         self.dockToolbarMove.addSeparator()
-        self.dockToolbarMove.setIconSize(QSize(16, 16))
+        self.dockToolbarMove.setIconSize(QSize(24, 24))
         
     def createActions (self):
         """

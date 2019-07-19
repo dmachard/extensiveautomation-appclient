@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -118,7 +118,6 @@ class ParametersTableModel(QAbstractTableModel, Logger.ClassLogger):
         self.owner = parent
         self.nbCol = len(HEADERS)
         self.mydata = []
-
     def getData(self):
         """
         Return model data
@@ -333,6 +332,7 @@ class ParametersTableModel(QAbstractTableModel, Logger.ClassLogger):
 
         # main display
         if role == Qt.DisplayRole:
+            
             if self.mydata[ index.row() ]['type'] in [ 'pwd' ]:
                 if index.column() == COL_VALUE:
                     return q("*********")
@@ -346,7 +346,13 @@ class ParametersTableModel(QAbstractTableModel, Logger.ClassLogger):
                     return q("text")
                     
                 if index.column() == COL_VALUE:
-                    return q("...")
+                    if len(value.splitlines()) > 1:
+                        return q("...")
+                    else:
+                        if len(value) > 35:
+                            return q( "%s..." % value[:35])
+                        else:
+                            return q(value)
 
             if self.mydata[ index.row() ]['type'] in [ 'list' ]:
                 if index.column() == COL_VALUE:
@@ -2782,7 +2788,8 @@ class ParametersTableView(QTableView, Logger.ClassLogger):
     DataChanged = pyqtSignal() 
     NbParameters = pyqtSignal(int)
     def __init__(self, parent, forParamsOutput=False, 
-                 forTestConfig=False, cacheViewer=None):
+                 forTestConfig=False, cacheViewer=None,
+                 ignoreNone=True):
         """
         Contructs ParametersTableView table view
 
@@ -2794,6 +2801,7 @@ class ParametersTableView(QTableView, Logger.ClassLogger):
         self.forParamsOutput = forParamsOutput
         self.forTestConfig = forTestConfig
         self.cacheViewer = cacheViewer
+        self.ignoreNone = ignoreNone
         
         self.model = None
         self.__acronym = Settings.instance().readValue( key='Common/acronym' ).lower()
@@ -2906,7 +2914,7 @@ class ParametersTableView(QTableView, Logger.ClassLogger):
         self.setColumnWidth(COL_CACHE, 40)
         self.setColumnWidth(COL_NAME, 60)
         self.setColumnWidth(COL_TYPE, 50)
-        self.setColumnWidth(COL_VALUE, 150)
+        self.setColumnWidth(COL_VALUE, 250)
         self.setColumnWidth(COL_DESCRIPTION, 100)
 
     def createConnections (self):
@@ -3481,7 +3489,6 @@ class ParametersTableView(QTableView, Logger.ClassLogger):
         self.model.setDataModel( params )
         self.setData( signal = False )
 
-
     def setData(self, signal = True):
         """
         Set table data
@@ -3820,7 +3827,8 @@ class ParametersQWidget(QWidget, Logger.ClassLogger):
     Parameters widget
     """
     def __init__(self, parent, forParamsOutput=False, 
-                 forTestConfig=False, cacheViewer=None):
+                 forTestConfig=False, cacheViewer=None,
+                 ignoreNone=True):
         """
         Contructs Parameters Widget
 
@@ -3831,11 +3839,14 @@ class ParametersQWidget(QWidget, Logger.ClassLogger):
         self.forParamsOutput = forParamsOutput
         self.forTestConfig = forTestConfig
         self.cacheViewer = cacheViewer
+        self.ignoreNone = ignoreNone
 
         self.createWidgets()
         self.createToolbar()
         self.createConnections()
 
+        if self.ignoreNone: self.filterIgnoreNone()
+        
     def createToolbar(self):
         """
         Toolbar creation
@@ -3876,7 +3887,8 @@ class ParametersQWidget(QWidget, Logger.ClassLogger):
         self.parametersTable = ParametersTableView(self, 
                                                    forParamsOutput=self.forParamsOutput, 
                                                    forTestConfig=self.forTestConfig,
-                                                   cacheViewer=self.cacheViewer)
+                                                   cacheViewer=self.cacheViewer,
+                                                   ignoreNone=self.ignoreNone)
         self.parametersTable.setColumnHidden(COL_DESCRIPTION, 
                                     QtHelper.str2bool(Settings.instance().readValue( key = 'TestProperties/parameters-hide-description' ))
                                 )
@@ -3885,8 +3897,15 @@ class ParametersQWidget(QWidget, Logger.ClassLogger):
         self.filterText.setToolTip(self.tr("Name filter"))
         self.filterText.setPlaceholderText("Search in parameters")
         
+        self.ignoreNoneCheck = QCheckBox( self.tr("Hide none type") )
+        self.ignoreNoneCheck.setChecked(True)
+        
+        layout2 = QHBoxLayout()
+        layout2.addWidget(self.filterText)
+        layout2.addWidget(self.ignoreNoneCheck)
+        
         layout.addWidget(self.parametersTable)
-        layout.addWidget(self.filterText)
+        layout.addLayout(layout2)
         layout.addWidget(self.dockToolbarParams)
         
         layout.setContentsMargins(0,0,0,0)
@@ -3897,7 +3916,8 @@ class ParametersQWidget(QWidget, Logger.ClassLogger):
         Create qt connections
         """
         self.filterText.textChanged.connect(self.filterRegExpChanged)
-
+        self.ignoreNoneCheck.stateChanged.connect(self.onIgnoreCheckChanged )
+        
     def clear(self):
         """
         Clear all widget
@@ -3993,10 +4013,33 @@ class ParametersQWidget(QWidget, Logger.ClassLogger):
         self.table().model.beginResetModel()
         self.table().model.endResetModel()
 
+    def onIgnoreCheckChanged(self, state):
+        """
+        """
+        if state == 2:
+            self.filterIgnoreNone()
+        else:
+            self.filterRegExpChanged()
+            
+    def filterIgnoreNone(self):
+        """
+        """
+        syntax = QRegExp.RegExp
+        caseSensitivity = Qt.CaseInsensitive
+        regExp = QRegExp("^(?!none)",  caseSensitivity, syntax)
+
+        self.parametersTable.proxyModel.setFilterKeyColumn( COL_TYPE )
+        self.parametersTable.proxyModel.setFilterRegExp(regExp)
+
+        self.parametersTable.adjustColumns()
+        self.parametersTable.adjustRows()
+        
     def filterRegExpChanged(self):
         """
         On filter regexp changed
         """
+        self.ignoreNoneCheck.setChecked(False)
+        
         syntax = QRegExp.RegExp
         caseSensitivity = Qt.CaseInsensitive
         regExp = QRegExp(self.filterText.text(),  caseSensitivity, syntax)

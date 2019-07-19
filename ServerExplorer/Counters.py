@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -514,55 +514,56 @@ class WCounters(QWidget, Logger.ClassLogger):
         @param parent: 
         @type parent:
         """
-        self.tests_stats = counters
+        pass
+        # self.tests_stats = counters
 
-        self.counterTgPass.display(counters['testglobals']['nb-pass'])
-        self.counterTgFail.display(counters['testglobals']['nb-fail'])
-        self.counterTgUndef.display(counters['testglobals']['nb-undef'])
-        self.counterTgTotal.display( counters['testglobals']['nb-pass'] + counters['testglobals']['nb-fail'] + counters['testglobals']['nb-undef'])
+        # self.counterTgPass.display(counters['testglobals']['nb-pass'])
+        # self.counterTgFail.display(counters['testglobals']['nb-fail'])
+        # self.counterTgUndef.display(counters['testglobals']['nb-undef'])
+        # self.counterTgTotal.display( counters['testglobals']['nb-pass'] + counters['testglobals']['nb-fail'] + counters['testglobals']['nb-undef'])
 
-        self.counterTpPass.display(counters['testplans']['nb-pass'])
-        self.counterTpFail.display(counters['testplans']['nb-fail'])
-        self.counterTpUndef.display(counters['testplans']['nb-undef'])
-        self.counterTpTotal.display( counters['testplans']['nb-pass'] + counters['testplans']['nb-fail'] + counters['testplans']['nb-undef'])
+        # self.counterTpPass.display(counters['testplans']['nb-pass'])
+        # self.counterTpFail.display(counters['testplans']['nb-fail'])
+        # self.counterTpUndef.display(counters['testplans']['nb-undef'])
+        # self.counterTpTotal.display( counters['testplans']['nb-pass'] + counters['testplans']['nb-fail'] + counters['testplans']['nb-undef'])
 
-        self.counterTsPass.display(counters['testsuites']['nb-pass'])
-        self.counterTsFail.display(counters['testsuites']['nb-fail'])
-        self.counterTsUndef.display(counters['testsuites']['nb-undef'])
-        self.counterTsTotal.display( counters['testsuites']['nb-pass'] + counters['testsuites']['nb-fail'] + counters['testsuites']['nb-undef'])
+        # self.counterTsPass.display(counters['testsuites']['nb-pass'])
+        # self.counterTsFail.display(counters['testsuites']['nb-fail'])
+        # self.counterTsUndef.display(counters['testsuites']['nb-undef'])
+        # self.counterTsTotal.display( counters['testsuites']['nb-pass'] + counters['testsuites']['nb-fail'] + counters['testsuites']['nb-undef'])
 
-        self.counterTuPass.display(counters['testunits']['nb-pass'])
-        self.counterTuFail.display(counters['testunits']['nb-fail'])
-        self.counterTuUndef.display(counters['testunits']['nb-undef'])
-        self.counterTuTotal.display( counters['testunits']['nb-pass'] + counters['testunits']['nb-fail'] + counters['testunits']['nb-undef'])
+        # self.counterTuPass.display(counters['testunits']['nb-pass'])
+        # self.counterTuFail.display(counters['testunits']['nb-fail'])
+        # self.counterTuUndef.display(counters['testunits']['nb-undef'])
+        # self.counterTuTotal.display( counters['testunits']['nb-pass'] + counters['testunits']['nb-fail'] + counters['testunits']['nb-undef'])
 
-        self.counterTaPass.display(counters['testabstracts']['nb-pass'])
-        self.counterTaFail.display(counters['testabstracts']['nb-fail'])
-        self.counterTaUndef.display(counters['testabstracts']['nb-undef'])
-        self.counterTaTotal.display( counters['testabstracts']['nb-pass'] + counters['testabstracts']['nb-fail'] + counters['testabstracts']['nb-undef'])
+        # self.counterTaPass.display(counters['testabstracts']['nb-pass'])
+        # self.counterTaFail.display(counters['testabstracts']['nb-fail'])
+        # self.counterTaUndef.display(counters['testabstracts']['nb-undef'])
+        # self.counterTaTotal.display( counters['testabstracts']['nb-pass'] + counters['testabstracts']['nb-fail'] + counters['testabstracts']['nb-undef'])
 
-        self.counterTcPass.display(counters['testcases']['nb-pass'])
-        self.counterTcFail.display(counters['testcases']['nb-fail'])
-        self.counterTcUndef.display(counters['testcases']['nb-undef'])
-        self.counterTcTotal.display( counters['testcases']['nb-pass'] + counters['testcases']['nb-fail'] + counters['testcases']['nb-undef'])
+        # self.counterTcPass.display(counters['testcases']['nb-pass'])
+        # self.counterTcFail.display(counters['testcases']['nb-fail'])
+        # self.counterTcUndef.display(counters['testcases']['nb-undef'])
+        # self.counterTcTotal.display( counters['testcases']['nb-pass'] + counters['testcases']['nb-fail'] + counters['testcases']['nb-undef'])
 
-        nbPass =  counters['testglobals']['nb-pass']+counters['testplans']['nb-pass']+counters['testsuites']['nb-pass']+counters['testunits']['nb-pass'] \
-                    + counters['testabstracts']['nb-pass']+counters['testcases']['nb-pass']
-        nbUndef = counters['testglobals']['nb-undef']+counters['testplans']['nb-undef']+counters['testsuites']['nb-undef']+counters['testunits']['nb-undef'] \
-                    + counters['testabstracts']['nb-undef'] + counters['testcases']['nb-undef']
-        nbFailed = counters['testglobals']['nb-fail']+counters['testplans']['nb-fail']+counters['testsuites']['nb-fail']+counters['testunits']['nb-fail'] \
-                    + counters['testabstracts']['nb-fail'] + counters['testcases']['nb-fail']
-        nbTot = nbPass+nbUndef+nbFailed
-        if nbTot:
-            self.totPassValue.setText( "%s<br />(%s%%)" % (nbPass, round( (nbPass*100)/ float(nbTot), 1 ) ) )
-            self.totFailedValue.setText( "%s<br />(%s%%)" % (nbFailed, round( (nbFailed*100)/ float(nbTot), 1) ) )
-            self.totUndefValue.setText( "%s<br />(%s%%)" % (nbUndef, round( (nbUndef*100)/ float(nbTot), 1) ) )
-        else:
-            self.totPassValue.setText( "0<br />(0%)" )
-            self.totFailedValue.setText( "0<br />(0%)" )
-            self.totUndefValue.setText( "0<br />(0%)" )
+        # nbPass =  counters['testglobals']['nb-pass']+counters['testplans']['nb-pass']+counters['testsuites']['nb-pass']+counters['testunits']['nb-pass'] \
+                    # + counters['testabstracts']['nb-pass']+counters['testcases']['nb-pass']
+        # nbUndef = counters['testglobals']['nb-undef']+counters['testplans']['nb-undef']+counters['testsuites']['nb-undef']+counters['testunits']['nb-undef'] \
+                    # + counters['testabstracts']['nb-undef'] + counters['testcases']['nb-undef']
+        # nbFailed = counters['testglobals']['nb-fail']+counters['testplans']['nb-fail']+counters['testsuites']['nb-fail']+counters['testunits']['nb-fail'] \
+                    # + counters['testabstracts']['nb-fail'] + counters['testcases']['nb-fail']
+        # nbTot = nbPass+nbUndef+nbFailed
+        # if nbTot:
+            # self.totPassValue.setText( "%s<br />(%s%%)" % (nbPass, round( (nbPass*100)/ float(nbTot), 1 ) ) )
+            # self.totFailedValue.setText( "%s<br />(%s%%)" % (nbFailed, round( (nbFailed*100)/ float(nbTot), 1) ) )
+            # self.totUndefValue.setText( "%s<br />(%s%%)" % (nbUndef, round( (nbUndef*100)/ float(nbTot), 1) ) )
+        # else:
+            # self.totPassValue.setText( "0<br />(0%)" )
+            # self.totFailedValue.setText( "0<br />(0%)" )
+            # self.totUndefValue.setText( "0<br />(0%)" )
             
-        self.totValue.setText( "%s" % nbTot )
+        # self.totValue.setText( "%s" % nbTot )
 
     def refreshData(self, data, action ):
         """

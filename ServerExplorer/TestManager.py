@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -322,8 +322,8 @@ class TaskWaitingItem(QTreeWidgetItem, Logger.ClassLogger):
             self.setText(index_col, "Weekly on %s at %sh%sm%ss" % ( weekd , str(h).zfill(2), str(mn).zfill(2), str(s).zfill(2) )  )
             self.setRepeat()
         # END
-        else:
-            self.error( 'unknown event type: %s' % str(eventType) )
+        # else:
+            # self.error( 'unknown event type: %s' % str(eventType) )
 
 COL_HISTORY_ID          = 0
 COL_HISTORY_TYPE        = 1
@@ -458,8 +458,8 @@ class TaskHistoryItem(QTreeWidgetItem, Logger.ClassLogger):
                 weekd = UCI.SCHED_DAYS_DICT[d].title()
             self.setText(index_col, "Weekly on %s at %sh%sm%ss" % ( weekd, str(h).zfill(2), str(mn).zfill(2), str(s).zfill(2) )  )
         # END
-        else:
-            self.error( 'unknown event type: %s' % str(eventType) )
+        # else:
+            # self.error( 'unknown event type: %s' % str(eventType) )
 
 
 

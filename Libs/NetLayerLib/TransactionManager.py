@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -115,12 +115,12 @@ class TransactionManager(object):
         startTime = self.__outgoingTransactions[ (client,transactionId) ]['timestamp'] 
         if cancelEvent is not None:
             while (not event.isSet()) and (not timeout) and (not cancelEvent.isSet()):
-                time.sleep(0.01)
+                time.sleep(0.1)
                 if (time.time() - startTime) >= responseTimeout:
                     timeout = True      
         else:
             while (not event.isSet()) and (not timeout):
-                time.sleep(0.01)
+                time.sleep(0.1)
                 if (time.time() - startTime) >= responseTimeout:
                     timeout = True
         if cancelEvent is not None:

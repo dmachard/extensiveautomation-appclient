@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -52,9 +52,9 @@ settings.setValue( key='TestArchives/download-directory', value='Undefined' )
 settings.setValue( key='Server/addr-list', value='' )
 settings.setValue( key='Server/last-addr', value='' )
 settings.setValue( key='Server/last-username', value='tester' )
-settings.setValue( key='Server/last-pwd', value='' )
-settings.setValue( key='Server/port-data', value='443' )
-settings.setValue( key='Server/port-api', value='443' )
+settings.setValue( key='Server/last-pwd', value='07EAFA158B30DCE5D39958C3F14318C9' )
+settings.setValue( key='Server/port-data', value='8080' )
+settings.setValue( key='Server/port-api', value='8080' )
 
 settings.setValue( key='Editor/code-folding', value='True' )
 settings.setValue( key='Editor/find-wrap', value='True' )
@@ -64,7 +64,7 @@ settings.setValue( key='Trace/level', value='INFO' )
 settings.setValue( key='TestRun/auto-focus', value='True' )
 settings.setValue( key='TestRun/auto-save', value='False' )
 settings.setValue( key='TestRun/new-window', value='False' )
-settings.setValue( key='TestRun/event-filter-pattern', value='^(?!DEBUG)' )
+settings.setValue( key='TestRun/event-filter-pattern', value='WARNING|^INFO|ERROR|SEND|RECEIVED' )
 settings.setValue( key='TestRun/event-filter-column', value='4' )
 settings.setValue( key='TestRun/default-tab-run', value='0' )
 

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -331,8 +331,8 @@ class UserClientInterface(QObject, Logger.ClassLogger, NetLayerLib.ClientAgent):
         self.portProxyHttp = portProxyHttp
 
         self.login = login
-        self.password = hashlib.sha1( password.encode('utf8') ).hexdigest()
-        # resolve server address
+        self.password = str( password )
+        # self.password = hashlib.sha1( password.encode('utf8') ).hexdigest()
 
         # read port from settings, can be changed from preferences
         self.portWs = int( Settings.instance().readValue( key = 'Server/port-api' ) )

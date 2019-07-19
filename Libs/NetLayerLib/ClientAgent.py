@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -176,7 +176,7 @@ class ClientAgent(TcpClient.TcpClientThread, TransactionManager.TransactionManag
         if not self.__forceClose:
             # wait to empty the queue before to close the connection
             while self.__connected:
-                time.sleep(0.001)
+                time.sleep(0.01)
         TransactionManager.TransactionManager.stop(self)
         TcpClient.TcpClientThread.stop(self)
         TcpClient.TcpClientThread.join(self)

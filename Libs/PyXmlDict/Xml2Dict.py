@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# -*- coding: UTF-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -21,12 +21,19 @@
 # MA 02110-1301 USA
 # -------------------------------------------------------------------
 
-"""
-Xml to dict module converter
-"""
+# prefer to use this library for huge xml file support
+etree=None
+try:
+    from lxml import etree
+except ImportError:
+    pass
+    
+try:
+    import xml.etree.ElementTree as ET
+except Exception as e:
+    import cElementTree as ET
 
 import sys
-import xml.etree.ElementTree as ET
 
 def bytes2str(val):
     """
@@ -36,6 +43,7 @@ def bytes2str(val):
         return str(val, "utf8")
     else:
         return val
+        
         
 class Xml2Dict(object):
     """
@@ -84,7 +92,6 @@ class Xml2Dict(object):
         if sys.version_info > (3,):
             nodeValue = bytes2str(nodeValue)
         ret[nodeName] = nodeValue
-        #if len(nodeAttrib) > 0: 
         ret["@%s" % nodeName] = nodeAttrib
         return ret
 
@@ -106,6 +113,7 @@ class Xml2Dict(object):
         """
         if sys.version_info > (3,):
             nodeValue = bytes2str(nodeValue)
+            
         if not isinstance( dico[nodeName], list):
             dico[nodeName] = [ dico[nodeName] ]
         rslt = self.__makeDict( nodeName = nodeName, nodeAttrib = nodeAttrib, 
@@ -131,7 +139,7 @@ class Xml2Dict(object):
         for child in node.getchildren():
             # retrieve tag, attrib and number of child
             ctag = child.tag # node name
-            cattrib = child.attrib
+            cattrib = dict(child.attrib)
             nbChild = self.__getNbChildren( node = child )
             if nbChild == 0:
                 # child is null the retrieve the value of the node
@@ -168,15 +176,21 @@ class Xml2Dict(object):
         @rtype: dict
         """
         ret = None
-        root = ET.fromstring(xml)
+        if etree is None:
+            root = ET.fromstring(xml)
+        else:
+            parser = etree.XMLParser(huge_tree=huge_tree)
+            root = etree.fromstring(xml, parser)
+        
         nbChild = self.__getNbChildren( node = root )
         if nbChild > 0:
-            ret = self.__makeDict( nodeName = root.tag, nodeAttrib = root.attrib,
-                    nodeValue = self.__parseNode( node = root ) )       
+            ret = self.__makeDict( nodeName = root.tag, nodeAttrib = dict(root.attrib),
+                                    nodeValue = self.__parseNode( node = root ) )       
         else:
-            rtext = ""
-            if root.text is not None:
-                rtext = root.text.encode(self.coding)
-            ret = self.__makeDict( nodeName = root.tag, nodeAttrib = root.attrib,
-                            nodeValue = rtext )     
+            rtext = root.text.encode(self.coding)
+            if rtext is None:
+                rtext = ""
+            rtext = rtext.encode(self.coding)
+            ret = self.__makeDict( nodeName = root.tag, nodeAttrib = dict(root.attrib),
+                                    nodeValue = rtext )     
         return ret

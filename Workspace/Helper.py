@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -59,8 +59,6 @@ except ImportError:
 import Settings
 from Libs import QtHelper, Logger
 import DefaultTemplates
-# import UserClientInterface as UCI
-import RestClientInterface as RCI
 
 class Item(QTreeWidgetItem):
     """
@@ -613,137 +611,7 @@ class QDoc(QWidget):
 
 TAB_FRAMEWORK       = 0
 TAB_ADAPTERS        = 1
-TAB_LIBRARIES       = 2
 
-class WsdlDialog(QtHelper.EnhancedQDialog):
-    """
-    Wsdl dialog
-    """
-    def __init__(self, dialogName, parent = None):
-        """
-        Constructor
-        """
-        QtHelper.EnhancedQDialog.__init__(self, parent)
-        self.name = self.tr("Adapter generator from WSDL")
-
-        self.createDialog()
-        self.createConnections()
-
-    def createDialog(self):
-        """
-        Create qt dialog
-        """
-        self.setWindowTitle( self.name )
-        
-        urlLabel = QLabel( "WSDL Url:" )
-        self.urlLineEdit = QLineEdit()
-        
-        pkgLabel = QLabel( "Package version:" )
-        self.pkgLineEdit = QComboBox(self)
-        self.pkgLineEdit.addItems( Settings.instance().serverContext['adapters'].split(",") )
-        
-        fileLabel = QLabel( "WSDL+XSD File:" )
-        self.fileLineEdit = QLineEdit()
-        self.fileLineEdit.setEnabled(False)
-        self.fileButton = QPushButton(self.tr("Browse..."))
-        
-        layout = QGridLayout()
-
-        layout.addWidget(  urlLabel, 0, 0 )
-        layout.addWidget(  self.urlLineEdit, 0, 1 )
-        
-        layoutFile = QHBoxLayout()
-
-        layoutFile.addWidget(  self.fileLineEdit )
-        layoutFile.addWidget(  self.fileButton )
-
-        layout.addWidget(  fileLabel, 1, 0 )
-        layout.addLayout(  layoutFile, 1, 1 )
-
-        layout.addWidget(  pkgLabel, 2, 0 )
-        layout.addWidget(  self.pkgLineEdit, 2, 1 )
-        
-        
-        self.overwriteCheckBox = QCheckBox( "Overwrite adapter if already exists!")
-        layout.addWidget(  self.overwriteCheckBox, 3, 1 )
-        
-        buttonLayout = QHBoxLayout()
-
-        self.okButton = QPushButton(self.tr("OK"), self)
-        self.cancelButton = QPushButton(self.tr("Cancel"), self)
-        buttonLayout.addWidget(self.okButton)
-        buttonLayout.addWidget(self.cancelButton)
-
-        layout.addLayout(  buttonLayout, 4, 1 )
-
-        
-        layoutMain = QVBoxLayout()
-        descr = [ 'Use this module to generate one adapter from the wsdl. ' ]
-        descr.append('Provide the URL of the WSDL or the file him self.' )
-        
-        layoutMain.addWidget(QLabel( '\n'.join(descr) ))
-        layoutMain.addLayout(layout)
-        
-        self.setLayout(layoutMain)
-        
-        self.setMinimumWidth(400)
-        
-        flags = Qt.WindowFlags()
-        flags |= Qt.WindowCloseButtonHint
-        flags |= Qt.MSWindowsFixedSizeDialogHint
-        self.setWindowFlags(flags)
-        
-    def createConnections (self):
-        """
-        create qt connections
-         * ok
-         * cancel
-        """
-        self.okButton.clicked.connect( self.acceptClicked )
-        self.cancelButton.clicked.connect( self.reject )
-        self.fileButton.clicked.connect(self.getFile)
-            
-    def getFile (self):
-        """
-        Returns the path of the repository
-        """
-        fileName = QFileDialog.getOpenFileName(self, self.tr("Open WSDL file"),  '', "Files (*.*)")
-        if fileName:
-            self.fileLineEdit.setText(fileName)
-            
-    def acceptClicked (self):
-        """
-        Called on accept button
-        """
-        url = self.urlLineEdit.text()
-        fileWsdl = self.fileLineEdit.text()
-        if not len(url) and not len(fileWsdl):
-            QMessageBox.information(self, self.tr("Wsdl Handler") , "Please to specify an url or file.")
-        else:  
-            if len(url):
-                if not( str(url).startswith('http://') or str(url).startswith('https://') ):
-                    QMessageBox.information(self, self.tr("Wsdl Handler") , "Please to specify http:// or https://")
-                    return
-            pkg = self.pkgLineEdit.currentText()
-            if not len(pkg):
-                QMessageBox.information(self, self.tr("Wsdl Handler") , "Please to specify the package version.")
-            
-            else:
-                self.accept()
-        
-    def getParameters(self):
-        """
-        Return parameters
-        """
-        url = self.urlLineEdit.text()
-        fileWsdl = self.fileLineEdit.text()
-        pkg = self.pkgLineEdit.currentText()
-        if self.overwriteCheckBox.checkState():
-            overwrite = True
-        else:
-            overwrite = False
-        return (url, fileWsdl, pkg, overwrite)
-        
 class WHelper(QWidget, Logger.ClassLogger):
     """
     Assistant widget
@@ -784,19 +652,9 @@ class WHelper(QWidget, Logger.ClassLogger):
         """
         create qt widget
         """
-        self.dockToolbar = QToolBar(self)
-
-        self.masterTab = QTabWidget()
-        self.masterTab.setTabPosition(QTabWidget.North)
-        self.masterTab.setStyleSheet("QTabWidget { border: 0px; }") # remove 3D border
-
         self.areaTab = QTabWidget()
         self.areaTab.setTabPosition(QTabWidget.North)
         self.areaTab.setStyleSheet("QTabWidget { border: 0px; }") # remove 3D border
-        
-        self.extsTab = QTabWidget()
-        self.extsTab.setTabPosition(QTabWidget.North)
-        self.extsTab.setStyleSheet("QTabWidget { border: 0px; }") # remove 3D border
 
         self.helper = TreeWidgetHelper()
         self.helper.setSytleSheetTree()
@@ -805,38 +663,8 @@ class WHelper(QWidget, Logger.ClassLogger):
         self.helper.setEnabled(False)
         self.helper.setDragEnabled(True)
         self.helper.setContextMenuPolicy(Qt.CustomContextMenu)
-        
-        self.helperInterop = TreeWidgetHelper()
-        self.helperInterop.setSytleSheetTree()
-        self.helperInterop.setFocusPolicy( Qt.NoFocus )
-        self.helperInterop.setHeaderHidden(True)
-        self.helperInterop.setEnabled(False)
-        self.helperInterop.setDragEnabled(True)
-        self.helperInterop.setContextMenuPolicy(Qt.CustomContextMenu)
 
-        self.helperAdapters = TreeWidgetHelper()
-        self.helperAdapters.setSytleSheetTree()
-        self.helperAdapters.setFocusPolicy( Qt.NoFocus )
-        self.helperAdapters.setHeaderHidden(True)
-        self.helperAdapters.setEnabled(False)
-        self.helperAdapters.setDragEnabled(True)
-        self.helperAdapters.setContextMenuPolicy(Qt.CustomContextMenu)
-        
-        self.helperLibraries = TreeWidgetHelper()
-        self.helperLibraries.setSytleSheetTree()
-        self.helperLibraries.setFocusPolicy( Qt.NoFocus )
-        self.helperLibraries.setHeaderHidden(True)
-        self.helperLibraries.setEnabled(False)
-        self.helperLibraries.setDragEnabled(True)
-        self.helperLibraries.setContextMenuPolicy(Qt.CustomContextMenu)
-        
         self.areaTab.addTab(self.helper, QIcon(":/processes.png"), "Framework")
-        self.areaTab.addTab(self.helperInterop, QIcon(":/plugin.png"), "Third party tools")
-        self.extsTab.addTab(self.helperAdapters, QIcon(":/adapters-help.png"), "Adapters")
-        self.extsTab.addTab(self.helperLibraries, QIcon(":/libraries-help.png"), "Libraries")
-
-        self.masterTab.addTab(self.areaTab, QIcon(":/main.png"), "Test Library")
-        self.masterTab.addTab(self.extsTab, QIcon(":/adapters.png"), "SUT Extensions")
 
         self.setMinimumWidth( 300 )
         
@@ -849,8 +677,8 @@ class WHelper(QWidget, Logger.ClassLogger):
         frame = QFrame()
         layoutFrame = QVBoxLayout()
         layoutFrame.setContentsMargins(0,0,0,0)
-        layoutFrame.addWidget(self.masterTab)
-        layoutFrame.addWidget(self.dockToolbar)
+        layoutFrame.addWidget(self.areaTab)
+        # layoutFrame.addWidget(self.dockToolbar)
         frame.setLayout(layoutFrame)
 
         self.hSplitter.addWidget( frame )
@@ -868,133 +696,26 @@ class WHelper(QWidget, Logger.ClassLogger):
         """
         Create qt actions
         """
-        self.expandSubtreeAction = QtHelper.createAction(self, self.tr("Expand subtree..."), self.expandSubtreeItem, 
-                    icon = None, tip = self.tr('Expand subtree...') )
-        self.expandAllAction = QtHelper.createAction(self, self.tr("Expand All..."), self.expandAllItems, 
-                    icon = None, tip = self.tr('Expand All...') )
-        self.collapseAllAction = QtHelper.createAction(self, self.tr("Collapse All..."), self.collapseAllItems, 
-                    icon = None, tip = self.tr('Collapse All...') )
-        self.reloadAllAction = QtHelper.createAction(self, self.tr("Reload"), self.reloadAll, 
-                    icon =  QIcon(":/act-refresh.png"), tip = self.tr('Refresh') )
-        self.rebuildCacheAction = QtHelper.createAction(self, self.tr("Rebuild documentations"), self.rebuild, 
-                    icon = QIcon(":/generate-doc.png"), tip = self.tr('Rebuild') )
-        self.generateAdaptersAction = QtHelper.createAction(self, self.tr("Packaging Adapters"), self.generateAdapters, 
-                    icon = QIcon(":/generate-tar.png"), tip = self.tr('Packaging') )
-        self.generateLibrariesAction = QtHelper.createAction(self, self.tr("Packaging Libraries"), self.generateLibraries, 
-                    icon = QIcon(":/generate-tar.png"), tip = self.tr('Packaging') )
-        # self.generateAllAction = QtHelper.createAction(self, self.tr("Packaging all"), self.generateAll, 
-                    # icon = QIcon(":/generate-tar.png"), tip = self.tr('Packaging all adapters and libraries') )
-        # self.prepareAssistantAction = QtHelper.createAction(self, self.tr("Prepare Framework"), self.prepareAssistant, 
-                    # icon = QIcon(":/build.png"), tip = self.tr('Prepare framework') )
-        self.generateAdapterWsdlAction = QtHelper.createAction(self, self.tr("Generate adapter from WSDL"), self.generateAdapterWSDL, 
-                    icon = QIcon(":/api.png"), tip = self.tr('Generate adapter from WSDL') )
+        pass
         self.setDefaultActionsValues()
 
     def createToolbar(self):
         """
         create qt toolbar
         """
-        self.dockToolbar.setObjectName("toolbar")
-        self.dockToolbar.addAction(self.reloadAllAction)
-        self.dockToolbar.addSeparator()
-        # self.dockToolbar.addAction(self.prepareAssistantAction)
-        self.dockToolbar.addAction(self.rebuildCacheAction)
-        # self.dockToolbar.addAction(self.generateAllAction)
-        self.dockToolbar.addSeparator()
-        self.dockToolbar.addAction(self.generateAdapterWsdlAction)
-        self.dockToolbar.addSeparator()
-        self.dockToolbar.setIconSize(QSize(16, 16))
+        pass
         
     def createConnections (self):
         """
         Create qt connections
         """
         self.helper.currentItemChanged.connect(self.currentItemChanged)
-        self.helperInterop.currentItemChanged.connect(self.currentItemChanged)
-        self.helperAdapters.currentItemChanged.connect(self.currentItemChanged)
-        self.helperLibraries.currentItemChanged.connect(self.currentItemChanged)
- 
+
     def setDefaultActionsValues (self):
         """
         Set default values for qt actions
         """
-        self.masterTab.setEnabled(False)
-
-        self.reloadAllAction.setEnabled(False)
-        self.rebuildCacheAction.setEnabled(False)
-        self.expandSubtreeAction.setEnabled(False)
-        self.expandAllAction.setEnabled(False)
-        self.collapseAllAction.setEnabled(False)
-        self.generateAdaptersAction.setEnabled(False)
-        self.generateLibrariesAction.setEnabled(False)
-        self.generateAdapterWsdlAction.setEnabled(False)
-
-    def generateAdapterWSDL(self):
-        """
-        Generate adapter from WSDL file or url
-        """
-        if not RCI.instance().isAuthenticated():
-            QMessageBox.warning(self, "Capture desktop" , "Connect to the test center in first!")
-            return
-
-        dWsdl = WsdlDialog( self )
-        if dWsdl.exec_() == QDialog.Accepted:
-            url, fileWsdl, pkg, overwrite = dWsdl.getParameters()
-            wsdlEncoded = b''
-            if len(fileWsdl):
-                # read the file
-                fd = QFile(fileWsdl)
-                if not fd.open(QIODevice.ReadOnly):
-                    QMessageBox.warning(self, self.tr("Error opening file"), 
-                                        self.tr("Could not open the file ") + fileWsdl)
-                else:
-                    wsdlData= fd.readAll()
-                    wsdlEncoded = base64.b64encode(wsdlData)
-
-            if len(url):
-                RCI.instance().addAdapterByWsdlUrl(packageName=pkg, 
-                                                   overwriteAdapter=overwrite, 
-                                                   wsdlUrl=url)
-            else:
-                RCI.instance().addAdapterByWsdlFile(packageName=pkg, 
-                                                    overwriteAdapter=overwrite, 
-                                                    wsdlFile=wsdlEncoded)
-
-    def generateAdapters(self):
-        """
-        Generate adapters
-        """
-        reply = QMessageBox.question(self, self.tr("Generate adapters"), 
-                                     self.tr("Are you sure to re-generate adapters?"),
-                                     QMessageBox.Yes | QMessageBox.Cancel )
-        if reply == QMessageBox.Yes:
-            RCI.instance().buildAdapters()
-
-    def generateLibraries(self):
-        """
-        Generate libraries
-        """
-        reply = QMessageBox.question(self, self.tr("Generate librairies"), 
-                                     self.tr("Are you sure to re-generate libraries?"),
-                                     QMessageBox.Yes | QMessageBox.Cancel )
-        if reply == QMessageBox.Yes:
-            RCI.instance().buildLibraries()
-            
-    def rebuild(self):
-        """
-        Rebuild cache
-        """
-        reply = QMessageBox.question(self, self.tr("Generate documentation"), 
-                                     self.tr("Are you sure to re-generate the documentation?"),
-                        QMessageBox.Yes | QMessageBox.Cancel )
-        if reply == QMessageBox.Yes:
-            RCI.instance().buildDocumentations()
-            
-    def reloadAll(self):
-        """
-        Reload the tree
-        """
-        RCI.instance().cacheDocs()
+        self.areaTab.setEnabled(False)
 
     def expandItem(self, itm):
         """
@@ -1007,43 +728,28 @@ class WHelper(QWidget, Logger.ClassLogger):
                 if itm.child(i).childCount() > 0:
                     self.expandItem(itm=itm.child(i))
 
-    def expandSubtreeItem(self):
-        """
-        Expand subitem of the tree
-        """
-        if self.areaTab.currentIndex() == TAB_ADAPTERS:
-            treeHelper = self.helperAdapters
-        elif self.areaTab.currentIndex() == TAB_LIBRARIES:
-            treeHelper = self.helperLibraries
-        else:
-            treeHelper = self.helper
-        currentItem = treeHelper.currentItem()
-        if currentItem is not None:
-            self.expandItem(itm=currentItem)
+    # def expandSubtreeItem(self):
+        # """
+        # Expand subitem of the tree
+        # """
+        # treeHelper = self.helper
+        # currentItem = treeHelper.currentItem()
+        # if currentItem is not None:
+            # self.expandItem(itm=currentItem)
 
-    def expandAllItems(self):
-        """
-        Expand all items
-        """
-        if self.areaTab.currentIndex() == TAB_ADAPTERS:
-            treeHelper = self.helperAdapters
-        elif self.areaTab.currentIndex() == TAB_LIBRARIES:
-            treeHelper = self.helperLibraries
-        else:
-            treeHelper = self.helper
-        treeHelper.expandAll()
+    # def expandAllItems(self):
+        # """
+        # Expand all items
+        # """
+        # treeHelper = self.helper
+        # treeHelper.expandAll()
     
-    def collapseAllItems(self):
-        """
-        Collapse all items
-        """
-        if self.areaTab.currentIndex() == TAB_ADAPTERS:
-            treeHelper = self.helperAdapters
-        elif self.areaTab.currentIndex() == TAB_LIBRARIES:
-            treeHelper = self.helperLibraries
-        else:
-            treeHelper = self.helper
-        treeHelper.collapseAll()
+    # def collapseAllItems(self):
+        # """
+        # Collapse all items
+        # """
+        # treeHelper = self.helper
+        # treeHelper.collapseAll()
 
     def currentItemChanged(self, currentItem, previousItem):
         """
@@ -1115,23 +821,7 @@ class WHelper(QWidget, Logger.ClassLogger):
         @param hideLabel:
         @type hideLabel:
         """
-        self.masterTab.setEnabled(True)
-
-        self.reloadAllAction.setEnabled(True)
-        if RCI.RIGHTS_ADMIN in RCI.instance().userRights :
-            self.rebuildCacheAction.setEnabled(True)
-            self.generateAdaptersAction.setEnabled(True)
-            self.generateLibrariesAction.setEnabled(True)
-            self.generateAdapterWsdlAction.setEnabled(True)
-        else:
-            self.rebuildCacheAction.setEnabled(False)
-            self.generateAdaptersAction.setEnabled(False)
-            self.generateLibrariesAction.setEnabled(False)
-            self.generateAdapterWsdlAction.setEnabled(False)
-            
-        self.expandSubtreeAction.setEnabled(True)
-        self.expandAllAction.setEnabled(True)
-        self.collapseAllAction.setEnabled(True)
+        self.areaTab.setEnabled(True)
 
     def initialize(self, listing):
         """
@@ -1141,18 +831,9 @@ class WHelper(QWidget, Logger.ClassLogger):
         @type listing: list
         """
         self.helper.clear()
-        self.helperInterop.clear()
-        self.helperAdapters.clear()
-        self.helperLibraries.clear()
 
         self.createTree(listing=listing, parent=self.helper, framework=True, 
                         adapters=False, libraries=False, interops=False)
-        self.createTree(listing=listing, parent=self.helperInterop, 
-                        framework=False, interops=True)
-        self.createTree(listing=listing, parent=self.helperAdapters, 
-                        framework=False, adapters=True, libraries=False)
-        self.createTree(listing=listing, parent=self.helperLibraries, 
-                        framework=False, adapters=False, libraries=True)
 
     def createTree(self, listing, parent, framework=False, adapters=False, libraries=False, 
                    isGeneric=False, isDefault=False, interops=False ):
@@ -1173,8 +854,8 @@ class WHelper(QWidget, Logger.ClassLogger):
                         continue
                     if dct["type"] == "package" and dct["name"] != "TestLibrary" and not interops:
                         continue
-                    if dct["type"] == "package-libraries" and not libraries:
-                        continue
+                    # if dct["type"] == "package-libraries" and not libraries:
+                        # continue
                     if dct["type"] == "package-adapters" and not adapters:
                         continue
 
@@ -1250,10 +931,7 @@ class WHelper(QWidget, Logger.ClassLogger):
         @type data:
         """
         self.helper.unsetSytleSheetTree()
-        self.helperInterop.unsetSytleSheetTree()
-        self.helperAdapters.unsetSytleSheetTree()
-        self.helperLibraries.unsetSytleSheetTree()
-        
+
         helpObj = []
         
         try:
@@ -1274,106 +952,9 @@ class WHelper(QWidget, Logger.ClassLogger):
         self.setConnected() 
 
         self.helper.setEnabled(True)
-        self.helperInterop.setEnabled(True)
-        self.helperAdapters.setEnabled(True)
-        self.helperLibraries.setEnabled(True)
 
         self.textEdit.setEnabled(True)
         self.initialize(listing=helpObj)
-         
-    def helpAllObjects(self):
-        """
-        return help all objects
-        """
-        return self.assistantData
-
-    def helpFramework(self, moduleName=None, className=None, functionName=None):
-        """
-        return help all objects
-        """
-        if not len(self.assistantData):
-            return None
-            
-        for h in self.assistantData:
-            if  h['type'] == 'package':
-                if moduleName is None:
-                    return h['modules']
-                else:
-                    for m in h['modules']:
-                        if m['name'] == moduleName:
-                            if functionName is not None and className is None:
-                                for c in m['classes']:
-                                    if  c['type'] == 'function':
-                                        if c['name'] == functionName: 
-                                            return c
-                            else:
-                                if className is None:
-                                    return m['classes']
-                                else:
-                                    for c in m['classes']:
-                                        if c['name'] == className: 
-                                            if functionName is None:
-                                                return c['functions']
-                                            else:
-                                                for f in c['functions']:
-                                                    if f['name'] == functionName: 
-                                                        return f
-
-    def helpAdapters(self, name=None, generic=False):
-        """
-        return help all objects
-        """
-        if not len(self.assistantData):
-            return None
-        for h in self.assistantData:
-            if  h['type'] == 'package-adapters':
-                for sutadp in h['adapters']:
-                    if generic:
-                        return sutadp['modules']
-                    else:
-                        if name is not None:
-                            if sutadp['name'] == name:
-                                return sutadp['modules']
-                        else:
-                            if sutadp['is-default']:
-                                return sutadp['modules']
-                return []
-
-    def isGuiGeneric(self, name="GUI"):
-        """
-        Is gui generic ?
-        """
-        isGeneric = False
-        for h in self.assistantData:
-            if  h['type'] == 'package-adapters':
-                for sutadp in h['adapters']:
-                    # search in default
-                    if sutadp['is-generic'] and not sutadp['is-default']:
-                        for m in sutadp['modules']:
-                            if m['name'] == name:
-                                isGeneric = True
-                                break
-        return isGeneric
-        
-    def helpLibraries(self, name=None, generic=False):
-        """
-        return help all objects
-        """
-        if not len(self.assistantData):
-            return None
-        for h in self.assistantData:
-            if  h['type'] == 'package-libraries':
-                for sutlib in h['libraries']:
-                    if generic:
-                        return sutlib['modules']
-                    else:
-                        if name is not None:
-                            if sutlib['name'] == name:
-                                return sutlib['modules']
-                        else:
-                            if sutlib['is-default']:
-                                return sutlib['modules']
-                return []
 
     def onReset(self):
         """
@@ -1382,23 +963,10 @@ class WHelper(QWidget, Logger.ClassLogger):
         self.assistantData = []
 
         self.helper.setSytleSheetTree()
-        self.helperInterop.setSytleSheetTree()
-        self.helperAdapters.setSytleSheetTree()
-        self.helperLibraries.setSytleSheetTree()
 
         self.setNotConnected() 
         self.helper.clear()
         self.helper.setEnabled(False)
-        
-        self.helperInterop.clear()
-        self.helperInterop.setEnabled(False)
-        
-        self.helperAdapters.clear()
-        self.helperAdapters.setEnabled(True)
-
-        self.helperLibraries.clear()
-        self.helperLibraries.setEnabled(True)
-
         self.textEdit.setEnabled(False)
         self.textEdit.setText('')
 
@@ -1410,9 +978,6 @@ class WHelper(QWidget, Logger.ClassLogger):
         @type data:
         """
         self.helper.clear()
-        self.helperInterop.clear()
-        self.helperAdapters.clear()
-        self.helperLibraries.clear()
         self.onLoad( data )
 
 WH = None # Singleton

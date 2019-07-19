@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -104,24 +104,29 @@ class WTestAbstract(Document.WDocument):
         Document.WDocument.__init__(self, parent, path, filename, extension, nonameId, 
                                     remoteFile, repoDest, project, isLocked)
 
+        self.docViewer = parent
+        
         # prepare model with default value
         userName = Settings.instance().readValue( key = 'Server/last-username' )
         defaultTemplates = DefaultTemplates.Templates()
         testdef = defaultTemplates.getTestUnitDefinition()
-        if not 'default-library' in Settings.instance().serverContext:
-            if not Settings.instance().offlineMode:
-                QMessageBox.critical(self, "Open" , 
-                                     "Server context incomplete (default library is missing), please to reconnect!")
-            defLibrary = 'v000'
-        else:
-            defLibrary = Settings.instance().serverContext['default-library']
-        if not 'default-adapter' in Settings.instance().serverContext:
-            if not Settings.instance().offlineMode:
-                QMessageBox.critical(self, "Open" , 
-                                     "Server context incomplete (default adapter is missing), please to reconnect!")
-            defAdapter = 'v000'
-        else:
-            defAdapter = Settings.instance().serverContext['default-adapter']
+        
+        defLibrary = 'deprecated'
+        defAdapter = 'deprecated'
+        # if not 'default-library' in Settings.instance().serverContext:
+            # if not Settings.instance().offlineMode:
+                # QMessageBox.critical(self, "Open" , 
+                                     # "Server context incomplete (default library is missing), please to reconnect!")
+            # defLibrary = 'v000'
+        # else:
+            # defLibrary = Settings.instance().serverContext['default-library']
+        # if not 'default-adapter' in Settings.instance().serverContext:
+            # if not Settings.instance().offlineMode:
+                # QMessageBox.critical(self, "Open" , 
+                                     # "Server context incomplete (default adapter is missing), please to reconnect!")
+            # defAdapter = 'v000'
+        # else:
+            # defAdapter = Settings.instance().serverContext['default-adapter']
             
         # new in v17
         defaultTimeout = Settings.instance().readValue( key = 'TestProperties/default-timeout' )
@@ -181,7 +186,8 @@ class WTestAbstract(Document.WDocument):
         QtWidgets creation
         """
         self.graphScene = GraphScene.GraphAbstract(self, helper=Helper.instance(), 
-                                                   testParams=DocumentProperties.instance())
+                                                   testParams=DocumentProperties.instance(),
+                                                   docViewer=self.docViewer)
         self.graphScene.dockToolbarTest.addAction(self.toTestUnitAction)
 
         layoutFinal = QVBoxLayout()

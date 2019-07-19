@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -112,28 +112,30 @@ class Repository(RemoteRepository.Repository):
         """
         More creation qt actions
         """
-        self.createSamplesAction = QtHelper.createAction(self, "&Generate samples", self.generateSamples, 
-                                                         icon = None, 
-                                                         tip = 'Generate samples' )
-        self.setTestsDefaultAction = QtHelper.createAction(self, "&Set default versions", 
-                                                           self.setDefaultVersionForAllTests, 
-                                                           icon = None, 
-                                                           tip = 'Set default version adapters and libraries for all tests' )
+        pass
+        # self.createSamplesAction = QtHelper.createAction(self, "&Generate samples", self.generateSamples, 
+                                                         # icon = None, 
+                                                         # tip = 'Generate samples' )
+        # self.setTestsDefaultAction = QtHelper.createAction(self, "&Set default versions", 
+                                                           # self.setDefaultVersionForAllTests, 
+                                                           # icon = None, 
+                                                           # tip = 'Set default version adapters and libraries for all tests' )
 
     def moreDefaultActions(self):
         """
         Reimplemented from RemoteRepository
         """
-        self.createSamplesAction.setEnabled(False)
+        pass
+        # self.createSamplesAction.setEnabled(False)
     
     def onMorePopupMenu(self, itemType):
         """
         Reimplemented from RemoteRepository
         """
-        if itemType == QTreeWidgetItem.UserType+10 : # root
-            self.menu.addSeparator()
-            self.menu.addAction( self.createSamplesAction )
-            self.menu.addAction( self.setTestsDefaultAction )
+        # if itemType == QTreeWidgetItem.UserType+10 : # root
+            # self.menu.addSeparator()
+            # self.menu.addAction( self.createSamplesAction )
+            # self.menu.addAction( self.setTestsDefaultAction )
 
         self.menu.addSeparator()
         for plug in self.pluginsStarted:
@@ -171,24 +173,24 @@ class Repository(RemoteRepository.Repository):
                     except Exception as e:
                         QMessageBox.warning(self, "Remote tests" , "bad file path!")
                     
-    def setDefaultVersionForAllTests(self):
-        """
-        Set the default version for all tests
-        """
-        reply = QMessageBox.question(self, self.tr("Set default adapters and libraries version"), 
-                                     self.tr("Are you sure to set the default adapters and libraries version for all tests?"),
-                                     QMessageBox.Yes | QMessageBox.Cancel )
-        if reply == QMessageBox.Yes:
-            RCI.instance().setAllTestsAsDefault()
+    # def setDefaultVersionForAllTests(self):
+        # """
+        # Set the default version for all tests
+        # """
+        # reply = QMessageBox.question(self, self.tr("Set default adapters and libraries version"), 
+                                     # self.tr("Are you sure to set the default adapters and libraries version for all tests?"),
+                                     # QMessageBox.Yes | QMessageBox.Cancel )
+        # if reply == QMessageBox.Yes:
+            # RCI.instance().setAllTestsAsDefault()
             
-    def generateSamples(self):
-        """
-        Generate samples
-        """
-        reply = QMessageBox.question(self, self.tr("Generate samples"), self.tr("Are you sure to re-generate samples?"),
-                                     QMessageBox.Yes | QMessageBox.Cancel )
-        if reply == QMessageBox.Yes:
-            RCI.instance().buildSamples()
+    # def generateSamples(self):
+        # """
+        # Generate samples
+        # """
+        # reply = QMessageBox.question(self, self.tr("Generate samples"), self.tr("Are you sure to re-generate samples?"),
+                                     # QMessageBox.Yes | QMessageBox.Cancel )
+        # if reply == QMessageBox.Yes:
+            # RCI.instance().buildSamples()
             
     def moveRemoteFile(self, currentName, currentPath, currentExtension, 
                        newPath, project=0, newProject=0, update_location=False):
@@ -219,10 +221,10 @@ class Repository(RemoteRepository.Repository):
         """
         Initialize the repository
         """
-        self.createSamplesAction.setEnabled(False)
+        # self.createSamplesAction.setEnabled(False)
 
-        if RCI.RIGHTS_ADMIN in RCI.instance().userRights:
-            self.createSamplesAction.setEnabled(True)
+        # if RCI.RIGHTS_ADMIN in RCI.instance().userRights:
+            # self.createSamplesAction.setEnabled(True)
 
         RemoteRepository.Repository.initialize(self, listing)
 

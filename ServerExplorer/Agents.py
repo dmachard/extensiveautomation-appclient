@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -166,12 +166,12 @@ class WAgents(QWidget, Logger.ClassLogger):
         self.parent = parent
         self.name = self.tr("Agents")
         self.itemCurrentRunning = None
-        self.itemCurrentInstalled = None
-        self.itemCurrentDefault = None
+        # self.itemCurrentInstalled = None
+        # self.itemCurrentDefault = None
         self.agents = {}
 
         self.nbAgts = 0
-        self.agtsInstalled = None
+        # self.agtsInstalled = None
 
         self.createWidgets()
         self.createConnections()
@@ -193,19 +193,19 @@ class WAgents(QWidget, Logger.ClassLogger):
         """
         layout = QHBoxLayout()
 
-        self.deployBox = QGroupBox("Default agents")
-        self.agentsAvailable = QTreeWidget(self)
-        self.agentsAvailable.setIndentation(10)
-        self.labelsAvail = [ self.tr("Installed") ]
-        self.agentsAvailable.setHeaderLabels(self.labelsAvail)
+        # self.deployBox = QGroupBox("Default agents")
+        # self.agentsAvailable = QTreeWidget(self)
+        # self.agentsAvailable.setIndentation(10)
+        # self.labelsAvail = [ self.tr("Installed") ]
+        # self.agentsAvailable.setHeaderLabels(self.labelsAvail)
 
         self.runningBox = QGroupBox("Running")
         self.agentsRegistered = QTreeWidget(self)
         self.agentsRegistered.setIndentation(10)
         self.runningDockToolbar = QToolBar(self)
         self.runningDockToolbar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
-        self.availDockToolbar = QToolBar(self)
-        self.availDockToolbar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
+        # self.availDockToolbar = QToolBar(self)
+        # self.availDockToolbar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
 
         self.labels = [ self.tr("Name"), self.tr("Running on address"), 
                         self.tr("Started at"), self.tr("Type"), 
@@ -217,12 +217,12 @@ class WAgents(QWidget, Logger.ClassLogger):
         self.agentsRegistered.setColumnWidth(3, 70)
         self.agentsRegistered.setContextMenuPolicy(Qt.CustomContextMenu)
 
-        self.agentsDefault = QTreeWidget(self)
-        self.agentsDefault.setIndentation(10)
-        self.labelsDefault = [ self.tr("Enabled"), self.tr("Name"), self.tr("Type"), self.tr("Description") ]
-        self.agentsDefault.setHeaderLabels(self.labelsDefault)
-        self.agentsDefault.setContextMenuPolicy(Qt.CustomContextMenu)
-        self.agentsDefault.setColumnWidth(1, 180)
+        # self.agentsDefault = QTreeWidget(self)
+        # self.agentsDefault.setIndentation(10)
+        # self.labelsDefault = [ self.tr("Enabled"), self.tr("Name"), self.tr("Type"), self.tr("Description") ]
+        # self.agentsDefault.setHeaderLabels(self.labelsDefault)
+        # self.agentsDefault.setContextMenuPolicy(Qt.CustomContextMenu)
+        # self.agentsDefault.setColumnWidth(1, 180)
 
         layoutRunning = QVBoxLayout()
         layoutRunning.addWidget(self.runningDockToolbar)
@@ -239,44 +239,44 @@ class WAgents(QWidget, Logger.ClassLogger):
         self.agentTypeEdit.setSizePolicy( QSizePolicy.Expanding, QSizePolicy.Fixed )
         self.agentTypeEdit.setEnabled(False)
         
-        self.agentDescrInstalledEdit = QTextEdit('')
-        self.agentDescrInstalledEdit.setEnabled(False)
+        # self.agentDescrInstalledEdit = QTextEdit('')
+        # self.agentDescrInstalledEdit.setEnabled(False)
         
         self.checkAutoStartOption = QCheckBox()
         self.checkStartNowOption = QCheckBox()
 
-        paramLayout = QGridLayout()
-        paramLayout.addWidget(QLabel("Type:"), 0, 0, Qt.AlignRight)
-        paramLayout.addWidget(self.agentTypeEdit, 0, 1)
-        paramLayout.addWidget(QLabel("Name:"), 1, 0, Qt.AlignRight)
-        paramLayout.addWidget(self.agentNameEdit, 1, 1)
-        paramLayout.addWidget(QLabel("Description:"), 2, 0, Qt.AlignRight)
-        paramLayout.addWidget(self.agentDescEdit, 2, 1)
-        paramLayout.addWidget(QLabel("Startup on boot:"), 3, 0, Qt.AlignRight)
-        paramLayout.addWidget(self.checkAutoStartOption, 3, 1)
-        paramLayout.addWidget(QLabel("Start now:"), 4, 0, Qt.AlignRight)
-        paramLayout.addWidget(self.checkStartNowOption, 4, 1)
+        # paramLayout = QGridLayout()
+        # paramLayout.addWidget(QLabel("Type:"), 0, 0, Qt.AlignRight)
+        # paramLayout.addWidget(self.agentTypeEdit, 0, 1)
+        # paramLayout.addWidget(QLabel("Name:"), 1, 0, Qt.AlignRight)
+        # paramLayout.addWidget(self.agentNameEdit, 1, 1)
+        # paramLayout.addWidget(QLabel("Description:"), 2, 0, Qt.AlignRight)
+        # paramLayout.addWidget(self.agentDescEdit, 2, 1)
+        # paramLayout.addWidget(QLabel("Startup on boot:"), 3, 0, Qt.AlignRight)
+        # paramLayout.addWidget(self.checkAutoStartOption, 3, 1)
+        # paramLayout.addWidget(QLabel("Start now:"), 4, 0, Qt.AlignRight)
+        # paramLayout.addWidget(self.checkStartNowOption, 4, 1)
         
         layoutLeft = QVBoxLayout()
 
-        layoutAvail = QHBoxLayout()
-        layoutAvail.addWidget(self.agentsAvailable)
-        layoutAvail.addWidget(self.agentDescrInstalledEdit)
+        # layoutAvail = QHBoxLayout()
+        # layoutAvail.addWidget(self.agentsAvailable)
+        # layoutAvail.addWidget(self.agentDescrInstalledEdit)
         
-        layoutLeft.addLayout(layoutAvail)
+        # layoutLeft.addLayout(layoutAvail)
         layoutLeft.addWidget(self.runningBox)
 
-        layoutDeploy = QVBoxLayout()
-        layoutDeploy.addWidget(self.availDockToolbar)
-        layoutDeploy.addLayout(paramLayout)
-        layoutDeploy.addWidget(self.agentsDefault)
-        self.deployBox.setLayout(layoutDeploy)
+        # layoutDeploy = QVBoxLayout()
+        # layoutDeploy.addWidget(self.availDockToolbar)
+        # layoutDeploy.addLayout(paramLayout)
+        # layoutDeploy.addWidget(self.agentsDefault)
+        # self.deployBox.setLayout(layoutDeploy)
 
-        layoutRight = QVBoxLayout()
-        layoutRight.addWidget(self.deployBox)   
+        # layoutRight = QVBoxLayout()
+        # layoutRight.addWidget(self.deployBox)   
 
         layout.addLayout(layoutLeft)
-        layout.addLayout(layoutRight)
+        # layout.addLayout(layoutRight)
         self.setLayout(layout)
 
     def createConnections (self):
@@ -287,10 +287,10 @@ class WAgents(QWidget, Logger.ClassLogger):
         self.agentsRegistered.currentItemChanged.connect(self.currentItemChanged)
         self.agentsRegistered.itemClicked.connect(self.itemClicked)
 
-        self.agentsAvailable.currentItemChanged.connect(self.currentItemChanged)
+        # self.agentsAvailable.currentItemChanged.connect(self.currentItemChanged)
 
-        self.agentsDefault.currentItemChanged.connect(self.currentItemChanged)
-        self.agentsDefault.customContextMenuRequested.connect(self.onPopupMenuDefault)
+        # self.agentsDefault.currentItemChanged.connect(self.currentItemChanged)
+        # self.agentsDefault.customContextMenuRequested.connect(self.onPopupMenuDefault)
 
     def createActions (self):
         """
@@ -304,20 +304,20 @@ class WAgents(QWidget, Logger.ClassLogger):
         """
         self.stopAction = QtHelper.createAction(self, "&Stop", self.stopAgent, 
                                                 tip = 'Stop agent', icon = QIcon(":/act-stop.png"))
-        self.startAction = QtHelper.createAction(self, "&Add / Start", self.startAgent, 
-                                                 tip = 'Add default agent', icon = QIcon(":/probe-add.png"))
-        self.delAgentAction = QtHelper.createAction(self, "&Delete", self.delAgent, 
-                                                    tip = 'Delete default agent', icon = QIcon(":/probe-del.png"))
-        self.cancelAction = QtHelper.createAction(self, "&Clear", self.resetAgent, 
-                                                  tip = 'Clear fields', icon = QIcon(":/clear.png") )
+        # self.startAction = QtHelper.createAction(self, "&Add / Start", self.startAgent, 
+                                                 # tip = 'Add default agent', icon = QIcon(":/probe-add.png"))
+        # self.delAgentAction = QtHelper.createAction(self, "&Delete", self.delAgent, 
+                                                    # tip = 'Delete default agent', icon = QIcon(":/probe-del.png"))
+        # self.cancelAction = QtHelper.createAction(self, "&Clear", self.resetAgent, 
+                                                  # tip = 'Clear fields', icon = QIcon(":/clear.png") )
         self.refreshRunningAction = QtHelper.createAction(self, "&Refresh", 
                                                           self.refreshRunningAgent, 
                                                           tip = 'Refresh running agents', 
                                                           icon = QIcon(":/act-refresh.png") )
-        self.refreshDefaultAction = QtHelper.createAction(self, "&Refresh", 
-                                                          self.refreshDefaultAgent, 
-                                                          tip = 'Refresh default agents', 
-                                                          icon = QIcon(":/act-refresh.png") )
+        # self.refreshDefaultAction = QtHelper.createAction(self, "&Refresh", 
+                                                          # self.refreshDefaultAgent, 
+                                                          # tip = 'Refresh default agents', 
+                                                          # icon = QIcon(":/act-refresh.png") )
 
     def createToolbar(self):
         """
@@ -334,15 +334,15 @@ class WAgents(QWidget, Logger.ClassLogger):
         self.runningDockToolbar.addSeparator()
         self.runningDockToolbar.setIconSize(QSize(16, 16))
 
-        self.availDockToolbar.setObjectName("Installed agent toolbar")
-        self.availDockToolbar.addAction(self.refreshDefaultAction)
-        self.availDockToolbar.addSeparator()
-        self.availDockToolbar.addAction(self.startAction)
-        self.availDockToolbar.addAction(self.delAgentAction)
-        self.availDockToolbar.addSeparator()
-        self.availDockToolbar.addAction(self.cancelAction)
-        self.availDockToolbar.addSeparator()
-        self.availDockToolbar.setIconSize(QSize(16, 16))
+        # self.availDockToolbar.setObjectName("Installed agent toolbar")
+        # self.availDockToolbar.addAction(self.refreshDefaultAction)
+        # self.availDockToolbar.addSeparator()
+        # self.availDockToolbar.addAction(self.startAction)
+        # self.availDockToolbar.addAction(self.delAgentAction)
+        # self.availDockToolbar.addSeparator()
+        # self.availDockToolbar.addAction(self.cancelAction)
+        # self.availDockToolbar.addSeparator()
+        # self.availDockToolbar.setIconSize(QSize(16, 16))
 
     def itemClicked(self, currentItem):
         """
@@ -367,23 +367,23 @@ class WAgents(QWidget, Logger.ClassLogger):
         @type previousItem: 
         """
         if currentItem is not None:
-            if isinstance( currentItem, AgentInstalledItem ):
-                self.itemCurrentInstalled = currentItem
-                if 'description' in currentItem.dataAgent:
-                    self.agentDescrInstalledEdit.setText( currentItem.dataAgent['description'] )
-                    self.agentTypeEdit.setText( currentItem.dataAgent['type'] )
-                else:
-                    self.agentDescrInstalledEdit.setText( '' )
-            elif isinstance( currentItem, AgentItem ):
+            # if isinstance( currentItem, AgentInstalledItem ):
+                # self.itemCurrentInstalled = currentItem
+                # if 'description' in currentItem.dataAgent:
+                    # self.agentDescrInstalledEdit.setText( currentItem.dataAgent['description'] )
+                    # self.agentTypeEdit.setText( currentItem.dataAgent['type'] )
+                # else:
+                    # self.agentDescrInstalledEdit.setText( '' )
+            if isinstance( currentItem, AgentItem ):
                 self.itemCurrentRunning = currentItem
                 self.stopAction.setEnabled(True)
-            elif isinstance( currentItem, AgentDefaultItem ):
-                self.itemCurrentDefault = currentItem
-                self.delAgentAction.setEnabled(True)
+            # elif isinstance( currentItem, AgentDefaultItem ):
+                # self.itemCurrentDefault = currentItem
+                # self.delAgentAction.setEnabled(True)
             else:
                 self.stopAction.setEnabled(False)
-                self.delAgentAction.setEnabled(False)
-                self.agentDescrInstalledEdit.setText( '' )
+                # self.delAgentAction.setEnabled(False)
+                # self.agentDescrInstalledEdit.setText( '' )
 
     def onPopupMenu(self, pos):
         """
@@ -399,26 +399,26 @@ class WAgents(QWidget, Logger.ClassLogger):
             self.menu.addAction( "Stop...", self.stopAgent)
             self.menu.popup(self.agentsRegistered.mapToGlobal(pos))
 
-    def onPopupMenuDefault(self, pos):
-        """
-        Display menu on right click
+    # def onPopupMenuDefault(self, pos):
+        # """
+        # Display menu on right click
 
-        @param pos: 
-        @type pos:
-        """
-        self.menu = QMenu()
-        item = self.agentsDefault.itemAt(pos)
-        if item:
-            self.itemCurrentDefault = item
-            self.menu.addAction( "Delete...", self.delAgent)
-            self.menu.popup(self.agentsDefault.mapToGlobal(pos))
+        # @param pos: 
+        # @type pos:
+        # """
+        # self.menu = QMenu()
+        # item = self.agentsDefault.itemAt(pos)
+        # if item:
+            # self.itemCurrentDefault = item
+            # self.menu.addAction( "Delete...", self.delAgent)
+            # self.menu.popup(self.agentsDefault.mapToGlobal(pos))
 
 
-    def refreshDefaultAgent(self):
-        """
-        Refresh the default list of Agents
-        """
-        RCI.instance().defaultAgents()
+    # def refreshDefaultAgent(self):
+        # """
+        # Refresh the default list of Agents
+        # """
+        # RCI.instance().defaultAgents()
         
     def refreshRunningAgent(self):
         """
@@ -426,19 +426,19 @@ class WAgents(QWidget, Logger.ClassLogger):
         """
         RCI.instance().runningAgents()
 
-    def delAgent(self):
-        """
-        Delete agent
-        """
-        if self.itemCurrentDefault is not None:
-            reply = QMessageBox.question(self, "Stop agent", "Are you sure ?",
-                QMessageBox.Yes | QMessageBox.No )
-            if reply == QMessageBox.Yes:
-                agentName = self.itemCurrentDefault.dataAgent['name']
-                self.delAgentAction.setEnabled(False)
+    # def delAgent(self):
+        # """
+        # Delete agent
+        # """
+        # if self.itemCurrentDefault is not None:
+            # reply = QMessageBox.question(self, "Stop agent", "Are you sure ?",
+                # QMessageBox.Yes | QMessageBox.No )
+            # if reply == QMessageBox.Yes:
+                # agentName = self.itemCurrentDefault.dataAgent['name']
+                # self.delAgentAction.setEnabled(False)
                 
                 # rest call
-                RCI.instance().removeAgent(agentName=agentName)
+                # RCI.instance().removeAgent(agentName=agentName)
 
     def stopAgent(self):
         """
@@ -455,58 +455,58 @@ class WAgents(QWidget, Logger.ClassLogger):
                 # rest call
                 RCI.instance().disconnectAgent(agentName=agentName)
                 
-    def startAgent(self):
-        """
-        Start a new Agent
-        """
+    # def startAgent(self):
+        # """
+        # Start a new Agent
+        # """
         # some checks before
-        if self.agentTypeEdit.text() == '':
-            QMessageBox.information(self, "Add default agent" , "Please select the agent type.")
-            return
-        if self.agentNameEdit.text() == '':
-            QMessageBox.information(self, "Add default agent" , "Agent name is mandatory.")
-            return
-        if not self.checkAutoStartOption.isChecked() and not self.checkStartNowOption.isChecked():
-            QMessageBox.information(self, "Add default agent" , "Select startup option.")
-            return
+        # if self.agentTypeEdit.text() == '':
+            # QMessageBox.information(self, "Add default agent" , "Please select the agent type.")
+            # return
+        # if self.agentNameEdit.text() == '':
+            # QMessageBox.information(self, "Add default agent" , "Agent name is mandatory.")
+            # return
+        # if not self.checkAutoStartOption.isChecked() and not self.checkStartNowOption.isChecked():
+            # QMessageBox.information(self, "Add default agent" , "Select startup option.")
+            # return
             
         # call web services
-        agentType = str( self.agentTypeEdit.text() )
-        agentName = str( self.agentNameEdit.text() )
-        agentDescription =  str( self.agentDescEdit.text() )
-        agentAutoStart = self.checkAutoStartOption.isChecked()
+        # agentType = str( self.agentTypeEdit.text() )
+        # agentName = str( self.agentNameEdit.text() )
+        # agentDescription =  str( self.agentDescEdit.text() )
+        # agentAutoStart = self.checkAutoStartOption.isChecked()
 
-        if not self.checkStartNowOption.isChecked():
-            RCI.instance().addAgent(agentName=agentName, agentType=agentType, 
-                                    agentDescription=agentDescription)
-        else:
-            RCI.instance().connectAgent(agentName=agentName, agentType=agentType, 
-                                        agentDescription=agentDescription, 
-                                        agentBoot=agentAutoStart)
+        # if not self.checkStartNowOption.isChecked():
+            # RCI.instance().addAgent(agentName=agentName, agentType=agentType, 
+                                    # agentDescription=agentDescription)
+        # else:
+            # RCI.instance().connectAgent(agentName=agentName, agentType=agentType, 
+                                        # agentDescription=agentDescription, 
+                                        # agentBoot=agentAutoStart)
                                         
-    def resetAgent(self):
-        """
-        Clear Agent field
-        """
-        self.agentDescrInstalledEdit.setText( '' )
-        self.agentDescEdit.setText( '' )
-        self.agentNameEdit.setText( '' )
-        self.agentTypeEdit.setText( '' )
+    # def resetAgent(self):
+        # """
+        # Clear Agent field
+        # """
+        # self.agentDescrInstalledEdit.setText( '' )
+        # self.agentDescEdit.setText( '' )
+        # self.agentNameEdit.setText( '' )
+        # self.agentTypeEdit.setText( '' )
         
         # clear selection
-        itms = self.agentsAvailable.selectedItems()
-        for i in itms:
-            if i.isSelected():
-                i.setSelected(False)
-        self.itemCurrentInstalled = None
+        # itms = self.agentsAvailable.selectedItems()
+        # for i in itms:
+            # if i.isSelected():
+                # i.setSelected(False)
+        # self.itemCurrentInstalled = None
 
     def active (self):
         """
         Enables QTreeWidget
         """
         self.agentsRegistered.setEnabled(True)
-        self.agentsAvailable.setEnabled(True)
-        self.deployBox.setEnabled(True)
+        # self.agen<tsAvailable.setEnabled(True)
+        # self.deployBox.setEnabled(True)
         self.runningBox.setEnabled(True)
 
         self.refreshRunningAction.setEnabled(True)
@@ -515,35 +515,35 @@ class WAgents(QWidget, Logger.ClassLogger):
         """
         Clears QTreeWidget and disables it
         """
-        self.checkAutoStartOption.setCheckState(Qt.Unchecked) 
-        self.checkStartNowOption.setCheckState(Qt.Unchecked) 
+        # self.checkAutoStartOption.setCheckState(Qt.Unchecked) 
+        # self.checkStartNowOption.setCheckState(Qt.Unchecked) 
 
-        self.agentsAvailable.clear()
-        self.agentDescrInstalledEdit.setText('')
+        # self.agentsAvailable.clear()
+        # self.agentDescrInstalledEdit.setText('')
         
         self.agentsRegistered.clear()
-        self.agentsDefault.clear()
+        # self.agentsDefault.clear()
         self.agents = {}
         
         self.agentsRegistered.setEnabled(False)
-        self.agentsAvailable.setEnabled(False)
-        self.deployBox.setEnabled(False)
+        # self.agentsAvailable.setEnabled(False)
+        # self.deployBox.setEnabled(False)
         self.runningBox.setEnabled(False)
 
         # actions
         self.stopAction.setEnabled(False)
-        self.delAgentAction.setEnabled(False)
+        # self.delAgentAction.setEnabled(False)
         self.refreshRunningAction.setEnabled(False)
 
         self.itemCurrentRunning = None
-        self.itemCurrentInstalled = None
-        self.agtsInstalled = None
+        # self.itemCurrentInstalled = None
+        # self.agtsInstalled = None
 
         self.agentDescEdit.setText( '' )
         self.agentTypeEdit.setText( '' )
         self.agentNameEdit.setText( '' )
 
-        self.resetNbAgents()
+        # self.resetNbAgents()
 
     def getRunningAgents(self):
         """
@@ -577,19 +577,19 @@ class WAgents(QWidget, Logger.ClassLogger):
         else:
             return ''
 
-    def loadDefault (self, data):
-        """
-        Loads default Agents
+    # def loadDefault (self, data):
+        # """
+        # Loads default Agents
 
-        @param data: 
-        @type data: dict
-        """
-        self.agentsDefault.clear()
+        # @param data: 
+        # @type data: dict
+        # """
+        # self.agentsDefault.clear()
 
-        for defAgent in data:
-            defAgentItem = AgentDefaultItem( agent = defAgent, parent= self.agentsDefault)
+        # for defAgent in data:
+            # defAgentItem = AgentDefaultItem( agent = defAgent, parent= self.agentsDefault)
 
-    def loadData (self, data, dataInstalled=None):
+    def loadData (self, data):
         """
         Loads Agents
 
@@ -609,16 +609,16 @@ class WAgents(QWidget, Logger.ClassLogger):
             self.agents[agent['id']] = agentItem
 
         # load tests stats
-        if dataInstalled is not None:
-            if len(dataInstalled) == 0:
-                self.deployBox.setEnabled(False)
-                self.agentsAvailable.setEnabled(False)
+        # if dataInstalled is not None:
+            # if len(dataInstalled) == 0:
+                # self.deployBox.setEnabled(False)
+                # self.agentsAvailable.setEnabled(False)
 
-    def resetNbAgents(self, data=None):
-        """
-        Reset the number of agents
-        """
-        pass
+    # def resetNbAgents(self, data=None):
+        # """
+        # Reset the number of agents
+        # """
+        # pass
 
     def refreshData (self, data, action):
         """
@@ -633,32 +633,32 @@ class WAgents(QWidget, Logger.ClassLogger):
         if action == 'del':
             self.agentsRegistered.clear()
             self.agents = {}
-            self.resetNbAgents(data=data)
+            # self.resetNbAgents(data=data)
             self.loadData( data = data )
         elif action == 'add':
-            self.resetNbAgents(data=data)
+            # self.resetNbAgents(data=data)
             self.loadData( data = data )        
         else:
             self.error( 'action unknown: %s' % str(action) )
     
-    def refreshDataDefault(self, data, action):
-        """
-        Refresh Agents
+    # def refreshDataDefault(self, data, action):
+        # """
+        # Refresh Agents
 
-        @param data: 
-        @type data: dict
+        # @param data: 
+        # @type data: dict
 
-        @param action: expected values in 'del' and 'add'
-        @type action: string
-        """
-        if action == 'del':
-            self.agentsDefault.clear()
-            self.loadDefault( data = data )
-        elif action == 'add':
-            self.agentsDefault.clear()
-            self.loadDefault( data = data )     
-        else:
-            self.error( 'action unknown: %s' % str(action) )
+        # @param action: expected values in 'del' and 'add'
+        # @type action: string
+        # """
+        # if action == 'del':
+            # self.agentsDefault.clear()
+            # self.loadDefault( data = data )
+        # elif action == 'add':
+            # self.agentsDefault.clear()
+            # self.loadDefault( data = data )     
+        # else:
+            # self.error( 'action unknown: %s' % str(action) )
 
 AGENTS = None # Singleton
 def instance ():

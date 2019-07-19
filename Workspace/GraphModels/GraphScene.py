@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -1224,12 +1224,14 @@ class GraphAbstract(QWidget, Logger.ClassLogger):
     """
     DataChanged = pyqtSignal()
     AddStep = pyqtSignal()
-    def __init__(self, parent, helper, testParams):
+    def __init__(self, parent, helper, testParams, docViewer=None):
         """
         Constructor
         """
         super(GraphAbstract, self).__init__(parent)
         self.__parent = parent
+        self.docViewer = docViewer
+        
         self.helper = helper
         self.testParams = testParams
         self.itemId = 0
@@ -1244,6 +1246,10 @@ class GraphAbstract(QWidget, Logger.ClassLogger):
         """
         Create widget
         """
+        self.dockToolbarRun = QToolBar(self)
+        self.dockToolbarRun.setStyleSheet("QToolBar { border: 0px }") # remove 3D border
+        self.dockToolbarRun.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        
         self.dockToolbar = QToolBar(self)
         self.dockToolbar.setStyleSheet("QToolBar { border: 0px }") # remove 3D border
         self.dockToolbar.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
@@ -1306,6 +1312,17 @@ class GraphAbstract(QWidget, Logger.ClassLogger):
         font.setBold(True)
         title.setFont(font)
         
+        self.runBox = QGroupBox("Run")
+        self.runBox.setStyleSheet( """
+                                   QGroupBox { font: normal; border: 1px solid silver; border-radius: 2px; } 
+                                   QGroupBox { padding-bottom: 10px; background-color: #FAFAFA; } 
+                                   QGroupBox::title { subcontrol-position: bottom center;}
+                               """ )
+        layoutRunBox = QHBoxLayout()
+        layoutRunBox.addWidget(self.dockToolbarRun)
+        layoutRunBox.setContentsMargins(0,0,0,0)
+        self.runBox.setLayout(layoutRunBox)
+        
         self.drawBox = QGroupBox("Draw")
         self.drawBox.setStyleSheet( """
                                    QGroupBox { font: normal; border: 1px solid silver; border-radius: 2px; } 
@@ -1340,6 +1357,7 @@ class GraphAbstract(QWidget, Logger.ClassLogger):
         self.testBox.setLayout(layoutTestBox)
         
         layoutToolbars = QHBoxLayout()
+        layoutToolbars.addWidget(self.runBox)
         layoutToolbars.addWidget(self.testBox)
         layoutToolbars.addWidget(self.drawBox)
         layoutToolbars.addWidget(self.clipBox)
@@ -1360,6 +1378,13 @@ class GraphAbstract(QWidget, Logger.ClassLogger):
         """
         Create toolbar
         """
+        # self.dockToolbarRun.addWidget(self.pointerButton)
+        if self.docViewer is not None:
+            self.dockToolbarRun.addAction(self.docViewer.runAction)
+            self.dockToolbarRun.addAction(self.docViewer.schedAction)
+            self.dockToolbarRun.addAction(self.docViewer.checkAction)
+        self.dockToolbarRun.setIconSize(QSize(16, 16))
+        
         self.dockToolbar.addWidget(self.pointerButton)
         self.dockToolbar.addWidget(self.linePointerButton)
         self.dockToolbar.addSeparator()

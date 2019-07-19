@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -389,8 +389,8 @@ class RunsDialog(QtHelper.EnhancedQDialog):
             testItem.setIcon(QIcon(":/tpx.png"))
         if testName.endswith(self.rRepo.EXTENSION_TGX):
             testItem.setIcon(QIcon(":/tgx.png"))
-        if testName.endswith(self.rRepo.EXTENSION_TAX):
-            testItem.setIcon(QIcon(":/tax.png"))
+        # if testName.endswith(self.rRepo.EXTENSION_TAX):
+            # testItem.setIcon(QIcon(":/tax.png"))
             
         self.testsList.addItem( testItem )
 

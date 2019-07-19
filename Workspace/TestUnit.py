@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -69,7 +69,8 @@ class WTestUnit(Document.WDocument):
     TEST_EXEC_EDITOR = 1
     TEST_UNIT_EDITOR = 2
     def __init__(self, parent = None, path = None, filename = None, extension = None, 
-                        nonameId = None, remoteFile=False, repoDest=None, project=0, isLocked=False):
+                        nonameId = None, remoteFile=False, repoDest=None, 
+                        project=0, isLocked=False):
         """
         Constructs WScript widget
 
@@ -91,6 +92,7 @@ class WTestUnit(Document.WDocument):
         Document.WDocument.__init__(self, parent, path, filename, extension, 
                                     nonameId, remoteFile, repoDest, project, isLocked)
         
+        self.docViewer = parent
         self.srcEditor = None
         
         # prepare model with default value
@@ -98,20 +100,22 @@ class WTestUnit(Document.WDocument):
         defaultTemplates = DefaultTemplates.Templates()
         testdef = defaultTemplates.getTestUnitDefinition()
 
-        if not 'default-library' in Settings.instance().serverContext:
-            if not Settings.instance().offlineMode:
-                QMessageBox.critical(self, "Open" , 
-                                    "Server context incomplete (default library is missing), please to reconnect!")
-            defLibrary = 'v000'
-        else:
-            defLibrary = Settings.instance().serverContext['default-library']
-        if not 'default-adapter' in Settings.instance().serverContext:
-            if not Settings.instance().offlineMode:
-                QMessageBox.critical(self, "Open" , 
-                                    "Server context incomplete (default adapter is missing), please to reconnect!")
-            defAdapter = 'v000'
-        else:
-            defAdapter = Settings.instance().serverContext['default-adapter']
+        defLibrary = 'deprecated'
+        defAdapter = 'deprecated'
+        # if not 'default-library' in Settings.instance().serverContext:
+            # if not Settings.instance().offlineMode:
+                # QMessageBox.critical(self, "Open" , 
+                                    # "Server context incomplete (default library is missing), please to reconnect!")
+            # defLibrary = 'v000'
+        # else:
+            # defLibrary = Settings.instance().serverContext['default-library']
+        # if not 'default-adapter' in Settings.instance().serverContext:
+            # if not Settings.instance().offlineMode:
+                # QMessageBox.critical(self, "Open" , 
+                                    # "Server context incomplete (default adapter is missing), please to reconnect!")
+            # defAdapter = 'v000'
+        # else:
+            # defAdapter = Settings.instance().serverContext['default-adapter']
             
         # new in v17
         defaultTimeout = Settings.instance().readValue( key = 'TestProperties/default-timeout' )
@@ -162,8 +166,11 @@ class WTestUnit(Document.WDocument):
         |       PyEditor        |
         |_______________________|
         """
-        self.srcWidget = EditorWidget( self.TEST_UNIT_EDITOR, "Test Definition:", self, 
-                                    wrappingText=QtHelper.str2bool( Settings.instance().readValue( key = 'Editor/code-wrapping' ) ) )
+        self.srcWidget = EditorWidget( self.TEST_UNIT_EDITOR, 
+                                       "Test Definition:",
+                                       self, 
+                                        wrappingText=QtHelper.str2bool( Settings.instance().readValue( key = 'Editor/code-wrapping' ) ),
+                                       docViewer=self.docViewer )
         self.srcEditor = self.srcWidget.editor
         
         layout = QVBoxLayout()

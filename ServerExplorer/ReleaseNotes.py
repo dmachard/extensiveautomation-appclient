@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -110,13 +110,10 @@ class WServerReleaseNote(QWidget, Logger.ClassLogger):
         """
         QtWidgets creation
         """
-        self.mainTab = QTabWidget()
+        # self.mainTab = QTabWidget()
         mainLayout = QVBoxLayout()
     
-        self.toRead = QLabel( "%s" % "Release notes are specific to each version of the server, SUT adapters, libraries and toolbox. More details on each HISTORY files."  )
-
-        mainLayout.addWidget(self.toRead)
-        mainLayout.addWidget(self.mainTab)
+        self.toRead = QLabel( "%s" % "Release notes of the server."  )
 
         palette = QPalette()
         brush = QBrush(QColor(240, 240, 240))
@@ -132,37 +129,40 @@ class WServerReleaseNote(QWidget, Logger.ClassLogger):
         self.rn.setRootIsDecorated(False)
         self.rn.setPalette(palette)
 
+        mainLayout.addWidget(self.toRead)
+        mainLayout.addWidget(self.rn)
+
         # treewidget for adapter rn
-        self.rnAdp = QTreeWidget(self)
-        self.rnAdp.setHeaderHidden(True)
-        self.rnAdp.setFrameShape(QFrame.NoFrame)
-        self.rnAdp.setSelectionMode(QAbstractItemView.NoSelection)
-        self.rnAdp.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
-        self.rnAdp.setRootIsDecorated(False)
-        self.rnAdp.setPalette(palette)
+        # self.rnAdp = QTreeWidget(self)
+        # self.rnAdp.setHeaderHidden(True)
+        # self.rnAdp.setFrameShape(QFrame.NoFrame)
+        # self.rnAdp.setSelectionMode(QAbstractItemView.NoSelection)
+        # self.rnAdp.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
+        # self.rnAdp.setRootIsDecorated(False)
+        # self.rnAdp.setPalette(palette)
 
         # treewidget for library rn
-        self.rnLibAdp = QTreeWidget(self)
-        self.rnLibAdp.setHeaderHidden(True)
-        self.rnLibAdp.setFrameShape(QFrame.NoFrame)
-        self.rnLibAdp.setSelectionMode(QAbstractItemView.NoSelection)
-        self.rnLibAdp.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
-        self.rnLibAdp.setRootIsDecorated(False)
-        self.rnLibAdp.setPalette(palette)
+        # self.rnLibAdp = QTreeWidget(self)
+        # self.rnLibAdp.setHeaderHidden(True)
+        # self.rnLibAdp.setFrameShape(QFrame.NoFrame)
+        # self.rnLibAdp.setSelectionMode(QAbstractItemView.NoSelection)
+        # self.rnLibAdp.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
+        # self.rnLibAdp.setRootIsDecorated(False)
+        # self.rnLibAdp.setPalette(palette)
         
         # treewidget for agent rn
-        self.rnToolbox = QTreeWidget(self)
-        self.rnToolbox.setHeaderHidden(True)
-        self.rnToolbox.setFrameShape(QFrame.NoFrame)
-        self.rnToolbox.setSelectionMode(QAbstractItemView.NoSelection)
-        self.rnToolbox.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
-        self.rnToolbox.setRootIsDecorated(False)
-        self.rnToolbox.setPalette(palette)
+        # self.rnToolbox = QTreeWidget(self)
+        # self.rnToolbox.setHeaderHidden(True)
+        # self.rnToolbox.setFrameShape(QFrame.NoFrame)
+        # self.rnToolbox.setSelectionMode(QAbstractItemView.NoSelection)
+        # self.rnToolbox.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
+        # self.rnToolbox.setRootIsDecorated(False)
+        # self.rnToolbox.setPalette(palette)
 
-        self.mainTab.addTab( self.rn, Settings.instance().readValue( key = 'Common/acronym-server' )  )
-        self.mainTab.addTab( self.rnAdp, "Sut Adapters" )
-        self.mainTab.addTab( self.rnLibAdp, "Sut Librairies" )
-        self.mainTab.addTab( self.rnToolbox, "Toolbox" )
+        # self.mainTab.addTab( self.rn, Settings.instance().readValue( key = 'Common/acronym-server' )  )
+        # self.mainTab.addTab( self.rnAdp, "Sut Adapters" )
+        # self.mainTab.addTab( self.rnLibAdp, "Sut Librairies" )
+        # self.mainTab.addTab( self.rnToolbox, "Toolbox" )
 
         self.setLayout(mainLayout)
 
@@ -172,9 +172,9 @@ class WServerReleaseNote(QWidget, Logger.ClassLogger):
         Active all qwidget
         """
         self.rn.setEnabled(True)
-        self.rnAdp.setEnabled(True)
-        self.rnLibAdp.setEnabled(True)
-        self.rnToolbox.setEnabled(True)
+        # self.rnAdp.setEnabled(True)
+        # self.rnLibAdp.setEnabled(True)
+        # self.rnToolbox.setEnabled(True)
 
     def deactivate (self):
         """
@@ -183,14 +183,14 @@ class WServerReleaseNote(QWidget, Logger.ClassLogger):
         self.rn.clear()
         self.rn.setEnabled(False)
         
-        self.rnAdp.clear()
-        self.rnAdp.setEnabled(False)
+        # self.rnAdp.clear()
+        # self.rnAdp.setEnabled(False)
 
-        self.rnLibAdp.clear()
-        self.rnLibAdp.setEnabled(False)
+        # self.rnLibAdp.clear()
+        # self.rnLibAdp.setEnabled(False)
         
-        self.rnToolbox.clear()
-        self.rnToolbox.setEnabled(False)
+        # self.rnToolbox.clear()
+        # self.rnToolbox.setEnabled(False)
 
     def loadData (self, data, dataAdp, dataLibAdp, dataToolbox):
         """
@@ -209,37 +209,37 @@ class WServerReleaseNote(QWidget, Logger.ClassLogger):
         self.constructItem(parent=self.rn, data= data )
 
         # load adapters rn
-        if not len(dataAdp): # dataAdp is false then adapters are not installed on the server
-            emptyItem = KeyItem( key = b"", parent = self.rnAdp, type = 0)
-            notInstalledItem = KeyItem( key = b"   Package adapters not installed on server", 
-                                        parent = self.rnAdp, type = 1)
-        else:
-            try:
-                self.constructItem(parent=self.rnAdp, data=dataAdp )
-            except Exception as e:
-                self.error( e )
+        # if not len(dataAdp): # dataAdp is false then adapters are not installed on the server
+            # emptyItem = KeyItem( key = b"", parent = self.rnAdp, type = 0)
+            # notInstalledItem = KeyItem( key = b"   Package adapters not installed on server", 
+                                        # parent = self.rnAdp, type = 1)
+        # else:
+            # try:
+                # self.constructItem(parent=self.rnAdp, data=dataAdp )
+            # except Exception as e:
+                # self.error( e )
 
         # load libraries rn
-        if not len(dataLibAdp): # dataLibAdp is false then libraries are not installed on the server
-            emptyItem = KeyItem( key = b"", parent = self.rnLibAdp, type = 0)
-            notInstalledItem = KeyItem( key = b"   Package libraries not installed on server", 
-                                        parent = self.rnLibAdp, type = 1)
-        else:
-            try:
-                self.constructItem(parent=self.rnLibAdp, data=dataLibAdp )
-            except Exception as e:
-                self.error( e )
+        # if not len(dataLibAdp): # dataLibAdp is false then libraries are not installed on the server
+            # emptyItem = KeyItem( key = b"", parent = self.rnLibAdp, type = 0)
+            # notInstalledItem = KeyItem( key = b"   Package libraries not installed on server", 
+                                        # parent = self.rnLibAdp, type = 1)
+        # else:
+            # try:
+                # self.constructItem(parent=self.rnLibAdp, data=dataLibAdp )
+            # except Exception as e:
+                # self.error( e )
                 
         # load toolbox rn
-        if not len(dataToolbox): # dataToolbox is false then toolbox are not installed on the server
-            emptyItem = KeyItem( key = b"", parent = self.rnToolbox, type = 0)
-            notInstalledItem = KeyItem( key = b"   Package toolbox not installed on server", 
-                                        parent = self.rnToolbox, type = 1)
-        else:
-            try:
-                self.constructItem(parent=self.rnToolbox, data=dataToolbox )
-            except Exception as e:
-                self.error( e )
+        # if not len(dataToolbox): # dataToolbox is false then toolbox are not installed on the server
+            # emptyItem = KeyItem( key = b"", parent = self.rnToolbox, type = 0)
+            # notInstalledItem = KeyItem( key = b"   Package toolbox not installed on server", 
+                                        # parent = self.rnToolbox, type = 1)
+        # else:
+            # try:
+                # self.constructItem(parent=self.rnToolbox, data=dataToolbox )
+            # except Exception as e:
+                # self.error( e )
 
     def constructItem (self, parent, data):
         """

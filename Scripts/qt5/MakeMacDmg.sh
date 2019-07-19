@@ -20,7 +20,7 @@
 # MA 02110-1301 USA
 # -------------------------------------------------------------------
 
-VERSION=18.0.0
+VERSION=20.0.0
 
 echo "Build App Client for Mac"
 python3 ../../BuildMac.py py2app

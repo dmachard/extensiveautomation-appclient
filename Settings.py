@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -100,17 +100,17 @@ class RepositoriesWidget(QWidget, Logger.ClassLogger):
         # repositories setting
         viewGroup = QGroupBox(self.tr('Default View'))
         self.reposComboBox = QComboBox(self)
-        self.reposComboBox.addItem("Local Tests")
+        # self.reposComboBox.addItem("Local Tests")
         self.reposComboBox.addItem("Remote Tests")
         self.reposComboBox.addItem("Adapters")
-        self.reposComboBox.addItem("Libraries")
+        # self.reposComboBox.addItem("Libraries")
         self.reposComboBox.setCurrentIndex( int(instance().readValue( key = 'Repositories/default-repo-test' )) )
 
         self.reposDevComboBox = QComboBox(self)
-        self.reposDevComboBox.addItem("Local Tests")
+        # self.reposDevComboBox.addItem("Local Tests")
         self.reposDevComboBox.addItem("Remote Tests")
         self.reposDevComboBox.addItem("Adapters")
-        self.reposDevComboBox.addItem("Libraries")
+        # self.reposDevComboBox.addItem("Libraries")
         self.reposDevComboBox.setCurrentIndex( int(instance().readValue( key = 'Repositories/default-repo-dev' )) )
         
         optsDfltLayout = QGridLayout()
@@ -121,27 +121,27 @@ class RepositoriesWidget(QWidget, Logger.ClassLogger):
         viewGroup.setLayout(optsDfltLayout)
         
         # local repository setting
-        localGroup = QGroupBox(self.tr('Local Repository Location'))
-        self.repoPathSetting = instance().readValue( key = 'Repositories/local-repo' )
-        self.currentRepoFolder = QLabel( self.tr("Current Folder: ") + "%s" % self.repoPathSetting )
-        self.repoActiveCheckBox = QCheckBox( "%s\n%s" % (self.tr("Set the default local repository location to save"),
-                                                    self.tr("your tests files."))  )
-        self.localRepositoryButton = QPushButton(self.tr("Browse..."))
-        self.localRepositoryButton.setEnabled(False)
-        if self.repoPathSetting != "Undefined":
-            self.repoActiveCheckBox.setChecked(True)
-            self.localRepositoryButton.setEnabled(True)
+        # localGroup = QGroupBox(self.tr('Local Repository Location'))
+        # self.repoPathSetting = instance().readValue( key = 'Repositories/local-repo' )
+        # self.currentRepoFolder = QLabel( self.tr("Current Folder: ") + "%s" % self.repoPathSetting )
+        # self.repoActiveCheckBox = QCheckBox( "%s\n%s" % (self.tr("Set the default local repository location to save"),
+                                                    # self.tr("your tests files."))  )
+        # self.localRepositoryButton = QPushButton(self.tr("Browse..."))
+        # self.localRepositoryButton.setEnabled(False)
+        # if self.repoPathSetting != "Undefined":
+            # self.repoActiveCheckBox.setChecked(True)
+            # self.localRepositoryButton.setEnabled(True)
         
-        optionsLayout = QVBoxLayout()
-        optionsLayout.addWidget( QLabel( "%s" % self.tr('Warning: use the remote repository for all features!') ) )
-        optionsLayout.addWidget(self.repoActiveCheckBox)
-        optionsLayout.addWidget(self.localRepositoryButton)
-        optionsLayout.addWidget(self.currentRepoFolder)
-        localGroup.setLayout(optionsLayout)
+        # optionsLayout = QVBoxLayout()
+        # optionsLayout.addWidget( QLabel( "%s" % self.tr('Warning: use the remote repository for all features!') ) )
+        # optionsLayout.addWidget(self.repoActiveCheckBox)
+        # optionsLayout.addWidget(self.localRepositoryButton)
+        # optionsLayout.addWidget(self.currentRepoFolder)
+        # localGroup.setLayout(optionsLayout)
 
         # final layout   
         subLayout = QGridLayout()
-        subLayout.addWidget(localGroup, 0, 0)
+        # subLayout.addWidget(localGroup, 0, 0)
         subLayout.addWidget(viewGroup, 0, 1)
         
         mainLayout = QVBoxLayout()
@@ -154,27 +154,28 @@ class RepositoriesWidget(QWidget, Logger.ClassLogger):
         """
         Create pyqt connection
         """
-        self.repoActiveCheckBox.stateChanged.connect(self.enableLocalRepo)
-        self.localRepositoryButton.clicked.connect(self.getLocalPathRepository)
+        pass
+        # self.repoActiveCheckBox.stateChanged.connect(self.enableLocalRepo)
+        # self.localRepositoryButton.clicked.connect(self.getLocalPathRepository)
 
-    def getLocalPathRepository (self):
-        """
-        Returns path repository
-        """
-        options = QFileDialog.DontResolveSymlinks | QFileDialog.ShowDirsOnly
-        directory = QFileDialog.getExistingDirectory(self, self.tr("Settings -> Directory"), "", options)
-        if directory:
-            self.repoPathSetting = directory 
+    # def getLocalPathRepository (self):
+        # """
+        # Returns path repository
+        # """
+        # options = QFileDialog.DontResolveSymlinks | QFileDialog.ShowDirsOnly
+        # directory = QFileDialog.getExistingDirectory(self, self.tr("Settings -> Directory"), "", options)
+        # if directory:
+            # self.repoPathSetting = directory 
 
-    def enableLocalRepo(self, state):
-        """
-        Enable repository
-        """
-        if state != 0:
-            self.localRepositoryButton.setEnabled(True)
-        else:
-            self.localRepositoryButton.setEnabled(False)
-            self.repoPathSetting = "Undefined"
+    # def enableLocalRepo(self, state):
+        # """
+        # Enable repository
+        # """
+        # if state != 0:
+            # self.localRepositoryButton.setEnabled(True)
+        # else:
+            # self.localRepositoryButton.setEnabled(False)
+            # self.repoPathSetting = "Undefined"
             
     def saveSettings(self):
         """
@@ -185,7 +186,7 @@ class RepositoriesWidget(QWidget, Logger.ClassLogger):
         newRepoDev = "%s" % self.reposDevComboBox.currentIndex()
 
         # save it
-        instance().setValue( key = 'Repositories/local-repo', value = self.repoPathSetting )
+        # instance().setValue( key = 'Repositories/local-repo', value = self.repoPathSetting )
         instance().setValue( key = 'Repositories/default-repo-test', value = newRepoTest )
         instance().setValue( key = 'Repositories/default-repo-dev', value = newRepoDev )
 
@@ -303,9 +304,9 @@ class TestsWritingWidget(QWidget, Logger.ClassLogger):
         if QtHelper.str2bool(instance().readValue( key = 'TestProperties/show-on-opening' )):  
             self.showOpeningCheckBox.setChecked(True)
         
-        self.outputsCheckBox = QCheckBox(self.tr("Outputs enabled"))
-        if QtHelper.str2bool(instance().readValue( key = 'TestProperties/outputs-enabled' )):  
-            self.outputsCheckBox.setChecked(True)
+        # self.outputsCheckBox = QCheckBox(self.tr("Outputs enabled"))
+        # if QtHelper.str2bool(instance().readValue( key = 'TestProperties/outputs-enabled' )):  
+            # self.outputsCheckBox.setChecked(True)
             
         optionsLayout = QVBoxLayout()
         optionsLayout.addWidget(self.inputsAsDefaultCheckBox)
@@ -313,7 +314,7 @@ class TestsWritingWidget(QWidget, Logger.ClassLogger):
         optionsLayout.addWidget(self.sortAutoCheckBox)
         optionsLayout.addWidget(self.hideDescrCheckBox)
         optionsLayout.addWidget(self.showOpeningCheckBox)
-        optionsLayout.addWidget(self.outputsCheckBox)
+        # optionsLayout.addWidget(self.outputsCheckBox)
         propertiesGroup.setLayout(optionsLayout)
         
         # colors 
@@ -484,7 +485,7 @@ class TestsWritingWidget(QWidget, Logger.ClassLogger):
         renameAuto = False
         sortAuto = False
         defaultTab = False
-        outputsEnabled = False
+        # outputsEnabled = False
         hideDescr = False
         showOpening = False
         
@@ -512,7 +513,7 @@ class TestsWritingWidget(QWidget, Logger.ClassLogger):
         if self.sortAutoCheckBox.checkState() : sortAuto = True
         if self.hideDescrCheckBox.checkState() : hideDescr = True
         if self.showOpeningCheckBox.checkState() : showOpening = True
-        if self.outputsCheckBox.checkState() :  outputsEnabled = True
+        # if self.outputsCheckBox.checkState() :  outputsEnabled = True
         
         if self.codeWrappingCheckBox.checkState() :  codeWrapping = True
         if self.codeFoldingCheckBox.checkState() :  codeFolding = True
@@ -552,7 +553,7 @@ class TestsWritingWidget(QWidget, Logger.ClassLogger):
         instance().setValue( key = 'TestPlan/hide-run-column', value = "%s" % hideTpRunColumn )
         instance().setValue( key = 'TestPlan/open-doubleclick', value = "%s" % openDoubleClick )
         
-        instance().setValue( key = 'TestProperties/outputs-enabled', value = "%s" % outputsEnabled )
+        # instance().setValue( key = 'TestProperties/outputs-enabled', value = "%s" % outputsEnabled )
         instance().setValue( key = 'TestProperties/inputs-default-tab', value = "%s" % defaultTab )
         instance().setValue( key = 'TestProperties/parameters-rename-auto', value = "%s" % renameAuto)
         instance().setValue( key = 'TestProperties/parameters-sort-auto', value = "%s" % sortAuto)
@@ -1165,11 +1166,11 @@ class ModulesTemplatesWidget(QWidget, Logger.ClassLogger):
         self.adpTplDefEdit.setFixedHeight(500)
         
         # library
-        self.libTplDefEdit = QtHelper.RawPythonEditor(parent=self)
+        # self.libTplDefEdit = QtHelper.RawPythonEditor(parent=self)
 
         # add tab to main
         self.mainTab.addTab( self.adpTplDefEdit, self.tr('Adapter') )
-        self.mainTab.addTab( self.libTplDefEdit, self.tr('Library') )
+        # self.mainTab.addTab( self.libTplDefEdit, self.tr('Library') )
         
         # final layout
         mainLayout = QVBoxLayout()
@@ -1183,14 +1184,14 @@ class ModulesTemplatesWidget(QWidget, Logger.ClassLogger):
         Load template
         """
         self.adpTplDefEdit.setText( self.defaultTemplates.getAdapter() )
-        self.libTplDefEdit.setText( self.defaultTemplates.getLibrary() )
+        # self.libTplDefEdit.setText( self.defaultTemplates.getLibrary() )
 
     def saveTemplates(self):
         """
         Save template
         """
         self.defaultTemplates.setAdapter( data=str( self.adpTplDefEdit.toPlainText() ) )
-        self.defaultTemplates.setLibrary( data=str( self.libTplDefEdit.toPlainText() ) )
+        # self.defaultTemplates.setLibrary( data=str( self.libTplDefEdit.toPlainText() ) )
 
     def saveSettings(self):
         """

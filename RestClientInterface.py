@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -79,15 +79,15 @@ REPO_ADAPTERS                       =   1
 REPO_TESTS_LOCAL                    =   2
 REPO_UNDEFINED                      =   3
 REPO_ARCHIVES                       =   4
-REPO_LIBRARIES                      =   5
+# REPO_LIBRARIES                      =   5
 
 REPO_TYPES_DICT =   {
                         REPO_TESTS          :   'remote-tests',
                         REPO_ADAPTERS       :   'remote-adapters',
-                        REPO_TESTS_LOCAL    :   'local-tests',
+                        # REPO_TESTS_LOCAL    :   'local-tests',
                         REPO_UNDEFINED      :   'undefined',
                         REPO_ARCHIVES       :   'archives',
-                        REPO_LIBRARIES      :   'remote-libraries'
+                        # REPO_LIBRARIES      :   'remote-libraries'
                     }
                     
 RIGHTS_ADMIN                =   "Administrator"
@@ -143,7 +143,7 @@ CMD_PROBES_CONNECT              =   "/probes/connect"
 CMD_PROBES_ADD                  =   "/probes/add"
 CMD_PROBES_REMOVE               =   "/probes/remove"
 
-CMD_TESTS_UNLOCK_ALL            =   "/tests/file/unlock/all"
+# CMD_TESTS_UNLOCK_ALL            =   "/tests/file/unlock/all"
 CMD_TESTS_BUILD                 =   "/tests/build/samples"
 CMD_TESTS_BACKUP                =   "/tests/backup"
 CMD_TESTS_BACKUP_REMOVE_ALL     =   "/tests/backup/remove/all"
@@ -165,10 +165,10 @@ CMD_TESTS_FILE_REMOVE           =   "/tests/file/remove"
 CMD_TESTS_FOLDER_REMOVE         =   "/tests/directory/remove"
 CMD_TESTS_FOLDER_REMOVE_ALL     =   "/tests/directory/remove/all"
 CMD_TESTS_FOLDER_ADD            =   "/tests/directory/add"
-CMD_TESTS_SNAPSHOT_ADD          =   "/tests/snapshot/add"
-CMD_TESTS_SNAPSHOT_REMOVE       =   "/tests/snapshot/remove"
-CMD_TESTS_SNAPSHOT_REMOVE_ALL   =   "/tests/snapshot/remove/all"
-CMD_TESTS_SNAPSHOT_RESTORE      =   "/tests/snapshot/restore"
+# CMD_TESTS_SNAPSHOT_ADD          =   "/tests/snapshot/add"
+# CMD_TESTS_SNAPSHOT_REMOVE       =   "/tests/snapshot/remove"
+# CMD_TESTS_SNAPSHOT_REMOVE_ALL   =   "/tests/snapshot/remove/all"
+# CMD_TESTS_SNAPSHOT_RESTORE      =   "/tests/snapshot/restore"
 CMD_TESTS_FILE_UNLOCK           =   "/tests/file/unlock"
 CMD_TESTS_FILE_OPEN             =   "/tests/file/open"
 CMD_TESTS_FILE_UPLOAD           =   "/tests/file/upload"
@@ -177,33 +177,33 @@ CMD_TESTS_SCHEDULE              =   "/tests/schedule"
 CMD_TESTS_SCHEDULE_TPG          =   "/tests/schedule/tpg"
 CMD_TESTS_SCHEDULE_GROUP        =   "/tests/schedule/group"
 
-CMD_LIBRARIES_UNLOCK_ALL        =   "/libraries/file/unlock/all"
-CMD_LIBRARIES_BUILD             =   "/libraries/build"
-CMD_LIBRARIES_SYNTAX_ALL        =   "/libraries/check/syntax/all"
-CMD_LIBRARIES_SYNTAX            =   "/libraries/check/syntax"
-CMD_LIBRARIES_PACKAGE_ADD       =   "/libraries/package/add"
-CMD_LIBRARIES_LIB_ADD           =   "/libraries/library/add"
-CMD_LIBRARIES_DEFAULT           =   "/libraries/package/default"
-CMD_LIBRARIES_GENERIC           =   "/libraries/package/generic"
-CMD_LIBRARIES_BACKUP            =   "/libraries/backup"
-CMD_LIBRARIES_BACKUP_REMOVE_ALL =   "/libraries/backup/remove/all"
-CMD_LIBRARIES_BACKUP_DOWNLOAD   =   "/libraries/backup/download"
-CMD_LIBRARIES_RESET             =   "/libraries/reset"
-CMD_LIBRARIES_STATISTICS        =   "/libraries/statistics"
-CMD_LIBRARIES_LISTING           =   "/libraries/listing"
-CMD_LIBRARIES_FILE_MOVE         =   "/libraries/file/move"
-CMD_LIBRARIES_FOLDER_MOVE       =   "/libraries/directory/move"
-CMD_LIBRARIES_FILE_RENAME       =   "/libraries/file/rename"
-CMD_LIBRARIES_FOLDER_RENAME     =   "/libraries/directory/rename"
-CMD_LIBRARIES_FILE_DUPLICATE    =   "/libraries/file/duplicate"
-CMD_LIBRARIES_FOLDER_DUPLICATE  =   "/libraries/directory/duplicate"
-CMD_LIBRARIES_FILE_REMOVE       =   "/libraries/file/remove"
-CMD_LIBRARIES_FOLDER_REMOVE     =   "/libraries/directory/remove"
-CMD_LIBRARIES_FOLDER_REMOVE_ALL =   "/libraries/directory/remove/all"
-CMD_LIBRARIES_FOLDER_ADD        =   "/libraries/directory/add"
-CMD_LIBRARIES_FILE_UNLOCK       =   "/libraries/file/unlock"
-CMD_LIBRARIES_FILE_OPEN         =   "/libraries/file/open"
-CMD_LIBRARIES_FILE_UPLOAD       =   "/libraries/file/upload"
+# CMD_LIBRARIES_UNLOCK_ALL        =   "/libraries/file/unlock/all"
+# CMD_LIBRARIES_BUILD             =   "/libraries/build"
+# CMD_LIBRARIES_SYNTAX_ALL        =   "/libraries/check/syntax/all"
+# CMD_LIBRARIES_SYNTAX            =   "/libraries/check/syntax"
+# CMD_LIBRARIES_PACKAGE_ADD       =   "/libraries/package/add"
+# CMD_LIBRARIES_LIB_ADD           =   "/libraries/library/add"
+# CMD_LIBRARIES_DEFAULT           =   "/libraries/package/default"
+# CMD_LIBRARIES_GENERIC           =   "/libraries/package/generic"
+# CMD_LIBRARIES_BACKUP            =   "/libraries/backup"
+# CMD_LIBRARIES_BACKUP_REMOVE_ALL =   "/libraries/backup/remove/all"
+# CMD_LIBRARIES_BACKUP_DOWNLOAD   =   "/libraries/backup/download"
+# CMD_LIBRARIES_RESET             =   "/libraries/reset"
+# CMD_LIBRARIES_STATISTICS        =   "/libraries/statistics"
+# CMD_LIBRARIES_LISTING           =   "/libraries/listing"
+# CMD_LIBRARIES_FILE_MOVE         =   "/libraries/file/move"
+# CMD_LIBRARIES_FOLDER_MOVE       =   "/libraries/directory/move"
+# CMD_LIBRARIES_FILE_RENAME       =   "/libraries/file/rename"
+# CMD_LIBRARIES_FOLDER_RENAME     =   "/libraries/directory/rename"
+# CMD_LIBRARIES_FILE_DUPLICATE    =   "/libraries/file/duplicate"
+# CMD_LIBRARIES_FOLDER_DUPLICATE  =   "/libraries/directory/duplicate"
+# CMD_LIBRARIES_FILE_REMOVE       =   "/libraries/file/remove"
+# CMD_LIBRARIES_FOLDER_REMOVE     =   "/libraries/directory/remove"
+# CMD_LIBRARIES_FOLDER_REMOVE_ALL =   "/libraries/directory/remove/all"
+# CMD_LIBRARIES_FOLDER_ADD        =   "/libraries/directory/add"
+# CMD_LIBRARIES_FILE_UNLOCK       =   "/libraries/file/unlock"
+# CMD_LIBRARIES_FILE_OPEN         =   "/libraries/file/open"
+# CMD_LIBRARIES_FILE_UPLOAD       =   "/libraries/file/upload"
 
 CMD_ADAPTERS_UNLOCK_ALL         =   "/adapters/file/unlock/all"
 CMD_ADAPTERS_BUILD              =   "/adapters/build"
@@ -211,13 +211,13 @@ CMD_ADAPTERS_SYNTAX_ALL         =   "/adapters/check/syntax/all"
 CMD_ADAPTERS_SYNTAX             =   "/adapters/check/syntax"
 CMD_ADAPTERS_PACKAGE_ADD        =   "/adapters/package/add"
 CMD_ADAPTERS_ADP_ADD            =   "/adapters/adapter/add"
-CMD_ADAPTERS_ADP_ADD_WSDL_URL   =   "/adapters/adapter/add/by/wsdl/url"
-CMD_ADAPTERS_ADP_ADD_WSDL_FILE  =   "/adapters/adapter/add/by/wsdl/file"
-CMD_ADAPTERS_DEFAULT            =   "/adapters/package/default"
-CMD_ADAPTERS_GENERIC            =   "/adapters/package/generic"
-CMD_ADAPTERS_BACKUP             =   "/adapters/backup"
-CMD_ADAPTERS_BACKUP_REMOVE_ALL  =   "/adapters/backup/remove/all"
-CMD_ADAPTERS_BACKUP_DOWNLOAD    =   "/adapters/backup/download"
+# CMD_ADAPTERS_ADP_ADD_WSDL_URL   =   "/adapters/adapter/add/by/wsdl/url"
+# CMD_ADAPTERS_ADP_ADD_WSDL_FILE  =   "/adapters/adapter/add/by/wsdl/file"
+# CMD_ADAPTERS_DEFAULT            =   "/adapters/package/default"
+# CMD_ADAPTERS_GENERIC            =   "/adapters/package/generic"
+# CMD_ADAPTERS_BACKUP             =   "/adapters/backup"
+# CMD_ADAPTERS_BACKUP_REMOVE_ALL  =   "/adapters/backup/remove/all"
+# CMD_ADAPTERS_BACKUP_DOWNLOAD    =   "/adapters/backup/download"
 CMD_ADAPTERS_RESET              =   "/adapters/reset"
 CMD_ADAPTERS_STATISTICS         =   "/adapters/statistics"
 CMD_ADAPTERS_LISTING            =   "/adapters/listing"
@@ -337,34 +337,34 @@ class RestClientInterface(QObject, Logger.ClassLogger):
     TestCancelled = pyqtSignal()
     TestKilled = pyqtSignal(int)
     TestsKilled = pyqtSignal()
-    RefreshRunningProbes = pyqtSignal(list)
+    # RefreshRunningProbes = pyqtSignal(list)
     RefreshRunningAgents = pyqtSignal(list)
     RefreshHelper = pyqtSignal(dict)
     RefreshStatsResults = pyqtSignal(dict)
-    RefreshStatsLibraries = pyqtSignal(dict)
+    # RefreshStatsLibraries = pyqtSignal(dict)
     RefreshStatsAdapters = pyqtSignal(dict)
     RefreshStatsTests = pyqtSignal(dict)
-    RefreshDefaultAgents = pyqtSignal(list)
-    RefreshDefaultProbes = pyqtSignal(list)
+    # RefreshDefaultAgents = pyqtSignal(list)
+    # RefreshDefaultProbes = pyqtSignal(list)
     Connected = pyqtSignal(dict)
     RefreshTestsRepo = pyqtSignal(list, int, bool, bool)
     RefreshAdaptersRepo = pyqtSignal(list)
-    RefreshLibrariesRepo = pyqtSignal(list)
+    # RefreshLibrariesRepo = pyqtSignal(list)
     FolderTestsRenamed = pyqtSignal(int, str, str, str)
     FolderAdaptersRenamed = pyqtSignal(str, str, str)
-    FolderLibrariesRenamed = pyqtSignal(str, str, str)
+    # FolderLibrariesRenamed = pyqtSignal(str, str, str)
     FileTestsRenamed = pyqtSignal(int, str, str, str, str)
     FileAdaptersRenamed = pyqtSignal(str, str, str, str)
-    FileLibrariesRenamed = pyqtSignal(str, str, str, str)
+    # FileLibrariesRenamed = pyqtSignal(str, str, str, str)
     OpenTestFile = pyqtSignal(str, str, str, str, int, bool, str, str)
     OpenAdapterFile = pyqtSignal(str, str, str, str, bool, str)
-    OpenLibraryFile = pyqtSignal(str, str, str, str, bool, str)
+    # OpenLibraryFile = pyqtSignal(str, str, str, str, bool, str)
     FileTestsUploaded = pyqtSignal(str, str, str, int, bool, bool)
     FileAdaptersUploaded = pyqtSignal(str, str, str, bool, bool)
-    FileLibrariesUploaded = pyqtSignal(str, str, str, bool, bool)
+    # FileLibrariesUploaded = pyqtSignal(str, str, str, bool, bool)
     FileTestsUploadError = pyqtSignal(str, str, str, int, bool, bool)
     FileAdaptersUploadError = pyqtSignal(str, str, str, bool, bool)
-    FileLibrariesUploadError = pyqtSignal(str, str, str, bool, bool)
+    # FileLibrariesUploadError = pyqtSignal(str, str, str, bool, bool)
     GetFileRepo = pyqtSignal(str, str, str, str, int, int, int, int, bool)
     AddTestTab = pyqtSignal(object)
     # New in v19, contributions from dbr13
@@ -540,8 +540,8 @@ class RestClientInterface(QObject, Logger.ClassLogger):
             elif response['cmd'] == CMD_DOCS_CACHE:
                 self.onCacheDocumentations(details=response)
 
-            elif response['cmd'] == CMD_TESTS_UNLOCK_ALL:
-                self.onUnlockTests(details=response)  
+            # elif response['cmd'] == CMD_TESTS_UNLOCK_ALL:
+                # self.onUnlockTests(details=response)  
             elif response['cmd'] == CMD_TESTS_BUILD:
                 self.onBuildTestsSamples(details=response)  
             elif response['cmd'] == CMD_TESTS_BACKUP:
@@ -576,14 +576,14 @@ class RestClientInterface(QObject, Logger.ClassLogger):
                 self.onTestsFoldersRemoved(details=response)
             elif response['cmd'] == CMD_TESTS_FOLDER_ADD:
                 self.onTestsFolderAdded(details=response)
-            elif response['cmd'] == CMD_TESTS_SNAPSHOT_ADD:
-                self.onTestsSnapshotAdded(details=response)
-            elif response['cmd'] == CMD_TESTS_SNAPSHOT_RESTORE:
-                self.onTestsSnapshotRestored(details=response)
-            elif response['cmd'] == CMD_TESTS_SNAPSHOT_REMOVE:
-                self.onTestsSnapshotRemoved(details=response)
-            elif response['cmd'] == CMD_TESTS_SNAPSHOT_REMOVE_ALL:
-                self.onTestsSnapshotRemovedAll(details=response)
+            # elif response['cmd'] == CMD_TESTS_SNAPSHOT_ADD:
+                # self.onTestsSnapshotAdded(details=response)
+            # elif response['cmd'] == CMD_TESTS_SNAPSHOT_RESTORE:
+                # self.onTestsSnapshotRestored(details=response)
+            # elif response['cmd'] == CMD_TESTS_SNAPSHOT_REMOVE:
+                # self.onTestsSnapshotRemoved(details=response)
+            # elif response['cmd'] == CMD_TESTS_SNAPSHOT_REMOVE_ALL:
+                # self.onTestsSnapshotRemovedAll(details=response)
             elif response['cmd'] == CMD_TESTS_FILE_OPEN:
                 self.onTestsFileOpened(details=response)       
             elif response['cmd'] == CMD_TESTS_FILE_UPLOAD:
@@ -648,84 +648,84 @@ class RestClientInterface(QObject, Logger.ClassLogger):
                 
             elif response['cmd'] == CMD_AGENTS_RUNNING:
                 self.onAgentsRunning(details=response)
-            elif response['cmd'] == CMD_AGENTS_DEFAULT:
-                self.onAgentsDefault(details=response)
+            # elif response['cmd'] == CMD_AGENTS_DEFAULT:
+                # self.onAgentsDefault(details=response)
             elif response['cmd'] == CMD_AGENTS_DISCONNECT:
                 self.onAgentsDisconnect(details=response)
-            elif response['cmd'] == CMD_AGENTS_CONNECT:
-                self.onAgentsConnect(details=response)
-            elif response['cmd'] == CMD_AGENTS_ADD:
-                self.onAgentsAdd(details=response)
-            elif response['cmd'] == CMD_AGENTS_REMOVE:
-                self.onAgentsRemove(details=response)
+            # elif response['cmd'] == CMD_AGENTS_CONNECT:
+                # self.onAgentsConnect(details=response)
+            # elif response['cmd'] == CMD_AGENTS_ADD:
+                # self.onAgentsAdd(details=response)
+            # elif response['cmd'] == CMD_AGENTS_REMOVE:
+                # self.onAgentsRemove(details=response)
                 
-            elif response['cmd'] == CMD_PROBES_RUNNING:
-                self.onProbesRunning(details=response)
-            elif response['cmd'] == CMD_PROBES_DEFAULT:
-                self.onProbesDefault(details=response)
-            elif response['cmd'] == CMD_PROBES_DISCONNECT:
-                self.onProbesDisconnect(details=response)
-            elif response['cmd'] == CMD_PROBES_CONNECT:
-                self.onProbesConnect(details=response)
-            elif response['cmd'] == CMD_PROBES_ADD:
-                self.onProbesAdd(details=response)
-            elif response['cmd'] == CMD_PROBES_REMOVE:
-                self.onProbesRemove(details=response)
+            # elif response['cmd'] == CMD_PROBES_RUNNING:
+                # self.onProbesRunning(details=response)
+            # elif response['cmd'] == CMD_PROBES_DEFAULT:
+                # self.onProbesDefault(details=response)
+            # elif response['cmd'] == CMD_PROBES_DISCONNECT:
+                # self.onProbesDisconnect(details=response)
+            # elif response['cmd'] == CMD_PROBES_CONNECT:
+                # self.onProbesConnect(details=response)
+            # elif response['cmd'] == CMD_PROBES_ADD:
+                # self.onProbesAdd(details=response)
+            # elif response['cmd'] == CMD_PROBES_REMOVE:
+                # self.onProbesRemove(details=response)
             
-            elif response['cmd'] == CMD_LIBRARIES_UNLOCK_ALL:
-                self.onUnlockLibraries(details=response)
-            elif response['cmd'] == CMD_LIBRARIES_SYNTAX_ALL:
-                self.onSyntaxAllLibraries(details=response)
-            elif response['cmd'] == CMD_LIBRARIES_SYNTAX:
-                self.onSyntaxLibrary(details=response)
-            elif response['cmd'] == CMD_LIBRARIES_BUILD:
-                self.onBuildLibraries(details=response)
-            elif response['cmd'] == CMD_LIBRARIES_DEFAULT:
-                self.onDefaultLibraries(details=response) 
-            elif response['cmd'] == CMD_LIBRARIES_GENERIC:
-                self.onGenericLibraries(details=response)
-            elif response['cmd'] == CMD_LIBRARIES_BACKUP:
-                self.onBackupLibraries(details=response)  
-            elif response['cmd'] == CMD_LIBRARIES_BACKUP_REMOVE_ALL:
-                self.onRemoveBackupsAdapters(details=response)  
-            elif response['cmd'] == CMD_LIBRARIES_BACKUP_DOWNLOAD:
-                self.onDownloadBackupLibraries(details=response) 
-            elif response['cmd'] == CMD_LIBRARIES_RESET:
-                self.onResetLibraries(details=response) 
-            elif response['cmd'] == CMD_LIBRARIES_STATISTICS:
-                self.onStatisticsLibraries(details=response) 
-            elif response['cmd'] == CMD_LIBRARIES_LISTING:
-                self.onLibrariesListing(details=response) 
-            elif response['cmd'] == CMD_LIBRARIES_FILE_MOVE:
-                self.onLibrariesFileMoved(details=response) 
-            elif response['cmd'] == CMD_LIBRARIES_FOLDER_MOVE:
-                self.onLibrariesFolderMoved(details=response) 
-            elif response['cmd'] == CMD_LIBRARIES_FILE_RENAME:
-                self.onLibrariesFileRenamed(details=response) 
-            elif response['cmd'] == CMD_LIBRARIES_FOLDER_RENAME:
-                self.onLibrariesFolderRenamed(details=response) 
-            elif response['cmd'] == CMD_LIBRARIES_FILE_DUPLICATE:
-                self.onLibrariesFileDuplicated(details=response) 
-            elif response['cmd'] == CMD_LIBRARIES_FOLDER_DUPLICATE:
-                self.onLibrariesFolderDuplicated(details=response) 
-            elif response['cmd'] == CMD_LIBRARIES_FILE_REMOVE:
-                self.onLibrariesFileRemoved(details=response) 
-            elif response['cmd'] == CMD_LIBRARIES_FOLDER_REMOVE:
-                self.onLibrariesFolderRemoved(details=response)
-            elif response['cmd'] == CMD_LIBRARIES_FOLDER_REMOVE_ALL:
-                self.onLibrariesFoldersRemoved(details=response)
-            elif response['cmd'] == CMD_LIBRARIES_FOLDER_ADD:
-                self.onLibrariesFolderAdded(details=response) 
-            elif response['cmd'] == CMD_LIBRARIES_FILE_OPEN:
-                self.onLibrariesFileOpened(details=response)       
-            elif response['cmd'] == CMD_LIBRARIES_FILE_UPLOAD:
-                self.onLibrariesFileUploaded(details=response) 
-            elif response['cmd'] == CMD_LIBRARIES_FILE_UNLOCK:
-                self.onLibrariesFileUnlocked(details=response) 
-            elif response['cmd'] == CMD_LIBRARIES_PACKAGE_ADD:
-                self.onLibrariesPackageAdded(details=response)
-            elif response['cmd'] == CMD_LIBRARIES_LIB_ADD:
-                self.onLibrariesLibraryAdded(details=response)
+            # elif response['cmd'] == CMD_LIBRARIES_UNLOCK_ALL:
+                # self.onUnlockLibraries(details=response)
+            # elif response['cmd'] == CMD_LIBRARIES_SYNTAX_ALL:
+                # self.onSyntaxAllLibraries(details=response)
+            # elif response['cmd'] == CMD_LIBRARIES_SYNTAX:
+                # self.onSyntaxLibrary(details=response)
+            # elif response['cmd'] == CMD_LIBRARIES_BUILD:
+                # self.onBuildLibraries(details=response)
+            # elif response['cmd'] == CMD_LIBRARIES_DEFAULT:
+                # self.onDefaultLibraries(details=response) 
+            # elif response['cmd'] == CMD_LIBRARIES_GENERIC:
+                # self.onGenericLibraries(details=response)
+            # elif response['cmd'] == CMD_LIBRARIES_BACKUP:
+                # self.onBackupLibraries(details=response)  
+            # elif response['cmd'] == CMD_LIBRARIES_BACKUP_REMOVE_ALL:
+                # self.onRemoveBackupsAdapters(details=response)  
+            # elif response['cmd'] == CMD_LIBRARIES_BACKUP_DOWNLOAD:
+                # self.onDownloadBackupLibraries(details=response) 
+            # elif response['cmd'] == CMD_LIBRARIES_RESET:
+                # self.onResetLibraries(details=response) 
+            # elif response['cmd'] == CMD_LIBRARIES_STATISTICS:
+                # self.onStatisticsLibraries(details=response) 
+            # elif response['cmd'] == CMD_LIBRARIES_LISTING:
+                # self.onLibrariesListing(details=response) 
+            # elif response['cmd'] == CMD_LIBRARIES_FILE_MOVE:
+                # self.onLibrariesFileMoved(details=response) 
+            # elif response['cmd'] == CMD_LIBRARIES_FOLDER_MOVE:
+                # self.onLibrariesFolderMoved(details=response) 
+            # elif response['cmd'] == CMD_LIBRARIES_FILE_RENAME:
+                # self.onLibrariesFileRenamed(details=response) 
+            # elif response['cmd'] == CMD_LIBRARIES_FOLDER_RENAME:
+                # self.onLibrariesFolderRenamed(details=response) 
+            # elif response['cmd'] == CMD_LIBRARIES_FILE_DUPLICATE:
+                # self.onLibrariesFileDuplicated(details=response) 
+            # elif response['cmd'] == CMD_LIBRARIES_FOLDER_DUPLICATE:
+                # self.onLibrariesFolderDuplicated(details=response) 
+            # elif response['cmd'] == CMD_LIBRARIES_FILE_REMOVE:
+                # self.onLibrariesFileRemoved(details=response) 
+            # elif response['cmd'] == CMD_LIBRARIES_FOLDER_REMOVE:
+                # self.onLibrariesFolderRemoved(details=response)
+            # elif response['cmd'] == CMD_LIBRARIES_FOLDER_REMOVE_ALL:
+                # self.onLibrariesFoldersRemoved(details=response)
+            # elif response['cmd'] == CMD_LIBRARIES_FOLDER_ADD:
+                # self.onLibrariesFolderAdded(details=response) 
+            # elif response['cmd'] == CMD_LIBRARIES_FILE_OPEN:
+                # self.onLibrariesFileOpened(details=response)       
+            # elif response['cmd'] == CMD_LIBRARIES_FILE_UPLOAD:
+                # self.onLibrariesFileUploaded(details=response) 
+            # elif response['cmd'] == CMD_LIBRARIES_FILE_UNLOCK:
+                # self.onLibrariesFileUnlocked(details=response) 
+            # elif response['cmd'] == CMD_LIBRARIES_PACKAGE_ADD:
+                # self.onLibrariesPackageAdded(details=response)
+            # elif response['cmd'] == CMD_LIBRARIES_LIB_ADD:
+                # self.onLibrariesLibraryAdded(details=response)
                 
             elif response['cmd'] == CMD_ADAPTERS_UNLOCK_ALL:
                 self.onUnlockAdapters(details=response)
@@ -733,18 +733,18 @@ class RestClientInterface(QObject, Logger.ClassLogger):
                 self.onSyntaxAllAdapters(details=response)
             elif response['cmd'] == CMD_ADAPTERS_SYNTAX:
                 self.onSyntaxAdapter(details=response) 
-            elif response['cmd'] == CMD_ADAPTERS_BUILD:
-                self.onBuildAdapters(details=response) 
-            elif response['cmd'] == CMD_ADAPTERS_DEFAULT:
-                self.onDefaultAdapters(details=response) 
-            elif response['cmd'] == CMD_ADAPTERS_GENERIC:
-                self.onGenericAdapters(details=response)
-            elif response['cmd'] == CMD_ADAPTERS_BACKUP:
-                self.onBackupAdapters(details=response)  
-            elif response['cmd'] == CMD_ADAPTERS_BACKUP_REMOVE_ALL:
-                self.onRemoveBackupsAdapters(details=response)  
-            elif response['cmd'] == CMD_ADAPTERS_BACKUP_DOWNLOAD:
-                self.onDownloadBackupAdapters(details=response) 
+            # elif response['cmd'] == CMD_ADAPTERS_BUILD:
+                # self.onBuildAdapters(details=response) 
+            # elif response['cmd'] == CMD_ADAPTERS_DEFAULT:
+                # self.onDefaultAdapters(details=response) 
+            # elif response['cmd'] == CMD_ADAPTERS_GENERIC:
+                # self.onGenericAdapters(details=response)
+            # elif response['cmd'] == CMD_ADAPTERS_BACKUP:
+                # self.onBackupAdapters(details=response)  
+            # elif response['cmd'] == CMD_ADAPTERS_BACKUP_REMOVE_ALL:
+                # self.onRemoveBackupsAdapters(details=response)  
+            # elif response['cmd'] == CMD_ADAPTERS_BACKUP_DOWNLOAD:
+                # self.onDownloadBackupAdapters(details=response) 
             elif response['cmd'] == CMD_ADAPTERS_RESET:
                 self.onResetAdapters(details=response) 
             elif response['cmd'] == CMD_ADAPTERS_STATISTICS:
@@ -777,14 +777,14 @@ class RestClientInterface(QObject, Logger.ClassLogger):
                 self.onAdaptersFileUploaded(details=response) 
             elif response['cmd'] == CMD_ADAPTERS_FILE_UNLOCK:
                 self.onAdaptersFileUnlocked(details=response)
-            elif response['cmd'] == CMD_ADAPTERS_PACKAGE_ADD:
-                self.onAdaptersPackageAdded(details=response)
+            # elif response['cmd'] == CMD_ADAPTERS_PACKAGE_ADD:
+                # self.onAdaptersPackageAdded(details=response)
             elif response['cmd'] == CMD_ADAPTERS_ADP_ADD:
                 self.onAdaptersAdapterAdded(details=response)
-            elif response['cmd'] == CMD_ADAPTERS_ADP_ADD_WSDL_URL:
-                self.onAdaptersAdapterWsdlUrlAdded(details=response)
-            elif response['cmd'] == CMD_ADAPTERS_ADP_ADD_WSDL_FILE:
-                self.onAdaptersAdapterWsdlFileAdded(details=response)
+            # elif response['cmd'] == CMD_ADAPTERS_ADP_ADD_WSDL_URL:
+                # self.onAdaptersAdapterWsdlUrlAdded(details=response)
+            # elif response['cmd'] == CMD_ADAPTERS_ADP_ADD_WSDL_FILE:
+                # self.onAdaptersAdapterWsdlFileAdded(details=response)
     
             else:
                 self.onGenericError(err=self.tr("Bad cmd provided on response: %s" % response["cmd"]), 
@@ -819,6 +819,7 @@ class RestClientInterface(QObject, Logger.ClassLogger):
         # password is a sha1
         _json = { 'login': login, 'password': password, 'channel-id': channelId }
         _json.update( self.application().getCurrentVersion() )
+
         self.makeRequest( uri=CMD_LOGIN, request=HTTP_POST, _json=_json )
         
     @calling_rest
@@ -1060,19 +1061,19 @@ class RestClientInterface(QObject, Logger.ClassLogger):
         """
         self.makeRequest( uri=CMD_PROBES_RUNNING, request=HTTP_GET, _json={} )
     
-    @calling_rest
-    def defaultAgents(self):
-        """
-        cancel
-        """
-        self.makeRequest( uri=CMD_AGENTS_DEFAULT, request=HTTP_GET, _json={} )
+    # @calling_rest
+    # def defaultAgents(self):
+        # """
+        # cancel
+        # """
+        # self.makeRequest( uri=CMD_AGENTS_DEFAULT, request=HTTP_GET, _json={} )
     
-    @calling_rest
-    def defaultProbes(self):
-        """
-        cancel
-        """
-        self.makeRequest( uri=CMD_PROBES_DEFAULT, request=HTTP_GET, _json={} )
+    # @calling_rest
+    # def defaultProbes(self):
+        # """
+        # cancel
+        # """
+        # self.makeRequest( uri=CMD_PROBES_DEFAULT, request=HTTP_GET, _json={} )
     
     @calling_rest
     def resetAdapters(self):
@@ -1280,19 +1281,19 @@ class RestClientInterface(QObject, Logger.ClassLogger):
         """
         self.makeRequest( uri=CMD_SYSTEM_USAGES, request=HTTP_GET, _json={} )
     
-    @calling_rest
-    def checkSyntaxAdapters(self):
-        """
-        check syntax
-        """
-        self.makeRequest( uri=CMD_ADAPTERS_SYNTAX_ALL, request=HTTP_GET, _json={} )
+    # @calling_rest
+    # def checkSyntaxAdapters(self):
+        # """
+        # check syntax
+        # """
+        # self.makeRequest( uri=CMD_ADAPTERS_SYNTAX_ALL, request=HTTP_GET, _json={} )
     
-    @calling_rest
-    def checkSyntaxLibraries(self):
-        """
-        check syntax
-        """
-        self.makeRequest( uri=CMD_LIBRARIES_SYNTAX_ALL, request=HTTP_GET, _json={} )
+    # @calling_rest
+    # def checkSyntaxLibraries(self):
+        # """
+        # check syntax
+        # """
+        # self.makeRequest( uri=CMD_LIBRARIES_SYNTAX_ALL, request=HTTP_GET, _json={} )
         
     @calling_rest
     def checkSyntaxAdapter(self, fileContent):
@@ -1342,62 +1343,62 @@ class RestClientInterface(QObject, Logger.ClassLogger):
         _json = { "package-name": packageName, "library-name": libraryName }
         self.makeRequest( uri=CMD_LIBRARIES_LIB_ADD, request=HTTP_POST, _json=_json )
         
-    @calling_rest
-    def addAdapterByWsdlUrl(self, packageName, overwriteAdapter, wsdlUrl):
-        """
-        check syntax
-        """
-        _json = { "package-name": packageName, "overwrite-adapter": overwriteAdapter,
-                  "wsdl-url": wsdlUrl}
-        self.makeRequest( uri=CMD_ADAPTERS_ADP_ADD_WSDL_URL, request=HTTP_POST, _json=_json )
+    # @calling_rest
+    # def addAdapterByWsdlUrl(self, packageName, overwriteAdapter, wsdlUrl):
+        # """
+        # check syntax
+        # """
+        # _json = { "package-name": packageName, "overwrite-adapter": overwriteAdapter,
+                  # "wsdl-url": wsdlUrl}
+        # self.makeRequest( uri=CMD_ADAPTERS_ADP_ADD_WSDL_URL, request=HTTP_POST, _json=_json )
         
-    @calling_rest
-    def addAdapterByWsdlFile(self, packageName, overwriteAdapter, wsdlFile):
-        """
-        check syntax
-        """
-        _json = { "package-name": packageName, "overwrite-adapter": overwriteAdapter,
-                  "wsdl-file": wsdlFile}
-        self.makeRequest( uri=CMD_ADAPTERS_ADP_ADD_WSDL_FILE, request=HTTP_POST, _json=_json )
+    # @calling_rest
+    # def addAdapterByWsdlFile(self, packageName, overwriteAdapter, wsdlFile):
+        # """
+        # check syntax
+        # """
+        # _json = { "package-name": packageName, "overwrite-adapter": overwriteAdapter,
+                  # "wsdl-file": wsdlFile}
+        # self.makeRequest( uri=CMD_ADAPTERS_ADP_ADD_WSDL_FILE, request=HTTP_POST, _json=_json )
   
-    @calling_rest
-    def setAllTestsAsDefault(self):
-        """
-        check syntax
-        """
-        self.makeRequest( uri=CMD_TESTS_DEFAULT_VERSION, request=HTTP_GET, _json=_json )
+    # @calling_rest
+    # def setAllTestsAsDefault(self):
+        # """
+        # check syntax
+        # """
+        # self.makeRequest( uri=CMD_TESTS_DEFAULT_VERSION, request=HTTP_GET, _json=_json )
         
-    @calling_rest
-    def setDefaultAdapter(self, packageName):
-        """
-        Delete test result
-        """
-        _json = { 'package-name': packageName }
-        self.makeRequest( uri=CMD_ADAPTERS_DEFAULT, request=HTTP_POST, _json=_json )
+    # @calling_rest
+    # def setDefaultAdapter(self, packageName):
+        # """
+        # Delete test result
+        # """
+        # _json = { 'package-name': packageName }
+        # self.makeRequest( uri=CMD_ADAPTERS_DEFAULT, request=HTTP_POST, _json=_json )
         
-    @calling_rest
-    def setGenericAdapter(self, packageName):
-        """
-        Delete test result
-        """
-        _json = { 'package-name': packageName }
-        self.makeRequest( uri=CMD_ADAPTERS_GENERIC, request=HTTP_POST, _json=_json )
+    # @calling_rest
+    # def setGenericAdapter(self, packageName):
+        # """
+        # Delete test result
+        # """
+        # _json = { 'package-name': packageName }
+        # self.makeRequest( uri=CMD_ADAPTERS_GENERIC, request=HTTP_POST, _json=_json )
         
-    @calling_rest
-    def setDefaultLibrary(self, packageName):
-        """
-        Delete test result
-        """
-        _json = { 'package-name': packageName }
-        self.makeRequest( uri=CMD_LIBRARIES_DEFAULT, request=HTTP_POST, _json=_json )
+    # @calling_rest
+    # def setDefaultLibrary(self, packageName):
+        # """
+        # Delete test result
+        # """
+        # _json = { 'package-name': packageName }
+        # self.makeRequest( uri=CMD_LIBRARIES_DEFAULT, request=HTTP_POST, _json=_json )
         
-    @calling_rest
-    def setGenericLibrary(self, packageName):
-        """
-        Delete test result
-        """
-        _json = { 'package-name': packageName }
-        self.makeRequest( uri=CMD_LIBRARIES_GENERIC, request=HTTP_POST, _json=_json )
+    # @calling_rest
+    # def setGenericLibrary(self, packageName):
+        # """
+        # Delete test result
+        # """
+        # _json = { 'package-name': packageName }
+        # self.makeRequest( uri=CMD_LIBRARIES_GENERIC, request=HTTP_POST, _json=_json )
             
     @calling_rest
     def deleteTestResultByDate(self, date,  projectId=0):
@@ -2555,47 +2556,47 @@ class RestClientInterface(QObject, Logger.ClassLogger):
         
         self.RefreshHelper.emit(details["cache"])
         
-    def onUnlockTests(self, details):
-        """
-        Called on response
-        """
-        self.trace("on unlock tests")
-        self.WarningMsg.emit( self.tr("Unlock all files") , self.tr("All tests unlocked") )
+    # def onUnlockTests(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on unlock tests")
+        # self.WarningMsg.emit( self.tr("Unlock all files") , self.tr("All tests unlocked") )
         
-    def onUnlockAdapters(self, details):
-        """
-        Called on response
-        """
-        self.trace("on unlock adapters")
-        self.WarningMsg.emit( self.tr("Unlock all files") , self.tr("All adapters unlocked") )
+    # def onUnlockAdapters(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on unlock adapters")
+        # self.WarningMsg.emit( self.tr("Unlock all files") , self.tr("All adapters unlocked") )
         
-    def onUnlockLibraries(self, details):
-        """
-        Called on response
-        """
-        self.trace("on unlock libraries")
-        self.WarningMsg.emit( self.tr("Unlock all files") , self.tr("All libraries unlocked") )
+    # def onUnlockLibraries(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on unlock libraries")
+        # self.WarningMsg.emit( self.tr("Unlock all files") , self.tr("All libraries unlocked") )
         
-    def onBuildTestsSamples(self, details):
-        """
-        Called on response
-        """
-        self.trace("on build tests samples")
-        self.InformationMsg.emit( self.tr("Generate tests samples") , self.tr("Build done!") )
+    # def onBuildTestsSamples(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on build tests samples")
+        # self.InformationMsg.emit( self.tr("Generate tests samples") , self.tr("Build done!") )
         
-    def onBuildAdapters(self, details):
-        """
-        Called on response
-        """
-        self.trace("on build adapters")
-        self.InformationMsg.emit( self.tr("Generate adapters") , self.tr("Build done!") )
+    # def onBuildAdapters(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on build adapters")
+        # self.InformationMsg.emit( self.tr("Generate adapters") , self.tr("Build done!") )
         
-    def onBuildLibraries(self, details):
-        """
-        Called on response
-        """
-        self.trace("on build libraries")
-        self.InformationMsg.emit( self.tr("Generate libraries") , self.tr("Build done!") )
+    # def onBuildLibraries(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on build libraries")
+        # self.InformationMsg.emit( self.tr("Generate libraries") , self.tr("Build done!") )
         
     def onRunningTasks(self, details):
         """
@@ -2644,12 +2645,12 @@ class RestClientInterface(QObject, Logger.ClassLogger):
     
         self.TestRescheduled.emit()
        
-    def onProbesRunning(self, details):
-        """
-        Called on response
-        """
-        self.trace("on probes running")
-        self.RefreshRunningProbes.emit(details['probes'])
+    # def onProbesRunning(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on probes running")
+        # self.RefreshRunningProbes.emit(details['probes'])
         
     def onAgentsRunning(self, details):
         """
@@ -2658,19 +2659,19 @@ class RestClientInterface(QObject, Logger.ClassLogger):
         self.trace("on agents running")
         self.RefreshRunningAgents.emit(details['agents'])
        
-    def onProbesDefault(self, details):
-        """
-        Called on response
-        """
-        self.trace("on probes default")
-        self.RefreshDefaultProbes.emit(details['probes'])
+    # def onProbesDefault(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on probes default")
+        # self.RefreshDefaultProbes.emit(details['probes'])
         
-    def onAgentsDefault(self, details):
-        """
-        Called on response
-        """
-        self.trace("on agents default")
-        self.RefreshDefaultAgents.emit(details['agents'])
+    # def onAgentsDefault(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on agents default")
+        # self.RefreshDefaultAgents.emit(details['agents'])
         
     def onSyntaxAllAdapters(self, details):
         """
@@ -2683,16 +2684,16 @@ class RestClientInterface(QObject, Logger.ClassLogger):
         else:
             self.CriticalMsg.emit( self.tr("Check syntax"), details['syntax-error'] )
         
-    def onSyntaxAllLibraries(self, details):
-        """
-        Called on response
-        """
-        self.trace("on syntax libraries")
-        if details['syntax-status']:
-            self.InformationMsg.emit( self.tr("Check syntax"), 
-                                      "%s\n%s" % (self.tr("Well done!"), "No syntax error detected.") )
-        else:
-            self.CriticalMsg.emit( self.tr("Check syntax"), details['syntax-error'] )
+    # def onSyntaxAllLibraries(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on syntax libraries")
+        # if details['syntax-status']:
+            # self.InformationMsg.emit( self.tr("Check syntax"), 
+                                      # "%s\n%s" % (self.tr("Well done!"), "No syntax error detected.") )
+        # else:
+            # self.CriticalMsg.emit( self.tr("Check syntax"), details['syntax-error'] )
     
     def onSyntaxAdapter(self, details):
         """
@@ -2706,17 +2707,17 @@ class RestClientInterface(QObject, Logger.ClassLogger):
             msg += "\n%s" % details["syntax-error"]
             self.CriticalMsg.emit( self.tr("Check syntax"), msg )
         
-    def onSyntaxLibrary(self, details):
-        """
-        Called on response
-        """
-        if details["success"]:
-            self.InformationMsg.emit( self.tr("Check syntax"), 
-                                      "%s\n%s" % ( self.tr("Well done!"), "No syntax error detected.") )
-        else:
-            msg = "An error exists on this file."
-            msg += "\n%s" % details["syntax-error"]
-            self.CriticalMsg.emit( self.tr("Check syntax"), msg )
+    # def onSyntaxLibrary(self, details):
+        # """
+        # Called on response
+        # """
+        # if details["success"]:
+            # self.InformationMsg.emit( self.tr("Check syntax"), 
+                                      # "%s\n%s" % ( self.tr("Well done!"), "No syntax error detected.") )
+        # else:
+            # msg = "An error exists on this file."
+            # msg += "\n%s" % details["syntax-error"]
+            # self.CriticalMsg.emit( self.tr("Check syntax"), msg )
             
     def onGenericAdapters(self, details):
         """
@@ -2727,14 +2728,14 @@ class RestClientInterface(QObject, Logger.ClassLogger):
                                   self.tr("Package adapters configured successfully as generic!") )
         self.sessionContext()
                 
-    def onGenericLibraries(self, details):
-        """
-        Called on response
-        """
-        self.trace("on generic libraries")
-        self.InformationMsg.emit( self.tr("Set the generic library of adapters") ,
-                                  self.tr("Package libraries configured successfully as generic!") )
-        self.sessionContext()
+    # def onGenericLibraries(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on generic libraries")
+        # self.InformationMsg.emit( self.tr("Set the generic library of adapters") ,
+                                  # self.tr("Package libraries configured successfully as generic!") )
+        # self.sessionContext()
         
     def onDefaultAdapters(self, details):
         """
@@ -2745,14 +2746,14 @@ class RestClientInterface(QObject, Logger.ClassLogger):
                                   self.tr("Package adapters configured successfully as default!") )
         self.sessionContext()
         
-    def onDefaultLibraries(self, details):
-        """
-        Called on response
-        """
-        self.trace("on default libraries")
-        self.InformationMsg.emit( self.tr("Set the default package of libraries") , 
-                                  self.tr("Package libraries configured succesfully as default!") )
-        self.sessionContext()
+    # def onDefaultLibraries(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on default libraries")
+        # self.InformationMsg.emit( self.tr("Set the default package of libraries") , 
+                                  # self.tr("Package libraries configured succesfully as default!") )
+        # self.sessionContext()
         
     def onBackupTests(self, details):   
         """
@@ -2775,12 +2776,12 @@ class RestClientInterface(QObject, Logger.ClassLogger):
         self.trace("on backup adapters")
         self.InformationMsg.emit( "Backup", "Backup created with success!" )
         
-    def onBackupLibraries(self, details):   
-        """
-        Called on response
-        """
-        self.trace("on backup libraries")
-        self.InformationMsg.emit( "Backup", "Backup created with success!" )
+    # def onBackupLibraries(self, details):   
+        # """
+        # Called on response
+        # """
+        # self.trace("on backup libraries")
+        # self.InformationMsg.emit( "Backup", "Backup created with success!" )
         
     def onRemoveBackupsResults(self, details):
         """
@@ -2803,12 +2804,12 @@ class RestClientInterface(QObject, Logger.ClassLogger):
         self.trace("on remove all backups adapters")
         self.InformationMsg.emit( "Delete backups", "All backups deleted with success!" )
         
-    def onRemoveBackupsLibraries(self, details):
-        """
-        Called on response
-        """
-        self.trace("on remove all backups libraries") 
-        self.InformationMsg.emit( "Delete backups", "All backups deleted with success!" )
+    # def onRemoveBackupsLibraries(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on remove all backups libraries") 
+        # self.InformationMsg.emit( "Delete backups", "All backups deleted with success!" )
     
     def onDownloadBackupResults(self, details):
         """
@@ -2879,28 +2880,28 @@ class RestClientInterface(QObject, Logger.ClassLogger):
             self.InformationMsg.emit( title=self.tr("Download Backup"), 
                                       err= self.tr("Download terminated!" ) )
     
-    def onDownloadBackupLibraries(self, details):
-        """
-        Called on response
-        """
-        self.trace("on download backup from libraries") 
+    # def onDownloadBackupLibraries(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on download backup from libraries") 
         
         # decode data file
-        content = base64.b64decode(details['backup'])
+        # content = base64.b64decode(details['backup'])
 
         # writing file
-        f = open( details['dest-name'], 'wb')
-        f.write( content )
-        f.close()
+        # f = open( details['dest-name'], 'wb')
+        # f.write( content )
+        # f.close()
         
         # remove unneeded data
-        del content
+        # del content
 
-        if QtHelper.str2bool( Settings.instance().readValue( key = 'Common/systray-notifications' ) ):
-            self.application().showMessageTray(msg="Download terminated!")
-        else:
-            self.InformationMsg.emit( title=self.tr("Download Backup"), 
-                                      err= self.tr("Download terminated!" ) )
+        # if QtHelper.str2bool( Settings.instance().readValue( key = 'Common/systray-notifications' ) ):
+            # self.application().showMessageTray(msg="Download terminated!")
+        # else:
+            # self.InformationMsg.emit( title=self.tr("Download Backup"), 
+                                      # err= self.tr("Download terminated!" ) )
          
     def onResetTests(self, details):
         """
@@ -2920,13 +2921,13 @@ class RestClientInterface(QObject, Logger.ClassLogger):
         self.trace("on reset adapters") 
         self.InformationMsg.emit( self.tr("Uninstall adapters") , self.tr("Uninstallation successfull!") )
         
-    def onResetLibraries(self, details):
-        """
-        Called on response
-        """
-        self.trace("on reset libraries") 
-        self.InformationMsg.emit( self.tr("Uninstall libraries") , 
-                                  self.tr("Uninstallation successfull!") )
+    # def onResetLibraries(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on reset libraries") 
+        # self.InformationMsg.emit( self.tr("Uninstall libraries") , 
+                                  # self.tr("Uninstallation successfull!") )
         
     def onStatisticsResults(self, details):
         """
@@ -2942,12 +2943,12 @@ class RestClientInterface(QObject, Logger.ClassLogger):
         self.trace("on statistics adapters")
         self.RefreshStatsAdapters.emit(details['statistics'])
         
-    def onStatisticsLibraries(self, details):
-        """
-        Called on response
-        """
-        self.trace("on statistics libraries")
-        self.RefreshStatsLibraries.emit(details['statistics'])
+    # def onStatisticsLibraries(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on statistics libraries")
+        # self.RefreshStatsLibraries.emit(details['statistics'])
         
     def onStatisticsTests(self, details):
         """
@@ -2963,12 +2964,12 @@ class RestClientInterface(QObject, Logger.ClassLogger):
         self.trace("on agents disconnect")
         self.InformationMsg.emit( "Stop agent" , "Agent stopped!" )
         
-    def onProbesDisconnect(self, details):
-        """
-        Called on response
-        """
-        self.trace("on probes disconnect")
-        self.InformationMsg.emit( "Stop probe" , "Probe stopped!" )
+    # def onProbesDisconnect(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on probes disconnect")
+        # self.InformationMsg.emit( "Stop probe" , "Probe stopped!" )
        
     def onAgentsConnect(self, details):
         """
@@ -2977,40 +2978,40 @@ class RestClientInterface(QObject, Logger.ClassLogger):
         self.trace("on agents connect")
         self.InformationMsg.emit( 'Starting agent' , "Agent started!" )
         
-    def onProbesConnect(self, details):
-        """
-        Called on response
-        """
-        self.trace("on probes connect")
-        self.InformationMsg.emit( 'Starting probe' , "Probes started!" )
+    # def onProbesConnect(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on probes connect")
+        # self.InformationMsg.emit( 'Starting probe' , "Probes started!" )
        
-    def onAgentsAdd(self, details):
-        """
-        Called on response
-        """
-        self.trace("on agents add")
-        self.InformationMsg.emit( "Add default agent" , "Default agent added!" )
+    # def onAgentsAdd(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on agents add")
+        # self.InformationMsg.emit( "Add default agent" , "Default agent added!" )
         
-    def onProbesAdd(self, details):
-        """
-        Called on response
-        """
-        self.trace("on probes add")
-        self.InformationMsg.emit( "Add default probe" , "Default probe added!" )
+    # def onProbesAdd(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on probes add")
+        # self.InformationMsg.emit( "Add default probe" , "Default probe added!" )
        
-    def onAgentsRemove(self, details):
-        """
-        Called on response
-        """
-        self.trace("on agents remove")
-        self.InformationMsg.emit( "Delete default agent" , "Default agent deleted!" )
+    # def onAgentsRemove(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on agents remove")
+        # self.InformationMsg.emit( "Delete default agent" , "Default agent deleted!" )
         
-    def onProbesRemove(self, details):
-        """
-        Called on response
-        """
-        self.trace("on probes add")
-        self.InformationMsg.emit( "Delete default probe" , "Default probe deleted!" )
+    # def onProbesRemove(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on probes add")
+        # self.InformationMsg.emit( "Delete default probe" , "Default probe deleted!" )
         
     def onClientAvailable(self, details):
         """
@@ -3215,13 +3216,13 @@ class RestClientInterface(QObject, Logger.ClassLogger):
         
         self.RefreshAdaptersRepo.emit(details["adapters-listing"])
         
-    def onLibrariesListing(self, details):
-        """
-        Called on response
-        """
-        self.trace("on libraries listing")
+    # def onLibrariesListing(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on libraries listing")
         
-        self.RefreshLibrariesRepo.emit(details["libraries-listing"])
+        # self.RefreshLibrariesRepo.emit(details["libraries-listing"])
         
     def onAdaptersFileMoved(self, details):
         """
@@ -3311,127 +3312,127 @@ class RestClientInterface(QObject, Logger.ClassLogger):
         
         self.listingAdapters()
         
-    def onLibrariesFileMoved(self, details):
-        """
-        Called on response
-        """
-        self.trace("on library file moved")
+    # def onLibrariesFileMoved(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on library file moved")
         
-        self.listingLibraries()
+        # self.listingLibraries()
         
-    def onLibrariesFolderMoved(self, details):
-        """
-        Called on response
-        """
-        self.trace("on library folder moved")
+    # def onLibrariesFolderMoved(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on library folder moved")
    
-        self.listingLibraries()
+        # self.listingLibraries()
         
-    def onLibrariesFileRenamed(self, details):
-        """
-        Called on response
-        """
-        self.trace("on library file renamed")
+    # def onLibrariesFileRenamed(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on library file renamed")
 
-        self.FileLibrariesRenamed.emit( details["file-path"], 
-                                        details["file-name"],
-                                        details["file-extension"],
-                                        details["new-file-name"] )
+        # self.FileLibrariesRenamed.emit( details["file-path"], 
+                                        # details["file-name"],
+                                        # details["file-extension"],
+                                        # details["new-file-name"] )
                                          
-        self.listingLibraries()
+        # self.listingLibraries()
         
-    def onLibrariesFolderRenamed(self, details):
-        """
-        Called on response
-        """
-        self.trace("on library folder renamed")
+    # def onLibrariesFolderRenamed(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on library folder renamed")
         
-        self.FolderLibrariesRenamed.emit(details["directory-name"], 
-                                         details["directory-path"],
-                                         details["new-directory-name"] )
+        # self.FolderLibrariesRenamed.emit(details["directory-name"], 
+                                         # details["directory-path"],
+                                         # details["new-directory-name"] )
         
-        self.listingLibraries()
+        # self.listingLibraries()
         
-    def onLibrariesFileDuplicated(self, details):
-        """
-        Called on response
-        """
-        self.trace("on library file duplicated")
+    # def onLibrariesFileDuplicated(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on library file duplicated")
         
-        self.listingLibraries()
+        # self.listingLibraries()
         
-    def onLibrariesFolderDuplicated(self, details):
-        """
-        Called on response
-        """
-        self.trace("on library folder duplicated")
+    # def onLibrariesFolderDuplicated(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on library folder duplicated")
         
-        self.listingLibraries()
+        # self.listingLibraries()
         
-    def onLibrariesFileRemoved(self, details):
-        """
-        Called on response
-        """
-        self.trace("on library file removed")
+    # def onLibrariesFileRemoved(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on library file removed")
         
-        self.listingLibraries()
+        # self.listingLibraries()
         
-    def onLibrariesFolderRemoved(self, details):
-        """
-        Called on response
-        """
-        self.trace("on library folder removed")
+    # def onLibrariesFolderRemoved(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on library folder removed")
 
-        self.listingLibraries()
+        # self.listingLibraries()
 
-    def onLibrariesFoldersRemoved(self, details):
-        """
-        Called on response
-        """
-        self.trace("on library folders removed")
+    # def onLibrariesFoldersRemoved(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on library folders removed")
 
-        self.listingLibraries()
+        # self.listingLibraries()
           
-    def onLibrariesFolderAdded(self, details):
-        """
-        Called on response
-        """
-        self.trace("on library folder added")
+    # def onLibrariesFolderAdded(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on library folder added")
         
-        self.listingLibraries()
+        # self.listingLibraries()
         
-    def onTestsSnapshotAdded(self, details):
-        """
-        Called on response
-        """
-        self.trace("on snapshot added")
+    # def onTestsSnapshotAdded(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on snapshot added")
         
-        self.listingTests(projectId=details["project-id"])
+        # self.listingTests(projectId=details["project-id"])
         
-    def onTestsSnapshotRestored(self, details):
-        """
-        Called on response
-        """
-        self.trace("on snapshot added")
+    # def onTestsSnapshotRestored(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on snapshot added")
         
-        self.listingTests(projectId=details["project-id"])
-        self.InformationMsg.emit( self.tr("Restore snapshot") , self.tr("Snapshot restored") )
+        # self.listingTests(projectId=details["project-id"])
+        # self.InformationMsg.emit( self.tr("Restore snapshot") , self.tr("Snapshot restored") )
         
-    def onTestsSnapshotRemoved(self, details):
-        """
-        Called on response
-        """
-        self.trace("on snapshot removed") 
+    # def onTestsSnapshotRemoved(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on snapshot removed") 
         
-        self.listingTests(projectId=details["project-id"])
+        # self.listingTests(projectId=details["project-id"])
         
-    def onTestsSnapshotRemovedAll(self, details):
-        """
-        Called on response
-        """
-        self.trace("on snapshot removed all") 
+    # def onTestsSnapshotRemovedAll(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on snapshot removed all") 
         
-        self.listingTests(projectId=details["project-id"])
+        # self.listingTests(projectId=details["project-id"])
         
     def onTestsFileOpened(self, details):
         """
@@ -3555,57 +3556,57 @@ class RestClientInterface(QObject, Logger.ClassLogger):
                                                 details["overwrite"],
                                                 details["close-after"] )
             
-    def onLibrariesFileOpened(self, details):
-        """
-        Called on response
-        """
-        self.trace("on libraries file opened") 
+    # def onLibrariesFileOpened(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on libraries file opened") 
         
-        self.OpenLibraryFile.emit(  details["file-path"],
-                                    details["file-name"],
-                                    details["file-extension"],
-                                    details["file-content"],
-                                    details["locked"],
-                                    details["locked-by"])
+        # self.OpenLibraryFile.emit(  details["file-path"],
+                                    # details["file-name"],
+                                    # details["file-extension"],
+                                    # details["file-content"],
+                                    # details["locked"],
+                                    # details["locked-by"])
                                     
-    def onLibrariesFileUploaded(self, details):
-        """
-        Called on response
-        """
-        self.trace("on libraries file uploaded") 
+    # def onLibrariesFileUploaded(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on libraries file uploaded") 
         
-        lockedBy = base64.b64decode(details["locked-by"])
-        if sys.version_info > (3,): # python3 support
-            lockedBy = lockedBy.decode("utf8")
+        # lockedBy = base64.b64decode(details["locked-by"])
+        # if sys.version_info > (3,): # python3 support
+            # lockedBy = lockedBy.decode("utf8")
             
-        if details["code"] == CODE_OK:
-            if details["locked"] and lockedBy != self.__login:
-                msg = "This file is locked by the user %s\nUnable to save the file!" %  lockedBy
-                self.WarningMsg.emit( "File locked" , msg  )
-            else:
-                self.FileLibrariesUploaded.emit(details["file-path"],
-                                                details["file-name"], 
-                                                details["file-extension"],
-                                                details["overwrite"],
-                                                details["close-after"])
+        # if details["code"] == CODE_OK:
+            # if details["locked"] and lockedBy != self.__login:
+                # msg = "This file is locked by the user %s\nUnable to save the file!" %  lockedBy
+                # self.WarningMsg.emit( "File locked" , msg  )
+            # else:
+                # self.FileLibrariesUploaded.emit(details["file-path"],
+                                                # details["file-name"], 
+                                                # details["file-extension"],
+                                                # details["overwrite"],
+                                                # details["close-after"])
             
-                if not details["overwrite"]:
-                    self.listingLibraries()
-        elif details["code"] == CODE_ALLREADY_EXISTS:  
-            self.WarningMsg.emit( "Save file" , "This filename already exist!" )
-            self.FileLibrariesUploadError.emit(details["file-path"],
-                                                details["file-name"], 
-                                                details["file-extension"],
-                                                details["overwrite"],
-                                                details["close-after"])
-        else:
-            self.CriticalMsg.emit( "Save file" , "Unable to save the file.\nError Num=%s" % details["code"])
+                # if not details["overwrite"]:
+                    # self.listingLibraries()
+        # elif details["code"] == CODE_ALLREADY_EXISTS:  
+            # self.WarningMsg.emit( "Save file" , "This filename already exist!" )
+            # self.FileLibrariesUploadError.emit(details["file-path"],
+                                                # details["file-name"], 
+                                                # details["file-extension"],
+                                                # details["overwrite"],
+                                                # details["close-after"])
+        # else:
+            # self.CriticalMsg.emit( "Save file" , "Unable to save the file.\nError Num=%s" % details["code"])
             
-            self.FileLibrariesUploadError.emit(details["file-path"],
-                                                details["file-name"], 
-                                                details["file-extension"],
-                                                details["overwrite"],
-                                                details["close-after"])
+            # self.FileLibrariesUploadError.emit(details["file-path"],
+                                                # details["file-name"], 
+                                                # details["file-extension"],
+                                                # details["overwrite"],
+                                                # details["close-after"])
         
 
     def onFindTestFileUsage(self, details):
@@ -3627,11 +3628,11 @@ class RestClientInterface(QObject, Logger.ClassLogger):
         """
         self.trace("on adapters file unlocked") 
         
-    def onLibrariesFileUnlocked(self, details):
-        """
-        Called on response
-        """
-        self.trace("on libraries file unlocked") 
+    # def onLibrariesFileUnlocked(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on libraries file unlocked") 
         
     def onTestsFileUnlocked(self, details):
         """
@@ -3647,21 +3648,21 @@ class RestClientInterface(QObject, Logger.ClassLogger):
         
         self.listingAdapters()
         
-    def onLibrariesPackageAdded(self, details):
-        """
-        Called on response
-        """
-        self.trace("on libraries package added") 
+    # def onLibrariesPackageAdded(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on libraries package added") 
         
-        self.listingLibraries()
+        # self.listingLibraries()
         
-    def onLibrariesLibraryAdded(self, details):
-        """
-        Called on response
-        """
-        self.trace("on library added") 
+    # def onLibrariesLibraryAdded(self, details):
+        # """
+        # Called on response
+        # """
+        # self.trace("on library added") 
         
-        self.listingLibraries()
+        # self.listingLibraries()
         
     def onAdaptersAdapterAdded(self, details):
         """

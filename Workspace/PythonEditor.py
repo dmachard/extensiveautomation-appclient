@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -60,7 +60,9 @@ class EditorWidget(QWidget, Logger.ClassLogger):
     Widget editor for python
     """
     def __init__(self, editorId, title, parent, activePyLexer=True, 
-                        activePropertiesLexer=False, wrappingText=False, toolbar=True  ):
+                activePropertiesLexer=False, 
+                wrappingText=False, toolbar=True,
+                docViewer=None):
         """
         Contructs EditorWidget
 
@@ -68,9 +70,15 @@ class EditorWidget(QWidget, Logger.ClassLogger):
         @type parent:
         """
         QWidget.__init__(self, parent)
+        
+        self.docViewer = docViewer
         self.toolbar = toolbar
         self.title = title
-        self.editor = PyEditor(editorId,parent, activePyLexer, activePropertiesLexer, wrappingText)
+        self.editor = PyEditor(editorId,
+                               parent, 
+                               activePyLexer, 
+                               activePropertiesLexer, 
+                               wrappingText)
         self.createWidgets()
         self.createToolbars()
     
@@ -84,6 +92,36 @@ class EditorWidget(QWidget, Logger.ClassLogger):
         """
         Create qt widget
         """
+        self.dockToolbarEdit = QToolBar(self)
+        self.dockToolbarEdit.setStyleSheet("QToolBar { border: 0px }") # remove 3D border
+        self.dockToolbarEdit.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        
+        self.editBox = QGroupBox("File")
+        self.editBox.setStyleSheet( """
+                                           QGroupBox { font: normal; border: 1px solid silver; border-radius: 2px; } 
+                                           QGroupBox { padding-bottom: 10px; background-color: #FAFAFA; } 
+                                           QGroupBox::title { subcontrol-position: bottom center;}
+                                       """ ) 
+        layoutEditBox = QHBoxLayout()
+        layoutEditBox.addWidget(self.dockToolbarEdit)
+        layoutEditBox.setContentsMargins(0,0,0,0)
+        self.editBox.setLayout(layoutEditBox)
+        
+        self.dockToolbarRun = QToolBar(self)
+        self.dockToolbarRun.setStyleSheet("QToolBar { border: 0px }") # remove 3D border
+        self.dockToolbarRun.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        
+        self.runBox = QGroupBox("Run")
+        self.runBox.setStyleSheet( """
+                                           QGroupBox { font: normal; border: 1px solid silver; border-radius: 2px; } 
+                                           QGroupBox { padding-bottom: 10px; background-color: #FAFAFA; } 
+                                           QGroupBox::title { subcontrol-position: bottom center;}
+                                       """ ) 
+        layoutRunBox = QHBoxLayout()
+        layoutRunBox.addWidget(self.dockToolbarRun)
+        layoutRunBox.setContentsMargins(0,0,0,0)
+        self.runBox.setLayout(layoutRunBox)
+        
         self.dockToolbarClipboard = QToolBar(self)
         self.dockToolbarClipboard.setStyleSheet("QToolBar { border: 0px }") # remove 3D border
         self.dockToolbarClipboard.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
@@ -115,6 +153,8 @@ class EditorWidget(QWidget, Logger.ClassLogger):
         self.textBox.setLayout(layoutTextBox)
         
         layoutToolbars = QHBoxLayout()
+        layoutToolbars.addWidget(self.editBox)
+        layoutToolbars.addWidget(self.runBox)
         layoutToolbars.addWidget(self.textBox)
         layoutToolbars.addWidget(self.clipBox)
         layoutToolbars.addStretch(1)
@@ -138,6 +178,19 @@ class EditorWidget(QWidget, Logger.ClassLogger):
         """
         Create qt toolbars
         """
+        self.dockToolbarRun.setIconSize(QSize(16, 16))
+        if self.docViewer is not None:
+            self.dockToolbarRun.addAction(self.docViewer.runAction)
+            self.dockToolbarRun.addAction(self.docViewer.schedAction)
+            self.dockToolbarRun.addAction(self.docViewer.checkAction)
+        
+        self.dockToolbarEdit.setIconSize(QSize(16, 16))
+        if self.docViewer is not None:
+            self.dockToolbarEdit.addAction(self.docViewer.saveAction)
+            self.dockToolbarEdit.addAction(self.docViewer.updateTestAction)
+            self.dockToolbarEdit.addAction(self.docViewer.findAction)
+            self.dockToolbarEdit.addAction(self.docViewer.printAction)
+            
         self.dockToolbarClipboard.addAction(self.editor.copyAction)
         self.dockToolbarClipboard.addAction(self.editor.cutAction)
         self.dockToolbarClipboard.addAction(self.editor.pasteAction)
@@ -151,7 +204,27 @@ class EditorWidget(QWidget, Logger.ClassLogger):
         self.dockToolbarText.addAction(self.editor.commentAction)
         self.dockToolbarText.addAction(self.editor.uncommentAction)
         self.dockToolbarText.setIconSize(QSize(16, 16))
-
+        
+    def hideToolbarRun(self):
+        """
+        """
+        self.runBox.hide()
+        
+    def hideToolbarFile(self):
+        """
+        """
+        self.editBox.hide()
+        
+    def showToolbarRun(self):
+        """
+        """
+        self.runBox.show()
+        
+    def showToolbarFile(self):
+        """
+        """
+        self.editBox.show() 
+        
 class CustomPythonLexer(QsciLexerPython):
     """
     Custom python lexer
@@ -363,16 +436,6 @@ class PyEditor(QsciScintilla, Logger.ClassLogger):
         
         if self.activePyLexer:
             self.setLexer(lexer)
-            
-            # api = QsciAPIs(lexer)
-            # api.add('aLongString')
-            # api.add('aLongerString')
-            # api.add('aDifferentString')
-            # api.add('sOmethingElse')
-            # api.prepare()
-            
-            # self.setAutoCompletionThreshold(1)
-            # self.setAutoCompletionSource(QsciScintilla.AcsAPIs)
 
         lexerProperties = QsciLexerProperties(self)
         if self.activePropertiesLexer:
@@ -396,9 +459,12 @@ class PyEditor(QsciScintilla, Logger.ClassLogger):
         self.setMarginLineNumbers(1, False)
         self.setMarginWidth(1, 0)
         self.setMarginsBackgroundColor(Qt.gray)
+        
         marginFont = QFont()
         marginFont.setBold(False)
+        marginFont.setPointSize( int(fontSize) )
         self.setMarginsFont (marginFont)
+        
         self.setMarginsForegroundColor(Qt.white)
         
         # text wrapping

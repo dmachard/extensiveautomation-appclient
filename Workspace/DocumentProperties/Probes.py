@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -61,7 +61,7 @@ def q(v=""):
     else:
         return QVariant(v)
         
-import ServerExplorer.Probes as ServerProbes
+# import ServerExplorer.Probes as ServerProbes
 
 
 try:
@@ -282,8 +282,8 @@ class ProbesTableModel(QAbstractTableModel, Logger.ClassLogger):
             self._data[ index.row() ]['name'] = value
             if orig_ != value:
                 dataChanged = True
-                probeType = ServerProbes.instance().getProbeTypeByName(name=value)
-                self._data[ index.row() ]['type'] = probeType.lower()
+                # probeType = ServerProbes.instance().getProbeTypeByName(name=value)
+                # self._data[ index.row() ]['type'] = probeType.lower()
                 self._data[ index.row() ]['args'] = ''
         elif index.column() == COLUMN_TYPE:
             if 'type' in self._data[ index.row() ]: # new with 2.1.0
@@ -412,18 +412,18 @@ class ComboBoxProbesActiveDelegate(QItemDelegate, Logger.ClassLogger):
         @rtype:
         """
         # get running probe from context
-        self.items_ = ServerProbes.instance().getRunningProbes()
-        self.items_ = sorted(self.items_) # sort agents list, new in v12.2
+        # self.items_ = ServerProbes.instance().getRunningProbes()
+        # self.items_ = sorted(self.items_) # sort agents list, new in v12.2
         
         # load probs in combobox
-        value = self.getValue(index)
-        if index.column() == self.col_:
-            editor = QComboBox(parent)
-            editor.activated.connect(self.onItemActivated)
-            editor.addItem (value)
-            editor.insertSeparator(1)
-            editor.addItems(self.items_)
-            return editor
+        # value = self.getValue(index)
+        # if index.column() == self.col_:
+            # editor = QComboBox(parent)
+            # editor.activated.connect(self.onItemActivated)
+            # editor.addItem (value)
+            # editor.insertSeparator(1)
+            # editor.addItems(self.items_)
+            # return editor
             
         return QItemDelegate.createEditor(self, parent, option, index)
         

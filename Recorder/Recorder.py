@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -225,7 +225,7 @@ class WRecorder(object):
                     testAgents = currentDocument.dataModel.properties['properties']['agents']
 
                     Gui.instance().clearSteps()
-                    Gui.instance().loadAgents()
+                    # Gui.instance().loadAgents()
                     Gui.instance().show()
                     Gui.instance().loadCurrentTest( currentDoc=currentDocument, 
                                                     testContent=testContent,
@@ -253,7 +253,7 @@ class WRecorder(object):
                 return
 
         Gui.instance().clearSteps()
-        Gui.instance().loadAgents()
+        # Gui.instance().loadAgents()
         
         if mode == MODE_APP:
             Gui.instance().focusAppPart()

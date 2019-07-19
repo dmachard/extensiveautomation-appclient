@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -972,24 +972,6 @@ class WRecorderGui(QWidget, Logger.ClassLogger):
                 args = args.replace("cssSelector=None", "cssSelector=input('BROWSER_TEXT_BY_%s')" % j ) 
         return args
         
-    def searchGUI(self):
-        """
-        Search GUI module in assistant
-        """
-        # modules accessor
-        ret = "SutAdapters"
-        if self.automaticAdp.isChecked():
-            isGeneric = WWorkspace.Helper.instance().isGuiGeneric(name="GUI")
-            if isGeneric:
-                ret =  "SutAdapters.Generic"
-        elif self.defaultAdp.isChecked():
-            return ret
-        elif self.genericAdp.isChecked():
-            ret =  "SutAdapters.Generic"
-        else:
-            pass
-        return ret
-        
     def checkDuplicateAlias(self, inputs, alias):
         """
         Check all alias duplicated
@@ -1073,6 +1055,9 @@ class WRecorderGui(QWidget, Logger.ClassLogger):
                 sysStepDetected = True
                 break
                 
+        # construct new inputs
+        newInputs = []
+                     
         # set the agent
         agentKeyName = self.sikuliGroup.getAgentName() 
         agentBrowserKeyName = self.seleniumGroup.getAgentName() 
@@ -1081,19 +1066,30 @@ class WRecorderGui(QWidget, Logger.ClassLogger):
         
         # init adapter
         adpsGui = [ ]
-        self.searchGUI()
         if anythingStepDetected:
-            adpsGui.append( "self.ADP_GUI = %s.GUI.Sikuli(parent=self, agent=agent('%s'), debug=input('DEBUG'))" % (self.searchGUI(), 
-                                                                                                                    str(agentKeyName))  )
+            adpsGui.append( "self.ADP_GUI = SutAdapters.GUI.Sikuli(parent=self, agent=input('%s'), debug=input('DEBUG'))" % str(agentKeyName)  )
+            newInputs.append( { 'type': 'json', 'name': '%s' % str(agentKeyName), 
+                                'description': '',
+                                'value' : '{"name": "", "type": "sikulixserver"}', 
+                                'color': '', 
+                                'scope': 'local' } ) 
         if browserStepDetected:
-            adpsGui.append( "self.ADP_GUI_BROWSER = %s.GUI.Selenium(parent=self, agent=agent('%s'), debug=input('DEBUG'), navigId=Cache().get(name='selenium-navig-id'))" % (self.searchGUI(),str(agentBrowserKeyName)) )
+            adpsGui.append( "self.ADP_GUI_BROWSER = SutAdapters.GUI.Selenium(parent=self, agent=input('%s'), debug=input('DEBUG'), navigId=Cache().get(name='selenium-navig-id'))" % (str(agentBrowserKeyName)) )
+            newInputs.append( { 'type': 'json', 'name': '%s' % str(agentBrowserKeyName), 
+                                'description': '',
+                                'value' : '{"name": "", "type": "selenium3server"}', 
+                                'color': '', 
+                                'scope': 'local' } ) 
         if androidStepDetected:
-            adpsGui.append( "self.ADP_ANDROID = %s.GUI.Adb(parent=self, agent=agent('%s'), debug=input('DEBUG'))" % (self.searchGUI(), 
+            adpsGui.append( "self.ADP_ANDROID = SutAdapters.GUI.Adb(parent=self, agent=input('%s'), debug=input('DEBUG'))" % ( 
                                                                                                                     str(agentAndroidKeyName))  )
+            newInputs.append( { 'type': 'json', 'name': '%s' % str(agentAndroidKeyName), 
+                                'description': '',
+                                'value' : '{"name": "", "type": "adb"}', 
+                                'color': '', 
+                                'scope': 'local' } )
 
-        # construct new inputs
-        newInputs = []
-                
+
         newInputs.extend( self.userParams  )
         
         j = 0
@@ -2104,10 +2100,10 @@ class WRecorderGui(QWidget, Logger.ClassLogger):
                             else:
                                 args.append( "password=input('SYS_PWD')")
                                 
-                            args.append( "agent=agent('%s')" %   str(agentSystemKeyName) )
+                            args.append( "agent=input('%s')" %   str(agentSystemKeyName) )
                             args.append( "debug=input('DEBUG')" )
                             args.append( "agentSupport=input('SYS_AGT_SUPPORT')")
-                            adpsGui.append( "self.ADP_SYS = %s.SSH.Terminal(parent=self, %s )" % (self.searchGUI(), ",".join(args) )  )
+                            adpsGui.append( "self.ADP_SYS = SutAdapters.SSH.Terminal(parent=self, %s )" % ( ",".join(args) )  )
                             
                             testdef.append( "%s\tSYS_RET%s = self.ADP_SYS.doSession(timeout=input('TIMEOUT_SYS'))" % (tab, j) )
                         if stepsReg[i]['action'] == GuiSteps.SYSTEM_CLOSE:
@@ -2123,7 +2119,7 @@ class WRecorderGui(QWidget, Logger.ClassLogger):
                             testdef.append( "%s\tSYS_RET%s = self.ADP_SYS.doText(%s)" % (tab, j, ','.join(args) ) )
                         if stepsReg[i]['action'] == GuiSteps.SYSTEM_SHORTCUT:
                             shortcut = stepsReg[i]["parameters"]['shortcut']
-                            testdef.append( "%s\tSYS_RET%s = self.ADP_SYS.doShortcut(key=%s.SSH.KEY_%s)" % (tab, j, self.searchGUI(), shortcut) )
+                            testdef.append( "%s\tSYS_RET%s = self.ADP_SYS.doShortcut(key=SutAdapters.SSH.KEY_%s)" % (tab, j, shortcut) )
                         if stepsReg[i]['action'] == GuiSteps.SYSTEM_CHECK_SCREEN:
                             op = stepsReg[i]['parameters']['operator']
                             args = []
@@ -2288,7 +2284,7 @@ class WRecorderGui(QWidget, Logger.ClassLogger):
                             keyStr = stepsReg[i]['text-more']
                             if ";" in stepsReg[i]['text-more']:
                                 keyStr, keyRepeat = stepsReg[i]['text-more'].split(";")
-                            keyArg = "%s.GUI.SELENIUM_KEY_%s" % (self.searchGUI(), keyStr)
+                            keyArg = "SutAdapters.GUI.SELENIUM_KEY_%s" % (keyStr)
                             
                             testdef.append( "%s\tBROWSER_RET%s = self.ADP_GUI_BROWSER.doTypeKey(key=%s, timeout=input('TIMEOUT_GUI_BROWSER'), %s, repeat=%s)" % ( tab, j, keyArg, args, keyRepeat) )
                         
@@ -2365,7 +2361,7 @@ class WRecorderGui(QWidget, Logger.ClassLogger):
                             testdef.append( "%s\tactionId = self.ADP_ANDROID.clearLogs()" % (tab) )
                         if stepsReg[i]['action'] == GuiSteps.ANDROID_TYPE_SHORTCUT:
                             key = stepsReg[i]['misc']
-                            testdef.append( "%s\tactionId = self.ADP_ANDROID.typeShortcut(shortcut=%s.GUI.ADB_KEY_%s)" % (tab, self.searchGUI(), key) )
+                            testdef.append( "%s\tactionId = self.ADP_ANDROID.typeShortcut(shortcut=SutAdapters.GUI.ADB_KEY_%s)" % (tab, key) )
                         if stepsReg[i]['action'] == GuiSteps.ANDROID_TYPE_KEYCODE:
                             code = stepsReg[i]['misc']
                             testdef.append( "%s\tactionId = self.ADP_ANDROID.typeKeyCode(code=%s)" % (tab, code) )
@@ -2587,7 +2583,7 @@ class WRecorderGui(QWidget, Logger.ClassLogger):
                             # extra key modifiers
                             for key in modifiersKeys:
                                 if len(key):
-                                    modifiersFinal.append( "%s.GUI.KEY_%s" % (self.searchGUI(), key) )
+                                    modifiersFinal.append( "SutAdapters.GUI.KEY_%s" % (key) )
                             
                             if len(modifiersFinal) == 1:
                                 mainKey = modifiersFinal[0]
@@ -2604,7 +2600,7 @@ class WRecorderGui(QWidget, Logger.ClassLogger):
                                         otherKey = stepsReg[i]['text'].lower()
 
                                 if not letterDetected:
-                                    specialKey =  "%s.GUI.KEY_%s" % (self.searchGUI(), stepsReg[i]['text'])
+                                    specialKey =  "SutAdapters.GUI.KEY_%s" % (stepsReg[i]['text'])
 
                             if otherKey != 'None':
                                 otherKey ="'%s'" % otherKey
@@ -3577,42 +3573,42 @@ class WRecorderGui(QWidget, Logger.ClassLogger):
                 self.sshGroup.setTimeout( inParam['value'] )
         
         # extract agent
-        for agtParam in testAgents['agent']:
-            if agtParam['name'] == 'AGENT_GUI' and agtParam['type'] == 'sikulixserver':
-                self.sikuliGroup.getAgentList().insertSeparator( self.sikuliGroup.getAgentList().count() )
-                self.sikuliGroup.getAgentList().addItems( [agtParam["value"]] )
+        # for agtParam in testAgents['agent']:
+            # if agtParam['name'] == 'AGENT_GUI' and agtParam['type'] == 'sikulixserver':
+                # self.sikuliGroup.getAgentList().insertSeparator( self.sikuliGroup.getAgentList().count() )
+                # self.sikuliGroup.getAgentList().addItems( [agtParam["value"]] )
         
-                for i in xrange(self.sikuliGroup.getAgentList().count()):
-                    item_text = self.sikuliGroup.getAgentList().itemText(i)
-                    if str(agtParam["value"]) == str(item_text):
-                        self.sikuliGroup.getAgentList().setCurrentIndex(i)
+                # for i in xrange(self.sikuliGroup.getAgentList().count()):
+                    # item_text = self.sikuliGroup.getAgentList().itemText(i)
+                    # if str(agtParam["value"]) == str(item_text):
+                        # self.sikuliGroup.getAgentList().setCurrentIndex(i)
                         
-            if agtParam['name'] == 'AGENT_GUI_BROWSER' and agtParam['type'] == 'seleniumserver':
-                self.seleniumGroup.getAgentList().insertSeparator( self.seleniumGroup.getAgentList().count() )
-                self.seleniumGroup.getAgentList().addItems( [agtParam["value"]] )
+            # if agtParam['name'] == 'AGENT_GUI_BROWSER' and agtParam['type'] == 'seleniumserver':
+                # self.seleniumGroup.getAgentList().insertSeparator( self.seleniumGroup.getAgentList().count() )
+                # self.seleniumGroup.getAgentList().addItems( [agtParam["value"]] )
         
-                for i in xrange(self.seleniumGroup.getAgentList().count()):
-                    item_text = self.seleniumGroup.getAgentList().itemText(i)
-                    if str(agtParam["value"]) == str(item_text):
-                        self.seleniumGroup.getAgentList().setCurrentIndex(i)
+                # for i in xrange(self.seleniumGroup.getAgentList().count()):
+                    # item_text = self.seleniumGroup.getAgentList().itemText(i)
+                    # if str(agtParam["value"]) == str(item_text):
+                        # self.seleniumGroup.getAgentList().setCurrentIndex(i)
                         
-            if agtParam['name'] == 'AGENT_ANDROID' and agtParam['type'] == 'adb':
-                self.androidGroup.getAgentList().insertSeparator( self.androidGroup.getAgentList().count() )
-                self.androidGroup.getAgentList().addItems( [agtParam["value"]] )
+            # if agtParam['name'] == 'AGENT_ANDROID' and agtParam['type'] == 'adb':
+                # self.androidGroup.getAgentList().insertSeparator( self.androidGroup.getAgentList().count() )
+                # self.androidGroup.getAgentList().addItems( [agtParam["value"]] )
         
-                for i in xrange(self.androidGroup.getAgentList().count()):
-                    item_text = self.androidGroup.getAgentList().itemText(i)
-                    if str(agtParam["value"]) == str(item_text):
-                        self.androidGroup.getAgentList().setCurrentIndex(i)
+                # for i in xrange(self.androidGroup.getAgentList().count()):
+                    # item_text = self.androidGroup.getAgentList().itemText(i)
+                    # if str(agtParam["value"]) == str(item_text):
+                        # self.androidGroup.getAgentList().setCurrentIndex(i)
                         
-            if agtParam['name'] == 'AGENT_SYSTEM' and agtParam['type'] == 'ssh':
-                self.sshGroup.getAgentList().insertSeparator( self.sshGroup.getAgentList().count() )
-                self.sshGroup.getAgentList().addItems( [agtParam["value"]] )
+            # if agtParam['name'] == 'AGENT_SYSTEM' and agtParam['type'] == 'ssh':
+                # self.sshGroup.getAgentList().insertSeparator( self.sshGroup.getAgentList().count() )
+                # self.sshGroup.getAgentList().addItems( [agtParam["value"]] )
         
-                for i in xrange(self.sshGroup.getAgentList().count()):
-                    item_text = self.sshGroup.getAgentList().itemText(i)
-                    if str(agtParam["value"]) == str(item_text):
-                        self.sshGroup.getAgentList().setCurrentIndex(i)
+                # for i in xrange(self.sshGroup.getAgentList().count()):
+                    # item_text = self.sshGroup.getAgentList().itemText(i)
+                    # if str(agtParam["value"]) == str(item_text):
+                        # self.sshGroup.getAgentList().setCurrentIndex(i)
             
         # set data to datamodel
         dataModel = self.stepsTable.getData()
@@ -3717,8 +3713,8 @@ class WRecorderGui(QWidget, Logger.ClassLogger):
             keysSysFinal = None
             if 'SutAdapters.SSH' in keySys:
                 keysSysFinal = keySys.split('SutAdapters.SSH.KEY_')[1].strip()
-            if 'SutAdapters.Generic.SSH' in keySys:
-                keysSysFinal = keySys.split('SutAdapters.Generic.SSH.KEY_')[1].strip()
+            # if 'SutAdapters.Generic.SSH' in keySys:
+                # keysSysFinal = keySys.split('SutAdapters.Generic.SSH.KEY_')[1].strip()
             stp['parameters'] = {"shortcut": keysSysFinal }
         if 'self.ADP_SYS.hasReceivedScreen' in line:
             stp['action'] = GuiSteps.SYSTEM_CHECK_SCREEN
@@ -3771,8 +3767,8 @@ class WRecorderGui(QWidget, Logger.ClassLogger):
             keysAndroidFinal = None
             if 'SutAdapters.GUI' in keyAndroid:
                 keysAndroidFinal = keyAndroid.split('SutAdapters.GUI.ADB_KEY_')[1].strip()
-            if 'SutAdapters.Generic.GUI' in keyAndroid:
-                keysAndroidFinal = keyAndroid.split('SutAdapters.Generic.GUI.ADB_KEY_')[1].strip()
+            # if 'SutAdapters.Generic.GUI' in keyAndroid:
+                # keysAndroidFinal = keyAndroid.split('SutAdapters.Generic.GUI.ADB_KEY_')[1].strip()
             if keysAndroidFinal is not None:
                 stp['action'] = GuiSteps.ANDROID_TYPE_SHORTCUT
                 stp['misc'] = keysAndroidFinal
@@ -4085,18 +4081,18 @@ class WRecorderGui(QWidget, Logger.ClassLogger):
                 if mainKey != 'None':
                     if 'SutAdapters.GUI' in mainKey:
                         keysFinal.append(mainKey.split('SutAdapters.GUI.KEY_')[1].strip())
-                    if 'SutAdapters.Generic.GUI' in mainKey:
-                        keysFinal.append(mainKey.split('SutAdapters.Generic.GUI.KEY_')[1].strip())
+                    # if 'SutAdapters.Generic.GUI' in mainKey:
+                        # keysFinal.append(mainKey.split('SutAdapters.Generic.GUI.KEY_')[1].strip())
                 if modifierKey != 'None':
                     if 'SutAdapters.GUI' in modifierKey:
                         keysFinal.append(modifierKey.split('SutAdapters.GUI.KEY_')[1].strip())
-                    if 'SutAdapters.Generic.GUI' in modifierKey:
-                        keysFinal.append(modifierKey.split('SutAdapters.Generic.GUI.KEY_')[1].strip())
+                    # if 'SutAdapters.Generic.GUI' in modifierKey:
+                        # keysFinal.append(modifierKey.split('SutAdapters.Generic.GUI.KEY_')[1].strip())
                 if specialKey != 'None':
                     if 'SutAdapters.GUI' in specialKey:
                         keysFinal.append(specialKey.split('SutAdapters.GUI.KEY_')[1].strip())
-                    if 'SutAdapters.Generic.GUI' in specialKey:
-                        keysFinal.append(specialKey.split('SutAdapters.Generic.GUI.KEY_')[1].strip())
+                    # if 'SutAdapters.Generic.GUI' in specialKey:
+                        # keysFinal.append(specialKey.split('SutAdapters.Generic.GUI.KEY_')[1].strip())
                 stp['misc'] = '+'.join(keysFinal)
                 if finalKey != 'None':
                     stp['text'] = finalKey.upper()
@@ -4569,26 +4565,26 @@ class WRecorderGui(QWidget, Logger.ClassLogger):
         
         return searchBy 
         
-    def loadAgents(self):
-        """
-        Load agents
-        """
-        self.updateStepsAction.setEnabled(False)
+    # def loadAgents(self):
+        # """
+        # Load agents
+        # """
+        # self.updateStepsAction.setEnabled(False)
 
-        self.sikuliGroup.getAgentList().clear()
-        self.seleniumGroup.getAgentList().clear()
-        self.androidGroup.getAgentList().clear()
-        self.sshGroup.getAgentList().clear()
-        runningAgents = ServerAgents.instance().getRunningAgentsComplete()
-        for agt in runningAgents:
-            if agt['type'].lower() in ['sikulix', 'sikulixserver' ]:
-                self.sikuliGroup.getAgentList().addItem ( agt['name'] )
-            if agt['type'].lower() in ['selenium', 'seleniumserver' ]:
-                self.seleniumGroup.getAgentList().addItem ( agt['name'] )
-            if agt['type'].lower() == 'adb':
-                self.androidGroup.getAgentList().addItem ( agt['name'] )
-            if agt['type'].lower() == 'ssh':
-                self.sshGroup.getAgentList().addItem ( agt['name'] )
+        # self.sikuliGroup.getAgentList().clear()
+        # self.seleniumGroup.getAgentList().clear()
+        # self.androidGroup.getAgentList().clear()
+        # self.sshGroup.getAgentList().clear()
+        # runningAgents = ServerAgents.instance().getRunningAgentsComplete()
+        # for agt in runningAgents:
+            # if agt['type'].lower() in ['sikulix', 'sikulixserver' ]:
+                # self.sikuliGroup.getAgentList().addItem ( agt['name'] )
+            # if agt['type'].lower() in ['selenium', 'seleniumserver' ]:
+                # self.seleniumGroup.getAgentList().addItem ( agt['name'] )
+            # if agt['type'].lower() == 'adb':
+                # self.androidGroup.getAgentList().addItem ( agt['name'] )
+            # if agt['type'].lower() == 'ssh':
+                # self.sshGroup.getAgentList().addItem ( agt['name'] )
                 
     def onTakeSnapshot(self):
         """

@@ -21,4 +21,4 @@
 # -------------------------------------------------------------------
 
 echo "Building files resources..."
-python3 -m PyQt5.pyrcc_main -o ../../Resources/Resources.py ../../Resources/__resources.qrc
+py -m PyQt5.pyrcc_main -o ../../Resources/Resources.py ../../Resources/__resources.qrc

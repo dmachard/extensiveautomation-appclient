@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -57,20 +57,20 @@ try:
     import Miscellaneous
     import TestManager
     import Archives
-    import Probes
+    # import Probes
     import Agents
     import ReleaseNotes
-    import Repositories
-    import Counters
+    # import Repositories
+    # import Counters
 except ImportError:
     from . import Miscellaneous
     from . import TestManager
     from . import Archives
-    from . import Probes
+    # from . import Probes
     from . import Agents
     from . import ReleaseNotes
-    from . import Repositories
-    from . import Counters
+    # from . import Repositories
+    # from . import Counters
 
 # import standard library
 import hashlib
@@ -156,7 +156,8 @@ class RestNetworkHandler(QObject, Logger.ClassLogger):
         if reply in NETWORK_ERRORS:
             self.error( 'REST response error: %s' % NETWORK_ERRORS[reply] )
             self.stopWorking()
-            UCI.instance().onError( title=self.tr("REST - Connection Error"), err=self.tr( "%s" % NETWORK_ERRORS[reply] ) )
+            UCI.instance().onError( title=self.tr("REST - Connection Error"), 
+                                    err=self.tr( "%s" % NETWORK_ERRORS[reply] ) )
         else:
             # read the body
             rsp = reply.readAll()
@@ -858,10 +859,10 @@ TAB_ARCHIVES_POS        =   0
 TAB_REPO_POS            =   1
 TAB_TESTMGR_POS         =   2
 TAB_AGENTS_POS          =   3
-TAB_PROBES_POS          =   4
-TAB_MISC_POS            =   5
-TAB_CT_POS              =   6
-TAB_RN_POS              =   7
+# TAB_PROBES_POS          =   4
+TAB_MISC_POS            =   4
+# TAB_CT_POS              =   6
+TAB_RN_POS              =   5
 
 class WServerExplorer(QWidget, Logger.ClassLogger):
     """
@@ -988,27 +989,27 @@ class WServerExplorer(QWidget, Logger.ClassLogger):
 
         Miscellaneous.initialize( parent = self.serverTab ) 
         TestManager.initialize( parent = self.serverTab )
-        Probes.initialize( parent = self.serverTab )
+        # Probes.initialize( parent = self.serverTab )
         Agents.initialize( parent = self.serverTab )
         Archives.initialize( parent = self.serverTab, mainParent=self.parent )
         ReleaseNotes.initialize( parent = self.serverTab )
-        Repositories.initialize( parent = self.serverTab )
-        Counters.initialize( parent = self.serverTab )
+        # Repositories.initialize( parent = self.serverTab )
+        # Counters.initialize( parent = self.serverTab )
 
         Miscellaneous.instance().setEnabled(False)
         TestManager.instance().setEnabled(False)
-        Probes.instance().setEnabled(False)
+        # Probes.instance().setEnabled(False)
         Agents.instance().setEnabled(False)
         Archives.instance().setEnabled(False)
         ReleaseNotes.instance().setEnabled(False)
-        Repositories.instance().setEnabled(False)
-        Counters.instance().setEnabled(False)
+        # Repositories.instance().setEnabled(False)
+        # Counters.instance().setEnabled(False)
 
         self.serverTab.addTab( Archives.instance(), QIcon(":/archives.png") , 
                                Archives.instance().name )
         self.serverTab.setTabEnabled( TAB_ARCHIVES_POS, False )
-        self.serverTab.addTab( Repositories.instance() , QIcon(":/repositories.png"), 
-                               Repositories.instance().name  )
+        # self.serverTab.addTab( Repositories.instance() , QIcon(":/repositories.png"), 
+                               # Repositories.instance().name  )
         self.serverTab.setTabEnabled( TAB_REPO_POS, False )
         self.serverTab.addTab( TestManager.instance() , QIcon(":/processes.png"), 
                                TestManager.instance().name )
@@ -1016,15 +1017,15 @@ class WServerExplorer(QWidget, Logger.ClassLogger):
         self.serverTab.addTab( Agents.instance() , QIcon(":/agent.png") , 
                                Agents.instance().name )
         self.serverTab.setTabEnabled( TAB_AGENTS_POS, False )
-        self.serverTab.addTab( Probes.instance() , QIcon(":/probe.png") , 
-                               Probes.instance().name )
-        self.serverTab.setTabEnabled( TAB_PROBES_POS, False )
+        # self.serverTab.addTab( Probes.instance() , QIcon(":/probe.png") , 
+                               # Probes.instance().name )
+        # self.serverTab.setTabEnabled( TAB_PROBES_POS, False )
         self.serverTab.addTab( Miscellaneous.instance(), QIcon(":/server-config.png"), 
                                Miscellaneous.instance().name )
         self.serverTab.setTabEnabled( TAB_MISC_POS, False )
-        self.serverTab.addTab( Counters.instance(), QIcon(":/reset-counter.png"), 
-                               Counters.instance().name )
-        self.serverTab.setTabEnabled( TAB_CT_POS, False )
+        # self.serverTab.addTab( Counters.instance(), QIcon(":/reset-counter.png"), 
+                               # Counters.instance().name )
+        # self.serverTab.setTabEnabled( TAB_CT_POS, False )
         self.serverTab.addTab( ReleaseNotes.instance(), QIcon(":/releasenotes.png"), 
                                ReleaseNotes.instance().name )
         self.serverTab.setTabEnabled( TAB_RN_POS, False )
@@ -1047,9 +1048,9 @@ class WServerExplorer(QWidget, Logger.ClassLogger):
                                             self.stopConnection, 
                                             icon = QIcon(":/ko.png"))
         self.disconnectAction.setEnabled( False )
-        self.checkUpdateAction = QtHelper.createAction(self, self.tr("Check for update"), 
-                                            self.checkUpdate)
-        self.checkUpdateAction.setEnabled(False)
+        # self.checkUpdateAction = QtHelper.createAction(self, self.tr("Check for update"), 
+                                            # self.checkUpdate)
+        # self.checkUpdateAction.setEnabled(False)
 
     def checkUpdateAuto(self):
         """
@@ -1112,9 +1113,7 @@ class WServerExplorer(QWidget, Logger.ClassLogger):
             # update actions
             self.connectAction.setEnabled(False)
             self.disconnectAction.setEnabled(True)
-            self.checkUpdateAction.setEnabled(True)
-            
-            # if UCI.RIGHTS_ADMIN in RCI.instance().userRights or  UCI.RIGHTS_TESTER in RCI.instance().userRights:
+            # self.checkUpdateAction.setEnabled(True)
 
             TestManager.instance().active()
             TestManager.instance().setEnabled(True)
@@ -1125,31 +1124,26 @@ class WServerExplorer(QWidget, Logger.ClassLogger):
             TestManager.instance().loadHistory( data = data['tasks-history'] )
             TestManager.instance().loadEnqueued( data = data['tasks-enqueued'] )
 
-            Probes.instance().active()
-            Probes.instance().setEnabled(True)
-            self.serverTab.setTabEnabled( TAB_PROBES_POS, True )
-            Probes.instance().loadData( data = data['probes-running'],
-                                        dataInstalled=data['probes-installed']
-                                        )
-            Probes.instance().loadDefault( data = data['probes-default'] )
+            # Probes.instance().active()
+            # Probes.instance().setEnabled(True)
+            # self.serverTab.setTabEnabled( TAB_PROBES_POS, True )
+            # Probes.instance().loadData( data = data['probes-running']
+                                        # )
+            # Probes.instance().loadDefault( data = data['probes-default'] )
 
             Agents.instance().active()
             Agents.instance().setEnabled(True)
             self.serverTab.setTabEnabled( TAB_AGENTS_POS, True )
-            Agents.instance().loadData( data = data['agents-running'],
-                                        dataInstalled=data['agents-installed']
+            Agents.instance().loadData( data = data['agents-running']
                                         )
-            Agents.instance().loadDefault( data = data['agents-default'] )
-
-            # if UCI.RIGHTS_ADMIN in RCI.instance().userRights or  UCI.RIGHTS_TESTER in RCI.instance().userRights \
-                  # or  UCI.RIGHTS_LEADER in RCI.instance().userRights:
+            # Agents.instance().loadDefault( data = data['agents-default'] )
 
             Archives.instance().active()
             Archives.instance().setEnabled(True)
             self.serverTab.setTabEnabled( TAB_ARCHIVES_POS, True )
             self.serverTab.setCurrentIndex(TAB_ARCHIVES_POS)
             Archives.instance().cleanTreeView()
-            Repositories.instance().cleanStatsArchives()
+            # Repositories.instance().cleanStatsArchives()
             rootItem = Archives.instance().createRootItem()
             Archives.instance().loadData( data = data['archives'], 
                                           parent=rootItem )
@@ -1162,48 +1156,43 @@ class WServerExplorer(QWidget, Logger.ClassLogger):
                 Miscellaneous.instance().setEnabled(True)
                 self.serverTab.setTabEnabled( TAB_MISC_POS, True )
                 Miscellaneous.instance().loadData( data = data['informations'] )
-                Miscellaneous.instance().loadStats( data = data['stats-server'] )
+                # Miscellaneous.instance().loadStats( data = data['stats-server'] )
                 
-                Repositories.instance().active()
-                Repositories.instance().setEnabled(True)
+                # Repositories.instance().active()
+                # Repositories.instance().setEnabled(True)
                 self.serverTab.setTabEnabled( TAB_REPO_POS, True )
                 
-                Repositories.instance().initializeProjects( projects=data['projects'], 
-                                                            defaultProject=data['default-project'] )
-                Repositories.instance().loadData(   data = data['stats-repo-tests'], 
-                                                    backups=data['backups-repo-tests'] )
-                Repositories.instance().loadDataAdapters(   data = data['stats-repo-adapters'],
-                                                            backups=data['backups-repo-adapters']   )
-                Repositories.instance().loadDataLibraries(  data = data['stats-repo-libraries'],
-                                                            backups=data['backups-repo-libraries']   )
-                Repositories.instance().loadDataArchives( data = data['stats-repo-archives'],
-                                                            backups=data['backups-repo-archives'] )
-                
-            # if UCI.RIGHTS_ADMIN in RCI.instance().userRights or  UCI.RIGHTS_TESTER in RCI.instance().userRights or \
-                # UCI.RIGHTS_DEVELOPER in RCI.instance().userRights or  UCI.RIGHTS_LEADER in RCI.instance().userRights:
+                # Repositories.instance().initializeProjects( projects=data['projects'], 
+                                                            # defaultProject=data['default-project'] )
+                # Repositories.instance().loadData(   data = data['stats-repo-tests'], 
+                                                    # backups=data['backups-repo-tests'] )
+                # Repositories.instance().loadDataAdapters(   data = data['stats-repo-adapters'],
+                                                            # backups=data['backups-repo-adapters']   )
+                # Repositories.instance().loadDataLibraries(  data = data['stats-repo-libraries'],
+                                                            # backups=data['backups-repo-libraries']   )
+                # Repositories.instance().loadDataArchives( data = data['stats-repo-archives'],
+                                                            # backups=data['backups-repo-archives'] )
 
             Settings.instance().setServerContext( data['informations'] )
             ReleaseNotes.instance().active()
             ReleaseNotes.instance().setEnabled(True)
             self.serverTab.setTabEnabled( TAB_RN_POS, True )
-            # if len(RCI.instance().userRights) == 1 and RCI.instance().userRights[0] == UCI.RIGHTS_DEVELOPER:
-                # self.serverTab.setCurrentIndex(TAB_RN_POS)
 
             ReleaseNotes.instance().loadData(   data = data['core'], 
                                                 dataAdp = data['adapters'],
                                                 dataLibAdp=data['libraries'], 
                                                 dataToolbox=data['toolbox']  )
 
-            Counters.instance().active()
-            Counters.instance().setEnabled(True)
-            self.serverTab.setTabEnabled( TAB_CT_POS, True )
+            # Counters.instance().active()
+            # Counters.instance().setEnabled(True)
+            # self.serverTab.setTabEnabled( TAB_CT_POS, True )
 
-            Counters.instance().loadData(counters=data['stats'] )
+            # Counters.instance().loadData(counters=data['stats'] )
         
-            if UCI.RIGHTS_TESTER in RCI.instance().userRights:
-                Counters.instance().deactivate()
-            else:
-                Counters.instance().active()
+            # if UCI.RIGHTS_TESTER in RCI.instance().userRights:
+                # Counters.instance().deactivate()
+            # else:
+                # Counters.instance().active()
                 
         except Exception as e:
             self.error('error on connection: %s' % str(e) )
@@ -1221,33 +1210,33 @@ class WServerExplorer(QWidget, Logger.ClassLogger):
         # update actions
         self.connectAction.setEnabled(True)
         self.disconnectAction.setEnabled(False)
-        self.checkUpdateAction.setEnabled(False)
+        # self.checkUpdateAction.setEnabled(False)
 
         Miscellaneous.instance().deactivate()
         TestManager.instance().deactivate()
-        Probes.instance().deactivate()
+        # Probes.instance().deactivate()
         Agents.instance().deactivate()
         Archives.instance().deactivate()
         ReleaseNotes.instance().deactivate()
-        Repositories.instance().deactivate()
+        # Repositories.instance().deactivate()
 
         Miscellaneous.instance().setEnabled(False)
         TestManager.instance().setEnabled(False)
-        Probes.instance().setEnabled(False)
+        # Probes.instance().setEnabled(False)
         Agents.instance().setEnabled(False)
         Archives.instance().setEnabled(False)
         ReleaseNotes.instance().setEnabled(False)
-        Repositories.instance().setEnabled(False)
-        Counters.instance().setEnabled(False)
+        # Repositories.instance().setEnabled(False)
+        # Counters.instance().setEnabled(False)
 
         self.serverTab.setTabEnabled( TAB_ARCHIVES_POS, False )
         self.serverTab.setTabEnabled( TAB_REPO_POS, False )
         self.serverTab.setTabEnabled( TAB_TESTMGR_POS, False )
-        self.serverTab.setTabEnabled( TAB_PROBES_POS, False )
+        # self.serverTab.setTabEnabled( TAB_PROBES_POS, False )
         self.serverTab.setTabEnabled( TAB_AGENTS_POS, False )
         self.serverTab.setTabEnabled( TAB_MISC_POS, False )
         self.serverTab.setTabEnabled( TAB_RN_POS, False )
-        self.serverTab.setTabEnabled( TAB_CT_POS, False )
+        # self.serverTab.setTabEnabled( TAB_CT_POS, False )
         self.serverTab.setCurrentIndex(-1)
     
     def startConnection (self):
@@ -1329,84 +1318,85 @@ class WServerExplorer(QWidget, Logger.ClassLogger):
                     Archives.instance().refreshData(data = event['archive'], 
                                                     data_stats=None, 
                                                     action = action )
-        elif data[0] == 'archives':
-            if action == 'reset-backups':
-                Repositories.instance().resetBackupArchivesPart()
-            elif action == 'add-backup':
-                Repositories.instance().newBackupArchives(data = event )
-            else:
-                self.error( 'repo to reset unknwon: %s' % str(event) )
-        elif data[0] == 'stats':
-            Counters.instance().refreshData(data = event, action = action )
-        elif data[0] == 'probes':
-            Probes.instance().refreshData(data = event, action = action )
-        elif data[0] == 'probes-default':
-            Probes.instance().refreshDataDefault(data = event, action = action )
+        # elif data[0] == 'archives':
+            # if action == 'reset-backups':
+                # Repositories.instance().resetBackupArchivesPart()
+            # elif action == 'add-backup':
+                # Repositories.instance().newBackupArchives(data = event )
+            # else:
+                # self.error( 'repo to reset unknwon: %s' % str(event) )
+        # elif data[0] == 'stats':
+            # Counters.instance().refreshData(data = event, action = action )
+        # elif data[0] == 'probes':
+            # Probes.instance().refreshData(data = event, action = action )
+        # elif data[0] == 'probes-default':
+            # Probes.instance().refreshDataDefault(data = event, action = action )
         elif data[0] == 'agents':
             Agents.instance().refreshData(data = event, action = action )
-        elif data[0] == 'agents-default':
-            Agents.instance().refreshDataDefault(data = event, action = action )
-        elif data[0] == 'repositories':
-            if action == 'reset':
-                if 'repo-adapters' in event:
-                    Repositories.instance().resetBackupAdpsPart()
-                elif 'repo-libraries' in event:
-                    Repositories.instance().resetBackupLibsPart()
-                elif 'repo-archives' in event:
-                    Repositories.instance().resetBackupArchivesPart()
-                elif 'repo-tests' in event:
-                    Repositories.instance().resetBackupTestsPart()
-                else:
-                    self.error( 'repo to reset unknwon: %s' % str(event) )
-            else:
-                Repositories.instance().newBackup(data = event )
+        # elif data[0] == 'agents-default':
+            # Agents.instance().refreshDataDefault(data = event, action = action )
+        # elif data[0] == 'repositories':
+            # if action == 'reset':
+                # if 'repo-adapters' in event:
+                    # Repositories.instance().resetBackupAdpsPart()
+                # elif 'repo-libraries' in event:
+                    # Repositories.instance().resetBackupLibsPart()
+                # elif 'repo-archives' in event:
+                    # Repositories.instance().resetBackupArchivesPart()
+                # elif 'repo-tests' in event:
+                    # Repositories.instance().resetBackupTestsPart()
+                # else:
+                    # self.error( 'repo to reset unknwon: %s' % str(event) )
+            # else:
+                # Repositories.instance().newBackup(data = event )
         else:
             self.error( "notify received unknown: %s" % str(data) )
 
-    def onRefreshStatsRepo(self, data):
-        """
-        Refresh data on xml rpc call
+    # def onRefreshStatsRepo(self, data):
+        # """
+        # Refresh data on xml rpc call
 
-        @param data: 
-        @type data:
-        """
-        Repositories.instance().loadData(data = data)   
+        # @param data: 
+        # @type data:
+        # """
+        # Repositories.instance().loadData(data = data)   
 
-    def onRefreshStatsRepoAdapters(self, data):
-        """
-        Refresh data on xml rpc call
+    # def onRefreshStatsRepoAdapters(self, data):
+        # """
+        # Refresh data on xml rpc call
 
-        @param data: 
-        @type data:
-        """
-        Repositories.instance().loadDataAdapters( data = data )    
+        # @param data: 
+        # @type data:
+        # """
+        # Repositories.instance().loadDataAdapters( data = data )    
 
-    def onRefreshStatsRepoLibraries(self, data):
-        """
-        Refresh data on xml rpc call
+    # def onRefreshStatsRepoLibraries(self, data):
+        # """
+        # Refresh data on xml rpc call
 
-        @param data: 
-        @type data:
-        """
-        Repositories.instance().loadDataLibraries( data = data )   
+        # @param data: 
+        # @type data:
+        # """
+        # Repositories.instance().loadDataLibraries( data = data )   
                                                     
-    def onRefreshStatsRepoArchives(self, data):
-        """
-        Refresh data on xml rpc call
+    # def onRefreshStatsRepoArchives(self, data):
+        # """
+        # Refresh data on xml rpc call
 
-        @param data: 
-        @type data:
-        """
-        Repositories.instance().loadDataArchives( data = data)   
+        # @param data: 
+        # @type data:
+        # """
+        # Repositories.instance().loadDataArchives( data = data)   
 
-    def onRefreshStatsServer(self, usages):
-        """
-        Refresh data on xml rpc call
+    # def onRefreshStatsServer(self, usages):
+        # """
+        # Refresh data on xml rpc call
 
-        @param data: 
-        @type data:
-        """
-        Miscellaneous.instance().loadStats( data = usages['disk'] )
+        # @param data: 
+        # @type data:
+        # """
+        # pass
+        # Miscellaneous.instance().loadStats( data = usages['disk'] )
         
     def onRefreshContextServer(self, data):
         """
@@ -1437,36 +1427,36 @@ class WServerExplorer(QWidget, Logger.ClassLogger):
         @param data: 
         @type data:     
         """
-        Agents.instance().resetNbAgents()
+        # Agents.instance().resetNbAgents()
         Agents.instance().loadData(data = data )
     
-    def onRefreshDefaultAgents(self, data):
-        """
-        Refresh data on xml rpc call
+    # def onRefreshDefaultAgents(self, data):
+        # """
+        # Refresh data on xml rpc call
 
-        @param data: 
-        @type data:     
-        """
-        Agents.instance().loadDefault(data = data )
+        # @param data: 
+        # @type data:     
+        # """
+        # Agents.instance().loadDefault(data = data )
 
-    def onRefreshRunningProbes(self, data):
-        """
-        Refresh data on xml rpc call
+    # def onRefreshRunningProbes(self, data):
+        # """
+        # Refresh data on xml rpc call
 
-        @param data: 
-        @type data:     
-        """
-        Probes.instance().resetNbProbes()
-        Probes.instance().loadData(data = data )
+        # @param data: 
+        # @type data:     
+        # """
+        # Probes.instance().resetNbProbes()
+        # Probes.instance().loadData(data = data )
     
-    def onRefreshDefaultProbes(self, data):
-        """
-        Refresh data on xml rpc call
+    # def onRefreshDefaultProbes(self, data):
+        # """
+        # Refresh data on xml rpc call
 
-        @param data: 
-        @type data:     
-        """
-        Probes.instance().loadDefault(data = data )
+        # @param data: 
+        # @type data:     
+        # """
+        # Probes.instance().loadDefault(data = data )
 
     def onRefreshTasksWaiting(self, data):
         """

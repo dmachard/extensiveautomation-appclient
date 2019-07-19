@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -91,7 +91,7 @@ EXTENSION_TDX = TestData.TYPE
 EXTENSION_TXT = TestTxt.TYPE
 EXTENSION_PY  = TestAdapter.TYPE
 EXTENSION_PNG  = TestPng.TYPE
-EXTENSION_SNAP  = "snapshot"
+# EXTENSION_SNAP  = "snapshot"
 
 class NotReimplemented(Exception):
     """
@@ -853,16 +853,16 @@ class Item(QTreeWidgetItem, Logger.ClassLogger):
             
             self.setText(0, self.fileName)
         
-        if type == QTreeWidgetItem.UserType+100: # file snapshot
+        # if type == QTreeWidgetItem.UserType+100: # file snapshot
             # issue 8 fix begin
-            tmp =  txt.rsplit('.', 1)
-            if len(tmp) == 2:
-                self.fileName = tmp[0]
-                self.fileExtension = tmp[1]
-            else:
-                raise Exception("file type unknown")
-            self.setIcon(0, self.repo.snapIcon)
-            self.setText(0, self.fileName)
+            # tmp =  txt.rsplit('.', 1)
+            # if len(tmp) == 2:
+                # self.fileName = tmp[0]
+                # self.fileExtension = tmp[1]
+            # else:
+                # raise Exception("file type unknown")
+            # self.setIcon(0, self.repo.snapIcon)
+            # self.setText(0, self.fileName)
             
     def getExtension(self):
         """
@@ -1640,9 +1640,9 @@ class PropertiesDialog(QtHelper.EnhancedQDialog, Logger.ClassLogger):
             if self.item.fileExtension == EXTENSION_TUX:
                 self.labelIcon.setPixmap(QPixmap(":/%s.png" % EXTENSION_TUX ) )
                 self.labelType.setText(self.tr('Test Unit Xml'))
-            elif self.item.fileExtension == EXTENSION_TAX:
-                self.labelIcon.setPixmap(QPixmap(":/%s.png" % EXTENSION_TAX ) )
-                self.labelType.setText(self.tr('Test Abstract Xml'))
+            # elif self.item.fileExtension == EXTENSION_TAX:
+                # self.labelIcon.setPixmap(QPixmap(":/%s.png" % EXTENSION_TAX ) )
+                # self.labelType.setText(self.tr('Test Abstract Xml'))
             elif self.item.fileExtension == EXTENSION_TSX:
                 self.labelIcon.setPixmap(QPixmap(":/%s.png" % EXTENSION_TSX ) )
                 self.labelType.setText(self.tr('Test Suite Xml'))
@@ -1733,7 +1733,7 @@ class Repository(QWidget, Logger.ClassLogger):
         self.adapterIcon = QIcon(":/file-adp2.png")
         self.libraryIcon = QIcon(":/file-lib-adp.png")
         self.txtIcon = QIcon(":/file-txt.png")
-        self.snapIcon = QIcon(":/snapshot.png")
+        # self.snapIcon = QIcon(":/snapshot.png")
         self.projectInitialized = False
 
         # new in v17
@@ -1762,8 +1762,9 @@ class Repository(QWidget, Logger.ClassLogger):
         self.dockToolbarRemote.addAction(self.runAction)
         self.dockToolbarRemote.addSeparator()
         self.dockToolbarRemote.addAction(self.addDirAction)
+        # self.dockToolbarRemote.addAction(self.delFolderAction)
         self.dockToolbarRemote.addAction(self.delDirAction)
-        self.dockToolbarRemote.addAction(self.delAllDirAction)
+        # self.dockToolbarRemote.addAction(self.delAllDirAction)
         self.dockToolbarRemote.addAction(self.deleteFileAction)
         self.dockToolbarRemote.addSeparator()
         self.dockToolbarRemote.addAction(self.renameAction)
@@ -1774,7 +1775,7 @@ class Repository(QWidget, Logger.ClassLogger):
         self.dockToolbarRemote.addAction(self.moveFolderAction)
         self.dockToolbarRemote.addSeparator()
         # dbr13 >>>
-        self.dockToolbarRemote.addAction(self.updateAdapterLibraryAction)
+        # self.dockToolbarRemote.addAction(self.updateAdapterLibraryAction)
         self.dockToolbarRemote.addAction(self.findUsageAction)
         self.dockToolbarRemote.addSeparator()
         # dbr13 <<<
@@ -1869,22 +1870,29 @@ class Repository(QWidget, Logger.ClassLogger):
                                                 self.__deleteItem, 
                                                 shortcut = "Ctrl+Alt+D", 
                                                 icon = QIcon(":/folder_delete.png"), 
-                                                tip = self.tr('Add the selected directory') )
+                                                tip = self.tr('Delete the selected directory') )
         self.delAllDirAction = QtHelper.createAction(self, self.tr("&Delete All"), 
                                                 self.__deleteAllItem, 
                                                 shortcut = "Ctrl+Alt+A", 
                                                 icon = QIcon(":/folder_delete_all.png"), 
                                                 tip = self.tr('Delete all folder and contents') )
+        menu1 = QMenu(self)
+        # menu1.addAction( self.delDirAction )
+        menu1.addAction( self.delAllDirAction )
+        # self.delFolderAction = QtHelper.createAction(self, self.tr("Delete"), self.__deleteItem,
+                                # tip = self.tr('Delete the selected directory'), icon=QIcon(":/folder_delete") )
+        self.delDirAction.setMenu(menu1)
+        
         self.renameAction = QtHelper.createAction(self, self.tr("&Rename"), 
                                                 self.__renameItem, 
                                                 shortcut = "Ctrl+Alt+R",
                                                 icon = QIcon(":/rename.png"), 
                                                 tip = self.tr('Rename') )
         # dbr13 >>>
-        self.updateAdapterLibraryAction = QtHelper.createAction(self, self.tr("&Update Adapter/Library"),
-                                                                self.__update_adapter_library,
-                                                                icon=QIcon(":/update-adapter.png"),
-                                                                tip=self.tr('Update Adapters/Library'))
+        # self.updateAdapterLibraryAction = QtHelper.createAction(self, self.tr("&Update Adapter/Library"),
+                                                                # self.__update_adapter_library,
+                                                                # icon=QIcon(":/update-adapter.png"),
+                                                                # tip=self.tr('Update Adapters/Library'))
         self.findUsageAction = QtHelper.createAction(self, self.tr("&Find Usage..."),
                                                      self.__find_usage,
                                                      icon=QIcon(":/find-usage@1x.png"),
@@ -1927,35 +1935,35 @@ class Repository(QWidget, Logger.ClassLogger):
                                                 self.__openProperties, 
                                                 icon = None, 
                                                 tip = self.tr('Open properties') )
-        self.snapshotAction = QtHelper.createAction(self, 
-                                                self.tr("&Snapshot"), 
-                                                self.__addSnapshot, 
-                                                icon = QIcon(":/snapshot.png"), 
-                                                tip = self.tr('Snapshot manager') )
-        self.snapshotAddAction = QtHelper.createAction(self, 
-                                                self.tr("&Create..."), 
-                                                self.__addSnapshot, 
-                                                icon = None, 
-                                                tip = self.tr('Add snapshot') )
-        self.snapshotRestoreAction = QtHelper.createAction(self, 
-                                                self.tr("&Restore..."), 
-                                                self.__restoreSnapshot, 
-                                                icon = None, 
-                                                tip = self.tr('Restore snapshot') )
-        self.snapshotDeleteAction = QtHelper.createAction(self, 
-                                                self.tr("&Delete..."), 
-                                                self.__deleteSnapshot, 
-                                                icon = None, 
-                                                tip = self.tr('Delete snapshot') )
-        self.snapshotDeleteAllAction = QtHelper.createAction(self, 
-                                                self.tr("&Delete All"), 
-                                                self.__delAllSnapshots, 
-                                                icon = None, 
-                                                tip = self.tr('Delete All') )
-        menu1 = QMenu(self)
-        menu1.addAction( self.snapshotAddAction )
-        menu1.addAction( self.snapshotDeleteAllAction )
-        self.snapshotAction.setMenu(menu1) 
+        # self.snapshotAction = QtHelper.createAction(self, 
+                                                # self.tr("&Snapshot"), 
+                                                # self.__addSnapshot, 
+                                                # icon = QIcon(":/snapshot.png"), 
+                                                # tip = self.tr('Snapshot manager') )
+        # self.snapshotAddAction = QtHelper.createAction(self, 
+                                                # self.tr("&Create..."), 
+                                                # self.__addSnapshot, 
+                                                # icon = None, 
+                                                # tip = self.tr('Add snapshot') )
+        # self.snapshotRestoreAction = QtHelper.createAction(self, 
+                                                # self.tr("&Restore..."), 
+                                                # self.__restoreSnapshot, 
+                                                # icon = None, 
+                                                # tip = self.tr('Restore snapshot') )
+        # self.snapshotDeleteAction = QtHelper.createAction(self, 
+                                                # self.tr("&Delete..."), 
+                                                # self.__deleteSnapshot, 
+                                                # icon = None, 
+                                                # tip = self.tr('Delete snapshot') )
+        # self.snapshotDeleteAllAction = QtHelper.createAction(self, 
+                                                # self.tr("&Delete All"), 
+                                                # self.__delAllSnapshots, 
+                                                # icon = None, 
+                                                # tip = self.tr('Delete All') )
+        # menu1 = QMenu(self)
+        # menu1.addAction( self.snapshotAddAction )
+        # menu1.addAction( self.snapshotDeleteAllAction )
+        # self.snapshotAction.setMenu(menu1) 
         
         self.saveAsFileAction = QtHelper.createAction(self, 
                                                 self.tr("&Save As"), 
@@ -2042,14 +2050,14 @@ class Repository(QWidget, Logger.ClassLogger):
         self.moveFolderAction.setEnabled(False)
         self.openFileAction.setEnabled(False)
         self.openPropertiesAction.setEnabled(False)
-        self.snapshotAction.setEnabled(False)
+        # self.snapshotAction.setEnabled(False)
         self.expandSubtreeAction.setEnabled(False)
         self.expandAllAction.setEnabled(False)
         self.collapseAllAction.setEnabled(False)
         self.runAction.setEnabled(False)
 
         # dbr13 >>>
-        self.updateAdapterLibraryAction.setEnabled(False)
+        # self.updateAdapterLibraryAction.setEnabled(False)
         self.findUsageAction.setEnabled(False)
         # dbr13 <<<
         
@@ -2086,16 +2094,16 @@ class Repository(QWidget, Logger.ClassLogger):
                 self.menu.addAction( self.runAction )
                 self.menu.addSeparator()
                 self.menu.addAction( self.openPropertiesAction )
-                self.menu.addSeparator()
-                self.menu.addAction( self.snapshotAction )
+                # self.menu.addSeparator()
+                # self.menu.addAction( self.snapshotAction )
                 # dbr13 >>>
                 self.menu.addSeparator()
                 self.menu.addAction(self.findUsageAction)
                 # dbr13 <<<
                 
-            if item.type() == QTreeWidgetItem.UserType+100: # file snapshot
-                self.menu.addAction( self.snapshotDeleteAction )
-                self.menu.addAction( self.snapshotRestoreAction )
+            # if item.type() == QTreeWidgetItem.UserType+100: # file snapshot
+                # self.menu.addAction( self.snapshotDeleteAction )
+                # self.menu.addAction( self.snapshotRestoreAction )
                 
             if item.type() == QTreeWidgetItem.UserType+1: # folder
                 self.menu.addAction( self.expandSubtreeAction )
@@ -2111,8 +2119,8 @@ class Repository(QWidget, Logger.ClassLogger):
                 self.menu.addSeparator()
                 self.menu.addAction( self.openPropertiesAction )
                 # dbr13 >>>
-                self.menu.addAction(self.updateAdapterLibraryAction)
-                self.menu.addSeparator()
+                # self.menu.addAction(self.updateAdapterLibraryAction)
+                # self.menu.addSeparator()
                 # dnr13 <<<
                 
             if item.type() == QTreeWidgetItem.UserType+10 : # root
@@ -2194,7 +2202,7 @@ class Repository(QWidget, Logger.ClassLogger):
 
         self.saveAs = SaveOpenToRepoDialog(self)
         
-        self.labelNotConnected = QLabel(self.tr("   Not connected"))
+        self.labelNotConnected = QLabel(self.tr(""))
         font = QFont()
         font.setItalic(True)
         self.labelNotConnected.setFont(font)
@@ -2448,19 +2456,19 @@ class Repository(QWidget, Logger.ClassLogger):
                                         projectName=pname )
                             
                             # adding snapshots
-                            if 'snapshots' in dct:
-                                if len(dct['snapshots']):
-                                    for snap in dct['snapshots']:
+                            # if 'snapshots' in dct:
+                                # if len(dct['snapshots']):
+                                    # for snap in dct['snapshots']:
                                         # extract snap name 
-                                        itemSnap = Item(repo = self, 
-                                                        parent = item, 
-                                                        txt = snap['name'] , 
-                                                        propertiesFile=dct,
-                                                        type = QTreeWidgetItem.UserType+100, 
-                                                        projectId=dct["project"], 
-                                                        projectName=pname, 
-                                                        snapRealname=snap['realname'], 
-                                                        snapMode=True )
+                                        # itemSnap = Item(repo = self, 
+                                                        # parent = item, 
+                                                        # txt = snap['name'] , 
+                                                        # propertiesFile=dct,
+                                                        # type = QTreeWidgetItem.UserType+100, 
+                                                        # projectId=dct["project"], 
+                                                        # projectName=pname, 
+                                                        # snapRealname=snap['realname'], 
+                                                        # snapMode=True )
 
         except Exception as e:
             self.error( "unable to create tree: %s" % e )
@@ -2518,72 +2526,72 @@ class Repository(QWidget, Logger.ClassLogger):
         if self.itemCurrent.type() == QTreeWidgetItem.UserType+0: # file
             pass
         
-    def __delAllSnapshots(self):
-        """
-        Delete all snapshots
-        """
-        if self.itemCurrent is None:
-            return
+    # def __delAllSnapshots(self):
+        # """
+        # Delete all snapshots
+        # """
+        # if self.itemCurrent is None:
+            # return
             
-        reply = QMessageBox.question(self, self.tr("Delete all snapshots"), self.tr("Are you sure?"),
-                        QMessageBox.Yes | QMessageBox.No )
-        if reply == QMessageBox.Yes: 
-            RCI.instance().removeAllSnapshotTests(projectId=int(self.itemCurrent.projectId), 
-                                                  testPath=self.itemCurrent.getPath(), 
-                                                  testName=self.itemCurrent.fileName, 
-                                                  testExtension=self.itemCurrent.fileExtension)
+        # reply = QMessageBox.question(self, self.tr("Delete all snapshots"), self.tr("Are you sure?"),
+                        # QMessageBox.Yes | QMessageBox.No )
+        # if reply == QMessageBox.Yes: 
+            # RCI.instance().removeAllSnapshotTests(projectId=int(self.itemCurrent.projectId), 
+                                                  # testPath=self.itemCurrent.getPath(), 
+                                                  # testName=self.itemCurrent.fileName, 
+                                                  # testExtension=self.itemCurrent.fileExtension)
             
-    def __deleteSnapshot(self):
-        """
-        Delete snapshot
-        """
-        if self.itemCurrent is None:
-            return
+    # def __deleteSnapshot(self):
+        # """
+        # Delete snapshot
+        # """
+        # if self.itemCurrent is None:
+            # return
             
-        reply = QMessageBox.question(self, self.tr("Delete snapshot"), self.tr("Are you sure?"),
-                        QMessageBox.Yes | QMessageBox.No )
-        if reply == QMessageBox.Yes: 
-            RCI.instance().removeSnapshotTests(projectId=int(self.itemCurrent.projectId), 
-                                               snapshotPath=self.itemCurrent.getPath(withFileName=False), 
-                                               snapshotName=self.itemCurrent.snapRealname)
+        # reply = QMessageBox.question(self, self.tr("Delete snapshot"), self.tr("Are you sure?"),
+                        # QMessageBox.Yes | QMessageBox.No )
+        # if reply == QMessageBox.Yes: 
+            # RCI.instance().removeSnapshotTests(projectId=int(self.itemCurrent.projectId), 
+                                               # snapshotPath=self.itemCurrent.getPath(withFileName=False), 
+                                               # snapshotName=self.itemCurrent.snapRealname)
             
-    def __restoreSnapshot(self):
-        """
-        Restore snapshot
-        """
-        if self.itemCurrent is None:
-            return
-        reply = QMessageBox.question(self, self.tr("Restore snapshot"), self.tr("Are you sure?"),
-                        QMessageBox.Yes | QMessageBox.No )
-        if reply == QMessageBox.Yes: 
-            RCI.instance().restoreSnapshotTests(projectId=int(self.itemCurrent.projectId), 
-                                                snapshotPath=self.itemCurrent.getPath(withFileName=False), 
-                                                snapshotName=self.itemCurrent.snapRealname)
+    # def __restoreSnapshot(self):
+        # """
+        # Restore snapshot
+        # """
+        # if self.itemCurrent is None:
+            # return
+        # reply = QMessageBox.question(self, self.tr("Restore snapshot"), self.tr("Are you sure?"),
+                        # QMessageBox.Yes | QMessageBox.No )
+        # if reply == QMessageBox.Yes: 
+            # RCI.instance().restoreSnapshotTests(projectId=int(self.itemCurrent.projectId), 
+                                                # snapshotPath=self.itemCurrent.getPath(withFileName=False), 
+                                                # snapshotName=self.itemCurrent.snapRealname)
             
-    def __addSnapshot(self):
-        """
-        Add snapshot
-        """
-        if self.itemCurrent is None:
-            return
+    # def __addSnapshot(self):
+        # """
+        # Add snapshot
+        # """
+        # if self.itemCurrent is None:
+            # return
             
-        txt, ok = QInputDialog.getText(self, "Create snapshot", "Enter snapshot name:",
-                                       QLineEdit.Normal, self.itemCurrent.fileName)
-        if ok and txt:
-            try:
+        # txt, ok = QInputDialog.getText(self, "Create snapshot", "Enter snapshot name:",
+                                       # QLineEdit.Normal, self.itemCurrent.fileName)
+        # if ok and txt:
+            # try:
                 # workaround to detect special characters, same limitation as with python2 because of the server
                 # this limitation will be removed when the server side will be ported to python3
-                if sys.version_info > (3,): # python3 support only 
-                    txt.encode("ascii") 
+                # if sys.version_info > (3,): # python3 support only 
+                    # txt.encode("ascii") 
 
-                RCI.instance().addSnapshotTests(projectId=int(self.itemCurrent.projectId), 
-                                                testPath=self.itemCurrent.getPath(), 
-                                                snapshotName=txt, 
-                                                snapshotTimestamp="%s" % time.time())
-            except UnicodeEncodeError as e:
-                self.error(e)
-                QMessageBox.warning(self, "Create snapshot" , 
-                                    "Bad snapshot name!\nPerhaps one day, but not today, sorry for this limitation.")
+                # RCI.instance().addSnapshotTests(projectId=int(self.itemCurrent.projectId), 
+                                                # testPath=self.itemCurrent.getPath(), 
+                                                # snapshotName=txt, 
+                                                # snapshotTimestamp="%s" % time.time())
+            # except UnicodeEncodeError as e:
+                # self.error(e)
+                # QMessageBox.warning(self, "Create snapshot" , 
+                                    # "Bad snapshot name!\nPerhaps one day, but not today, sorry for this limitation.")
  
     def __openProperties(self):
         """
@@ -3245,16 +3253,16 @@ class Repository(QWidget, Logger.ClassLogger):
                 else:
                     self.runAction.setEnabled(False)
                     
-                if self.itemCurrent.fileExtension.lower() in [ EXTENSION_TUX, EXTENSION_TAX, 
-                                                               EXTENSION_TPX, EXTENSION_TSX,
-                                                               EXTENSION_TGX, EXTENSION_TDX, 
-                                                               EXTENSION_TCX ]:
-                    self.snapshotAction.setEnabled(True)
-                else:
-                    self.snapshotAction.setEnabled(False)
+                # if self.itemCurrent.fileExtension.lower() in [ EXTENSION_TUX, EXTENSION_TAX, 
+                                                               # EXTENSION_TPX, EXTENSION_TSX,
+                                                               # EXTENSION_TGX, EXTENSION_TDX, 
+                                                               # EXTENSION_TCX ]:
+                    # self.snapshotAction.setEnabled(True)
+                # else:
+                    # self.snapshotAction.setEnabled(False)
                     
                 # dbr13 >>>
-                self.updateAdapterLibraryAction.setEnabled(False)
+                # self.updateAdapterLibraryAction.setEnabled(False)
                 
                 if self.itemCurrent.fileExtension.lower() in [ EXTENSION_TUX, EXTENSION_TAX, 
                                                                EXTENSION_TPX, EXTENSION_TSX]:
@@ -3264,26 +3272,26 @@ class Repository(QWidget, Logger.ClassLogger):
                     
                 # dbr13 <<<
                 
-            elif self.itemCurrent.type() == QTreeWidgetItem.UserType+100: # file snapshot
-                self.addDirAction.setEnabled(False)
-                self.delDirAction.setEnabled(False)
-                self.delAllDirAction.setEnabled(False)
-                self.renameAction.setEnabled(False)
-                self.duplicateDirAction.setEnabled(False)
-                self.duplicateFileAction.setEnabled(False)
-                self.deleteFileAction.setEnabled(False)
-                self.moveFileAction.setEnabled(False)
-                self.moveFolderAction.setEnabled(False)
-                self.openFileAction.setEnabled(False)
-                self.openPropertiesAction.setEnabled(False)
-                self.snapshotAction.setEnabled(False)
-                self.expandSubtreeAction.setEnabled(False)
-                self.expandAllAction.setEnabled(False)
-                self.collapseAllAction.setEnabled(False)
-                self.runAction.setEnabled(False)
+            # elif self.itemCurrent.type() == QTreeWidgetItem.UserType+100: # file snapshot
+                # self.addDirAction.setEnabled(False)
+                # self.delDirAction.setEnabled(False)
+                # self.delAllDirAction.setEnabled(False)
+                # self.renameAction.setEnabled(False)
+                # self.duplicateDirAction.setEnabled(False)
+                # self.duplicateFileAction.setEnabled(False)
+                # self.deleteFileAction.setEnabled(False)
+                # self.moveFileAction.setEnabled(False)
+                # self.moveFolderAction.setEnabled(False)
+                # self.openFileAction.setEnabled(False)
+                # self.openPropertiesAction.setEnabled(False)
+                # self.snapshotAction.setEnabled(False)
+                # self.expandSubtreeAction.setEnabled(False)
+                # self.expandAllAction.setEnabled(False)
+                # self.collapseAllAction.setEnabled(False)
+                # self.runAction.setEnabled(False)
                 
                 # dbr13 >>>
-                self.updateAdapterLibraryAction.setEnabled(False)
+                # self.updateAdapterLibraryAction.setEnabled(False)
                 # dbr13 <<<
                 
             elif self.itemCurrent.type() == QTreeWidgetItem.UserType+1: # folder
@@ -3301,14 +3309,14 @@ class Repository(QWidget, Logger.ClassLogger):
                 self.moveFolderAction.setEnabled(True)
                 self.openFileAction.setEnabled(False)
                 self.openPropertiesAction.setEnabled(True)
-                self.snapshotAction.setEnabled(False)
+                # self.snapshotAction.setEnabled(False)
                 self.expandSubtreeAction.setEnabled(True)
                 self.expandAllAction.setEnabled(False)
                 self.collapseAllAction.setEnabled(False)
                 self.runAction.setEnabled(False)
                 
                 # dbr13 >>>
-                self.updateAdapterLibraryAction.setEnabled(True)
+                # self.updateAdapterLibraryAction.setEnabled(True)
                 # dbr13 <<<
                 
             elif self.itemCurrent.type() == QTreeWidgetItem.UserType+10 : #root
@@ -3323,14 +3331,14 @@ class Repository(QWidget, Logger.ClassLogger):
                 self.moveFolderAction.setEnabled(False)
                 self.openFileAction.setEnabled(False)
                 self.openPropertiesAction.setEnabled(False)
-                self.snapshotAction.setEnabled(False)
+                # self.snapshotAction.setEnabled(False)
                 self.expandSubtreeAction.setEnabled(False)
                 self.expandAllAction.setEnabled(True)
                 self.collapseAllAction.setEnabled(True)
                 self.runAction.setEnabled(False)
                 
                 # dbr13 >>>
-                self.updateAdapterLibraryAction.setEnabled(False)
+                # self.updateAdapterLibraryAction.setEnabled(False)
                 # dbr13 <<<
                 
             elif self.itemCurrent.type() == QTreeWidgetItem.UserType+101: # reserved (trash, sandbox)
@@ -3345,14 +3353,14 @@ class Repository(QWidget, Logger.ClassLogger):
                 self.moveFolderAction.setEnabled(False)
                 self.openFileAction.setEnabled(False)
                 self.openPropertiesAction.setEnabled(True)
-                self.snapshotAction.setEnabled(False)
+                # self.snapshotAction.setEnabled(False)
                 self.expandSubtreeAction.setEnabled(True)
                 self.expandAllAction.setEnabled(False)
                 self.collapseAllAction.setEnabled(False)
                 self.runAction.setEnabled(False)
                 
                 # dbr13 >>>
-                self.updateAdapterLibraryAction.setEnabled(False)
+                # self.updateAdapterLibraryAction.setEnabled(False)
                 # dbr13 <<<
             else:
                 self.addDirAction.setEnabled(False)
@@ -3366,14 +3374,14 @@ class Repository(QWidget, Logger.ClassLogger):
                 self.moveFolderAction.setEnabled(False)
                 self.openFileAction.setEnabled(False)
                 self.openPropertiesAction.setEnabled(False)
-                self.snapshotAction.setEnabled(False)
+                # self.snapshotAction.setEnabled(False)
                 self.expandSubtreeAction.setEnabled(False)
                 self.expandAllAction.setEnabled(False)
                 self.collapseAllAction.setEnabled(False)
                 self.runAction.setEnabled(False)
 
                 # dbr13 >>>
-                self.updateAdapterLibraryAction.setEnabled(False)
+                # self.updateAdapterLibraryAction.setEnabled(False)
                 # dbr13 <<<
                 
             self.onMoreCurrentItemChanged( self.itemCurrent.type() )

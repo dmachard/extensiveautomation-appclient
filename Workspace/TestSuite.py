@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -67,7 +67,8 @@ class WTestSuite(Document.WDocument):
     TEST_DEF_EDITOR = 0
     TEST_EXEC_EDITOR = 1
     def __init__(self, parent = None, path = None, filename = None, extension = None, 
-                    nonameId = None, remoteFile=False, repoDest=None, project=0, isLocked=False):
+                    nonameId = None, remoteFile=False, repoDest=None, 
+                    project=0, isLocked=False):
         """
         Constructs WScript widget
 
@@ -89,6 +90,7 @@ class WTestSuite(Document.WDocument):
         Document.WDocument.__init__(self, parent, path, filename, extension, nonameId, 
                                     remoteFile, repoDest, project, isLocked)
         
+        self.docViewer = parent
         self.srcEditor = None
         self.execEditor = None
         # prepare model with default value
@@ -96,20 +98,23 @@ class WTestSuite(Document.WDocument):
         defaultTemplates = DefaultTemplates.Templates()
         testdef = defaultTemplates.getTestDefinition()
         testexec = defaultTemplates.getTestExecution()
-        if not 'default-library' in Settings.instance().serverContext:
-            if not Settings.instance().offlineMode:
-                QMessageBox.critical(self, "Open" , 
-                        "Server context incomplete (default library is missing), please to reconnect!")
-            defLibrary = 'v000'
-        else:
-            defLibrary = Settings.instance().serverContext['default-library']
-        if not 'default-adapter' in Settings.instance().serverContext:
-            if not Settings.instance().offlineMode:
-                QMessageBox.critical(self, "Open" , 
-                        "Server context incomplete (default adapter is missing), please to reconnect!")
-            defAdapter = 'v000'
-        else:
-            defAdapter = Settings.instance().serverContext['default-adapter']
+        
+        defLibrary = 'deprecated'
+        defAdapter = 'deprecated'
+        # if not 'default-library' in Settings.instance().serverContext:
+            # if not Settings.instance().offlineMode:
+                # QMessageBox.critical(self, "Open" , 
+                        # "Server context incomplete (default library is missing), please to reconnect!")
+            # defLibrary = 'v000'
+        # else:
+            # defLibrary = Settings.instance().serverContext['default-library']
+        # if not 'default-adapter' in Settings.instance().serverContext:
+            # if not Settings.instance().offlineMode:
+                # QMessageBox.critical(self, "Open" , 
+                        # "Server context incomplete (default adapter is missing), please to reconnect!")
+            # defAdapter = 'v000'
+        # else:
+            # defAdapter = Settings.instance().serverContext['default-adapter']
            
         # new in v17
         defaultTimeout = Settings.instance().readValue( key = 'TestProperties/default-timeout' )
@@ -149,7 +154,8 @@ class WTestSuite(Document.WDocument):
         |_______________________|
         """
         self.srcWidget = EditorWidget( self.TEST_DEF_EDITOR, "Test Definition:", self,
-                                        wrappingText=QtHelper.str2bool( Settings.instance().readValue( key = 'Editor/code-wrapping' ) ) )
+                                        wrappingText=QtHelper.str2bool( Settings.instance().readValue( key = 'Editor/code-wrapping' ) ),
+                                        docViewer=self.docViewer)
         self.execWidget = EditorWidget( self.TEST_EXEC_EDITOR, "Test Execution:",  self,
                                         wrappingText=QtHelper.str2bool( Settings.instance().readValue( key = 'Editor/code-wrapping' ) ),
                                         toolbar=False)
@@ -160,7 +166,7 @@ class WTestSuite(Document.WDocument):
         layout = QVBoxLayout()
 
         hSplitter = QSplitter(self)
-        hSplitter.setOrientation(Qt.Vertical)
+        # hSplitter.setOrientation(Qt.Vertical)
 
         hSplitter.addWidget(self.srcWidget)
         hSplitter.addWidget(self.execWidget)

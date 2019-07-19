@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -61,10 +61,10 @@ import base64
 import json
 import zlib
 
-TAB_LOCAL_POS       =   0
-TAB_REMOTE_POS      =   1
-TAB_ADAPTER_POS     =   0
-TAB_LIBRARY_POS     =   1
+# TAB_LOCAL_POS       =   0
+# TAB_REMOTE_POS      =   1
+# TAB_ADAPTER_POS     =   0
+# TAB_LIBRARY_POS     =   1
 
 MAIN_TAB_TEST       = 0
 MAIN_TAB_DEV        = 1
@@ -81,31 +81,13 @@ class WRepositories(QWidget, Logger.ClassLogger):
         @type parent:
         """
         QWidget.__init__(self, parent)
-        
-        self.localRepoPath = Settings.instance().readValue( key = 'Repositories/local-repo' )
-        self.localRepository = None
-        self.localSaveOpen = None
+
         self.remoteRepository = None
         self.adaptersRemoteRepository = None
         
         self.createWidgets()
         self.createConnections()
         self.onResetRemote()
-
-    def localRepoIsPresent(self):
-        """
-        The local repository is configured ?
-        """
-        if self.localRepoPath != "Undefined":
-            if not os.path.exists(self.localRepoPath):
-                self.localConfigured = "Undefined"
-                self.testsTab.setTabEnabled( TAB_LOCAL_POS, False )
-            else:
-                self.localConfigured = self.localRepoPath
-                self.testsTab.setTabEnabled( TAB_LOCAL_POS, True )
-        else:
-            self.localConfigured = self.localRepoPath
-            self.testsTab.setTabEnabled( TAB_LOCAL_POS, False )
 
     def createWidgets(self):
         """
@@ -119,28 +101,12 @@ class WRepositories(QWidget, Logger.ClassLogger):
         |                               |
         |_______________________________|
         """
-        self.line = QFrame()
-        self.line.setGeometry(QRect(110, 221, 51, 20))
-        self.line.setFrameShape(QFrame.HLine)
-        self.line.setFrameShadow(QFrame.Sunken)
-  
-        self.testsTab = QTabWidget()
-        self.testsTab.setTabPosition(QTabWidget.South)
-        self.testsTab.setStyleSheet("QTabWidget { border: 0px; }") # remove 3D border
 
-        # local repo
-        self.localConfigured = self.localRepoPath
-        self.localRepository = LocalRepository.Repository( parent = self )
-        self.localRepository.deactive()
-        self.localRepoIsPresent()
-
-        self.localSaveOpen = LocalRepository.SaveOpenToRepoDialog(parent = self)
-       
         # remote repo
-        self.remoteRepository = RemoteTests.Repository( parent = self, projectSupport=True )
+        self.remoteRepo = RemoteTests.Repository( parent = self, projectSupport=True )
         if not RCI.instance().isAuthenticated():
-            self.remoteRepository.setNotConnected() 
-            self.remoteRepository.setEnabled( False ) 
+            self.remoteRepo.setNotConnected() 
+            self.remoteRepo.setEnabled( False ) 
 
         # adapters remote repo
         self.adaptersRemoteRepository = RemoteAdapters.Repository( parent = self )
@@ -148,122 +114,42 @@ class WRepositories(QWidget, Logger.ClassLogger):
             self.adaptersRemoteRepository.setNotConnected() 
             self.adaptersRemoteRepository.setEnabled( False ) 
 
-        # libraries adapters remote repo
-        self.librariesRemoteRepository = RemoteLibraries.Repository( parent = self )
-        if not RCI.instance().isAuthenticated():
-            self.librariesRemoteRepository.setNotConnected() 
-            self.librariesRemoteRepository.setEnabled( False ) 
+        self.layout = QVBoxLayout()
 
-        self.testsTab.addTab(self.localRepository, QIcon(":/repository-tests.png"), self.tr("Local Tests") )
-        self.testsTab.addTab( self.remoteRepository, QIcon(":/repository-tests.png"), self.tr("Remote Tests") )
-        self.testsTab.setTabEnabled( TAB_LOCAL_POS, False )
-        self.testsTab.setTabEnabled( TAB_REMOTE_POS, False )
+        self.mainTab2 = QTabWidget()
+        self.mainTab2.setEnabled(False)
+        self.mainTab2.setTabPosition(QTabWidget.North)
+        self.mainTab2.setMinimumWidth( 300 )
+        self.mainTab2.addTab(self.remoteRepo, QIcon(":/repository-tests.png"), "Tests")
 
-        self.connectorsTab = QTabWidget()
-        self.connectorsTab.setTabPosition(QTabWidget.South)
-        self.connectorsTab.setStyleSheet("QTabWidget { border: 0px; }") # remove 3D border
-
-        self.connectorsTab.addTab(self.adaptersRemoteRepository, QIcon(":/repository-adapters.png"), self.tr("Adapters") )
-        self.connectorsTab.addTab(self.librariesRemoteRepository, QIcon(":/repository-libraries.png"), self.tr("Libraries") )
-        self.connectorsTab.setTabEnabled( TAB_ADAPTER_POS, False )
-        self.connectorsTab.setTabEnabled( TAB_LIBRARY_POS, False )
-
-        self.title = QLabel(self.tr("Repositories"))
-        font = QFont()
-        font.setBold(True)
-        self.title.setFont(font)
-
-        self.labelHelp = QLabel(self.tr("Drag and drop your selected file in the workspace to open it."))
-        self.labelHelp.setEnabled(False)
-        font = QFont()
-        font.setItalic(True)
-        self.labelHelp.setFont(font)
-
-        layout = QVBoxLayout()
-        layout.addWidget( self.title )
-        layout.addWidget( self.labelHelp )
-
-        self.mainTab = QTabWidget()
-        self.mainTab.setEnabled(False)
-        self.mainTab.setTabPosition(QTabWidget.North)
-        self.mainTab.setMinimumWidth( 300 )
-
-        self.mainTab.addTab(self.testsTab, QIcon(":/test-description.png"), "Tests Listing")
-        self.mainTab.addTab(self.connectorsTab, QIcon(":/adapters.png"), "Modules Listing")
-
-        layout.addWidget( self.mainTab )
-        layout.addWidget( self.line )
-
-        layout.setContentsMargins(0,0,0,0)
-        self.setLayout(layout)
-
-        # set the default tab  
-        defaultTab = Settings.instance().readValue( key = 'Repositories/default-repo-test' )
-        if int(defaultTab) == TAB_LOCAL_POS or int(defaultTab) == TAB_REMOTE_POS:
-            self.mainTab.setCurrentIndex(MAIN_TAB_TEST)  
-            self.testsTab.setCurrentIndex(int(defaultTab))   
-        else:
-            self.mainTab.setCurrentIndex(MAIN_TAB_DEV)  
-            self.connectorsTab.setCurrentIndex(int(defaultTab)-2)   
-    
-    def hideWidgetsHeader(self):
-        """
-        Hide the widget header
-        """
-        self.line.hide()
-        self.title.hide()
-        self.labelHelp.hide()
         
-    def showWidgetsHeader(self):
-        """
-        Show the widget header
-        """
-        self.line.show()
-        self.title.show()
-        self.labelHelp.show()
+        self.mainTab3 = QTabWidget()
+        self.mainTab3.setEnabled(False)
+        self.mainTab3.setTabPosition(QTabWidget.North)
+        self.mainTab3.setMinimumWidth( 300 )
         
+        self.mainTab3.addTab(self.adaptersRemoteRepository, QIcon(":/repository-adapters.png"), "Adapters")
+
+        self.layout.addWidget( self.mainTab2 )
+        self.layout.addWidget( self.mainTab3 )
+
+        self.layout.setContentsMargins(0,0,0,0)
+        self.setLayout(self.layout)
+
     def createConnections(self):
         """
         Create qt connections
         """
         pass
 
-    def initLocalRepo(self):
-        """
-        Initialize the local repository
-        """
-        if self.localConfigured != "Undefined":
-            self.localRepository.active()
-
-    def cleanLocalRepo(self):
-        """
-        Cleanup the local repository
-        """
-        self.localRepository.deactive()
-
-    def local (self):
-        """
-        Returns the local repository widget
-
-        @return: LocalRepository.Repository
-        @rtype: QWidget
-        """
-        return self.localRepository
-    
-    def localDialogSave(self):
-        """
-        Return the save/open dialog
-        """
-        return self.localSaveOpen
-
-    def remote (self):
+    def remote(self):
         """
         Returns the remote repository widget
 
         @return: RemoteRepository.Repository
         @rtype: QWidget
         """
-        return self.remoteRepository
+        return self.remoteRepo
     
     def remoteAdapter (self):
         """
@@ -274,201 +160,66 @@ class WRepositories(QWidget, Logger.ClassLogger):
         """
         return self.adaptersRemoteRepository
 
-    def remoteLibrary (self):
-        """
-        Returns the remote repository widget
-
-        @return: RemoteRepository.Repository
-        @rtype: QWidget
-        """
-        return self.librariesRemoteRepository
-
-    def decodeData(self, b64data):
-        """
-        Decode data
-        """
-        data_json = ''
-        try:
-            data_decoded = base64.b64decode(b64data)
-        except Exception as e:
-            self.error( 'unable to decode from base64 structure: %s' % str(e) )
-        else:
-            try:
-                data_uncompressed = zlib.decompress(data_decoded)
-            except Exception as e:
-                self.error( 'unable to decompress: %s' % str(e) )
-            else:
-                try:
-                    if sys.version_info > (3,):
-                        data_json = json.loads( data_uncompressed.decode('utf-8') )
-                    else:
-                        data_json = json.loads( data_uncompressed )
-                except Exception as e:
-                    self.error( 'unable to decode from json structure: %s' % str(e) )
-        return data_json
-
     # functions for remote repository
     def onLoadRemote(self, data):
         """
         Called on load remote actions
         """
-        self.mainTab.setEnabled(True)
-        self.labelHelp.setEnabled(True)
-        # if UCI.RIGHTS_TESTER in RCI.instance().userRights:
-            # self.remoteRepository.setConnected() 
-            # self.remoteRepository.setEnabled(True)
-            # self.localRepository.setEnabled(True)
-            
-            # self.testsTab.setTabEnabled( TAB_REMOTE_POS, True )
-            # if self.localConfigured != "Undefined":
-                # self.testsTab.setTabEnabled( TAB_LOCAL_POS, True )
-            # else:
-                # self.testsTab.setTabEnabled( TAB_LOCAL_POS, False )
-            # self.connectorsTab.setTabEnabled( TAB_LIBRARY_POS, False )
-            # self.connectorsTab.setTabEnabled( TAB_ADAPTER_POS, False )
- 
-            # defaultTab = Settings.instance().readValue( key = 'Repositories/default-repo-test' )
-            # if int(defaultTab) == TAB_LOCAL_POS or int(defaultTab) == TAB_REMOTE_POS:
-                # self.mainTab.setCurrentIndex(MAIN_TAB_TEST)  
-                # self.testsTab.setCurrentIndex(int(defaultTab))   
-            # else:
-                # self.mainTab.setCurrentIndex(MAIN_TAB_DEV)  
-                # self.connectorsTab.setCurrentIndex(int(defaultTab)-2)   
-            
-            # self.remoteRepository.defaultActions()
-            # self.remoteRepository.initialize(listing= data['repo']  )
-            # self.remoteRepository.initializeProjects( projects=data['projects'], 
-                                                      # defaultProject=data['default-project'] )
+        self.mainTab2.setEnabled(True)
+        self.mainTab3.setEnabled(True)
         
-        # if UCI.RIGHTS_TESTER in RCI.instance().userRights:
-            # self.connectorsTab.setTabEnabled( TAB_ADAPTER_POS, True )
-            # self.connectorsTab.setTabEnabled( TAB_LIBRARY_POS, True )
+        self.remoteRepo.setConnected() 
+        self.remoteRepo.setEnabled(True)
 
-            # if UCI.RIGHTS_TESTER in RCI.instance().userRights: # exception if the developer if also a tester
-            # defaultTab = Settings.instance().readValue( key = 'Repositories/default-repo-test' )
-            # if int(defaultTab) == TAB_LOCAL_POS or int(defaultTab) == TAB_REMOTE_POS:
-                # self.mainTab.setCurrentIndex(MAIN_TAB_TEST)  
-                # self.testsTab.setCurrentIndex(int(defaultTab))   
-            # else:
-                # self.mainTab.setCurrentIndex(MAIN_TAB_DEV)  
-                # self.connectorsTab.setCurrentIndex(int(defaultTab)-2)   
-            # else:
-                # defaultTab = Settings.instance().readValue( key = 'Repositories/default-repo-dev' )
-                # if int(defaultTab) == TAB_LOCAL_POS or int(defaultTab) == TAB_REMOTE_POS:
-                    # self.mainTab.setCurrentIndex(MAIN_TAB_TEST)  
-                    # self.testsTab.setCurrentIndex(int(defaultTab))   
-                # else:
-                    # self.mainTab.setCurrentIndex(MAIN_TAB_DEV)  
-                    # self.connectorsTab.setCurrentIndex(int(defaultTab)-2)   
-                    
-            # self.adaptersRemoteRepository.setConnected() 
-            # self.adaptersRemoteRepository.setEnabled(True)
-            # self.adaptersRemoteRepository.defaultActions()
-            # self.adaptersRemoteRepository.initialize(listing=data['repo-adp'] )
-
-            # self.librariesRemoteRepository.setConnected() 
-            # self.librariesRemoteRepository.setEnabled(True)
-            # self.librariesRemoteRepository.defaultActions()
-            # self.librariesRemoteRepository.initialize( listing=data['repo-lib-adp'] )
-
-        # if UCI.RIGHTS_ADMIN in RCI.instance().userRights:
-        self.remoteRepository.setConnected() 
-        self.remoteRepository.setEnabled(True)
-        self.localRepository.setEnabled(True)
-
-        self.testsTab.setTabEnabled( TAB_REMOTE_POS, True )
-        if self.localConfigured != "Undefined":
-            self.testsTab.setTabEnabled( TAB_LOCAL_POS, True )
-        else:
-            self.testsTab.setTabEnabled( TAB_LOCAL_POS, False )
-        self.connectorsTab.setTabEnabled( TAB_ADAPTER_POS, True )
-        self.connectorsTab.setTabEnabled( TAB_LIBRARY_POS, True )
-
-        defaultTab = Settings.instance().readValue( key = 'Repositories/default-repo-test' )
-        if int(defaultTab) == TAB_LOCAL_POS or int(defaultTab) == TAB_REMOTE_POS:
-            self.mainTab.setCurrentIndex(MAIN_TAB_TEST)  
-            self.testsTab.setCurrentIndex(int(defaultTab))   
-        else:
-            self.mainTab.setCurrentIndex(MAIN_TAB_DEV)  
-            self.connectorsTab.setCurrentIndex(int(defaultTab)-2)   
-                
-        self.remoteRepository.defaultActions()
-        if self.remoteRepository.initializeProjects( projects=data['projects'], 
-                                                     defaultProject=data['default-project']  ) :
-            self.remoteRepository.initialize(listing= data['repo'])
+        self.remoteRepo.defaultActions()
+        if self.remoteRepo.initializeProjects( projects=data['projects'], 
+                                               defaultProject=data['default-project']  ) :
+            self.remoteRepo.initialize(listing= data['repo'])
 
         self.adaptersRemoteRepository.setConnected() 
         self.adaptersRemoteRepository.setEnabled(True)
         self.adaptersRemoteRepository.defaultActions()
         self.adaptersRemoteRepository.initialize(listing=data['repo-adp'] )
 
-        self.librariesRemoteRepository.setConnected() 
-        self.librariesRemoteRepository.setEnabled(True)
-        self.librariesRemoteRepository.defaultActions()
-        self.librariesRemoteRepository.initialize( listing=data['repo-lib-adp'] )
-
     def onResetRemote(self):
         """
         Called on reset remote actions
         """
-        self.mainTab.setEnabled(False)
-        self.labelHelp.setEnabled(False)
-        
-        self.remoteRepository.setNotConnected() 
-        self.remoteRepository.wrepository.clear()
-        self.remoteRepository.setEnabled(False)
-        self.localRepository.setEnabled( False ) 
-        self.localRepository.defaultActions()
-        
+        self.mainTab2.setEnabled(False)
+        self.mainTab3.setEnabled(False)
+
+        self.remoteRepo.setNotConnected() 
+        self.remoteRepo.wrepository.clear()
+        self.remoteRepo.setEnabled(False)
+
         self.adaptersRemoteRepository.setNotConnected() 
         self.adaptersRemoteRepository.wrepository.clear()
         self.adaptersRemoteRepository.setEnabled(False)
-        
-        self.librariesRemoteRepository.setNotConnected() 
-        self.librariesRemoteRepository.wrepository.clear()
-        self.librariesRemoteRepository.setEnabled(False)
 
-        self.testsTab.setTabEnabled( TAB_REMOTE_POS, False )
-        self.connectorsTab.setTabEnabled( TAB_ADAPTER_POS, False )
-        self.testsTab.setTabEnabled( TAB_LOCAL_POS, False )
-        self.connectorsTab.setTabEnabled( TAB_LIBRARY_POS, False )
-  
-        defaultTab = Settings.instance().readValue( key = 'Repositories/default-repo-test' )
-        if int(defaultTab) == TAB_LOCAL_POS or int(defaultTab) == TAB_REMOTE_POS:
-            self.mainTab.setCurrentIndex(MAIN_TAB_TEST)  
-            self.testsTab.setCurrentIndex(int(defaultTab))   
-        else:
-            self.mainTab.setCurrentIndex(MAIN_TAB_DEV)  
-            self.connectorsTab.setCurrentIndex(int(defaultTab)-2)   
+        self.mainTab2.setCurrentIndex(MAIN_TAB_TEST)  
 
     def onRefreshRemoteTests(self, data, projectId, forSaveAs=False):
         """
         """
-        self.remoteRepository.defaultActions()
+        self.remoteRepo.defaultActions()
         
         if forSaveAs:
-            self.remoteRepository.initializeSaveAs(listing=data, 
+            self.remoteRepo.initializeSaveAs(listing=data, 
                                                    reloadItems=True )
         else:
             # update default project
-            projectName = self.remoteRepository.getProjectName(projectId)
-            self.remoteRepository.setDefaultProject(projectName=projectName)
+            projectName = self.remoteRepo.getProjectName(projectId)
+            self.remoteRepo.setDefaultProject(projectName=projectName)
             
             # reconstruct
-            self.remoteRepository.initialize(listing=data )
+            self.remoteRepo.initialize(listing=data )
 
     def onRefreshRemoteAdapters(self, data):
         """
         """
         self.adaptersRemoteRepository.defaultActions()
         self.adaptersRemoteRepository.initialize(listing=data )
-
-    def onRefreshRemoteLibraries(self, data):
-        """
-        """
-        self.librariesRemoteRepository.defaultActions()
-        self.librariesRemoteRepository.initialize(listing=data )
-            
+ 
 WR = None # Singleton
 def instance ():
     """

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -458,65 +458,65 @@ class ValueDelegate(QItemDelegate, Logger.ClassLogger):
                     # update table
                     index.model().setData(index,dataMode)
                 return None
-            elif value['key'] == 'libraries':
-                serverSutLibs = Settings.instance().serverContext['libraries']
-                editor = QComboBox(parent)
-                editor.activated.connect(self.onItemActivated)
-                editor.addItems ( serverSutLibs.split(',')  )
-                return editor
-            elif value['key'] == 'adapters':
-                serverSutAdps = Settings.instance().serverContext['adapters']
-                editor = QComboBox(parent)
-                editor.activated.connect(self.onItemActivated)
-                editor.addItems ( serverSutAdps.split(',') )
-                return editor
-            elif value['key'] == 'state':
-                wdoc = index.model().getWdoc()
+            # elif value['key'] == 'libraries':
+                # serverSutLibs = Settings.instance().serverContext['libraries']
+                # editor = QComboBox(parent)
+                # editor.activated.connect(self.onItemActivated)
+                # editor.addItems ( serverSutLibs.split(',')  )
+                # return editor
+            # elif value['key'] == 'adapters':
+                # serverSutAdps = Settings.instance().serverContext['adapters']
+                # editor = QComboBox(parent)
+                # editor.activated.connect(self.onItemActivated)
+                # editor.addItems ( serverSutAdps.split(',') )
+                # return editor
+            # elif value['key'] == 'state':
+                # wdoc = index.model().getWdoc()
                 
-                if wdoc is None:
-                    return
+                # if wdoc is None:
+                    # return
                     
-                if not wdoc.isSaved():
-                    return
+                # if not wdoc.isSaved():
+                    # return
 
-                isTp = False
-                isTs = False
-                isTu = False
-                isTg = False
-                isTa = False
-                if wdoc.extension == Workspace.TestUnit.TYPE:
-                    isTu=True
-                if wdoc.extension == Workspace.TestAbstract.TYPE:
-                    isTa=True
-                if wdoc.extension == Workspace.TestSuite.TYPE:
-                    isTs=True
-                if wdoc.extension == Workspace.TestPlan.TYPE:
-                    isTp=True
-                if wdoc.extension == Workspace.TestPlan.TYPE_GLOBAL:
-                    isTg=True
-                editorDialog = StateDialog()
-                if editorDialog.exec_() == QDialog.Accepted:
-                    stateTest = editorDialog.getSelectedState()
-                    if value['value'] != stateTest:
+                # isTp = False
+                # isTs = False
+                # isTu = False
+                # isTg = False
+                # isTa = False
+                # if wdoc.extension == Workspace.TestUnit.TYPE:
+                    # isTu=True
+                # if wdoc.extension == Workspace.TestAbstract.TYPE:
+                    # isTa=True
+                # if wdoc.extension == Workspace.TestSuite.TYPE:
+                    # isTs=True
+                # if wdoc.extension == Workspace.TestPlan.TYPE:
+                    # isTp=True
+                # if wdoc.extension == Workspace.TestPlan.TYPE_GLOBAL:
+                    # isTg=True
+                # editorDialog = StateDialog()
+                # if editorDialog.exec_() == QDialog.Accepted:
+                    # stateTest = editorDialog.getSelectedState()
+                    # if value['value'] != stateTest:
                         # uci call
-                        if stateTest == 'Executing':
-                            duration = time.time() - float(wdoc.dataModel.testdev)
+                        # if stateTest == 'Executing':
+                            # duration = time.time() - float(wdoc.dataModel.testdev)
                           
                             # rest call
-                            RCI.instance().durationTestsWritingMetrics( duration=int(duration), 
-                                                                        projectId=wdoc.project, 
-                                                                        isTp=isTp, 
-                                                                        isTs=isTs, 
-                                                                        isTu=isTu, 
-                                                                        isTg=isTg, 
-                                                                        isTa=isTa)
+                            # RCI.instance().durationTestsWritingMetrics( duration=int(duration), 
+                                                                        # projectId=wdoc.project, 
+                                                                        # isTp=isTp, 
+                                                                        # isTs=isTs, 
+                                                                        # isTu=isTu, 
+                                                                        # isTg=isTg, 
+                                                                        # isTa=isTa)
                             
                         # update data model
-                        if stateTest == 'Writing':
-                            wdoc.dataModel.testdev=time.time()
+                        # if stateTest == 'Writing':
+                            # wdoc.dataModel.testdev=time.time()
                         # update table
-                        index.model().setData(index,stateTest)
-                return None
+                        # index.model().setData(index,stateTest)
+                # return None
             else:
                 editor = editor = QLineEdit(parent)
                 return editor
@@ -976,12 +976,12 @@ class DescriptionsTableView(QTableView, Logger.ClassLogger):
         """
         self.clearAction = QtHelper.createAction(self, "Clear all parameters", self.clearItems,
                     icon = QIcon(":/test-parameter-clear.png"),  tip = 'Clear all parameters' )
-        self.setDefaultsAction = QtHelper.createAction(self, "Set default adapters and libraries", self.setDefaults, 
-                    icon = QIcon(":/refresh-test.png"),  tip = 'Set default adapters and libraries' )
-        self.writingAction = QtHelper.createAction(self, "Set writing state", self.stateWritingTest, 
-                    icon = QIcon(":/writing-state.png"),  tip = 'Set writing state')
-        self.executingAction = QtHelper.createAction(self, "Set executing state", self.stateExecutingTest, 
-                    icon = QIcon(":/state_right.png"),  tip = 'Set executing state')
+        # self.setDefaultsAction = QtHelper.createAction(self, "Set default adapters and libraries", self.setDefaults, 
+                    # icon = QIcon(":/refresh-test.png"),  tip = 'Set default adapters and libraries' )
+        # self.writingAction = QtHelper.createAction(self, "Set writing state", self.stateWritingTest, 
+                    # icon = QIcon(":/writing-state.png"),  tip = 'Set writing state')
+        # self.executingAction = QtHelper.createAction(self, "Set executing state", self.stateExecutingTest, 
+                    # icon = QIcon(":/state_right.png"),  tip = 'Set executing state')
         self.defaultActions()
 
     def defaultActions(self):
@@ -989,9 +989,9 @@ class DescriptionsTableView(QTableView, Logger.ClassLogger):
         Set default actions
         """
         self.clearAction.setEnabled(True)
-        self.setDefaultsAction.setEnabled(True)
-        self.writingAction.setChecked(False)
-        self.executingAction.setChecked(False)
+        # self.setDefaultsAction.setEnabled(True)
+        # self.writingAction.setChecked(False)
+        # self.executingAction.setChecked(False)
 
     def onPopupMenu(self, pos):
         """
@@ -1002,82 +1002,82 @@ class DescriptionsTableView(QTableView, Logger.ClassLogger):
         """
         self.menu = QMenu(self)
         self.menu.addAction( self.clearAction )
-        self.menu.addAction( self.setDefaultsAction )
-        self.menu.addSeparator()
-        self.menu.addAction( self.writingAction )
-        self.menu.addAction( self.executingAction )
+        # self.menu.addAction( self.setDefaultsAction )
+        # self.menu.addSeparator()
+        # self.menu.addAction( self.writingAction )
+        # self.menu.addAction( self.executingAction )
         self.menu.popup( self.mapToGlobal(pos) )
 
-    def setDefaults(self):
-        """
-        Set default values for adapters and libraries version
-        """
-        defaultSutAdp = Settings.instance().serverContext['default-adapter']
-        defaultSutLib = Settings.instance().serverContext['default-library']
-        data = self.model.getData()
-        for kv in data:
-            if kv['key'] == 'adapters':
-                kv['value'] = defaultSutAdp
-            if kv['key'] == 'libraries':
-                kv['value'] = defaultSutLib
-        self.setData()
+    # def setDefaults(self):
+        # """
+        # Set default values for adapters and libraries version
+        # """
+        # defaultSutAdp = Settings.instance().serverContext['default-adapter']
+        # defaultSutLib = Settings.instance().serverContext['default-library']
+        # data = self.model.getData()
+        # for kv in data:
+            # if kv['key'] == 'adapters':
+                # kv['value'] = defaultSutAdp
+            # if kv['key'] == 'libraries':
+                # kv['value'] = defaultSutLib
+        # self.setData()
 
-    def stateExecutingTest(self):
-        """
-        Set the executing state for the current test
-        """
-        wdoc = self.model.getWdoc()
-        if wdoc is None:
-            return
+    # def stateExecutingTest(self):
+        # """
+        # Set the executing state for the current test
+        # """
+        # wdoc = self.model.getWdoc()
+        # if wdoc is None:
+            # return
             
-        if not wdoc.isSaved():
-            return
+        # if not wdoc.isSaved():
+            # return
             
-        isTp = False
-        isTs = False
-        isTu = False
-        isTg = False
-        if wdoc.extension == Workspace.TestUnit.TYPE:
-            isTu=True
-        if wdoc.extension == Workspace.TestSuite.TYPE:
-            isTs=True
-        if wdoc.extension == Workspace.TestPlan.TYPE:
-            isTp=True
-        if wdoc.extension == Workspace.TestPlan.TYPE_GLOBAL:
-            isTg=True
-        duration = time.time() - float(wdoc.dataModel.testdev)
+        # isTp = False
+        # isTs = False
+        # isTu = False
+        # isTg = False
+        # if wdoc.extension == Workspace.TestUnit.TYPE:
+            # isTu=True
+        # if wdoc.extension == Workspace.TestSuite.TYPE:
+            # isTs=True
+        # if wdoc.extension == Workspace.TestPlan.TYPE:
+            # isTp=True
+        # if wdoc.extension == Workspace.TestPlan.TYPE_GLOBAL:
+            # isTg=True
+        # duration = time.time() - float(wdoc.dataModel.testdev)
 
-        data = self.model.getData()
-        for kv in data:
-            if kv['key'] == 'state':
-                kv['value'] = 'Executing'
-                self.setData()
-                break
+        # data = self.model.getData()
+        # for kv in data:
+            # if kv['key'] == 'state':
+                # kv['value'] = 'Executing'
+                # self.setData()
+                # break
 
         # call web service
-        RCI.instance().durationTestsWritingMetrics( duration=int(duration), 
-                                                    projectId=wdoc.project, 
-                                                    isTp=isTp, 
-                                                    isTs=isTs, 
-                                                    isTu=isTu, 
-                                                    isTg=isTg, 
-                                                    isTa=isTa)
+        # RCI.instance().durationTestsWritingMetrics( duration=int(duration), 
+                                                    # projectId=wdoc.project, 
+                                                    # isTp=isTp, 
+                                                    # isTs=isTs, 
+                                                    # isTu=isTu, 
+                                                    # isTg=isTg, 
+                                                    # isTa=isTa)
                                                                         
-    def stateWritingTest(self):
-        """
-        Set the writing state for the current test
-        """
-        wdoc = self.model.getWdoc()
-        if wdoc is None:
-            return
+    # def stateWritingTest(self):
+        # """
+        # Set the writing state for the current test
+        # """
+        # wdoc = self.model.getWdoc()
+        # if wdoc is None:
+            # return
 
-        wdoc.dataModel.testdev=time.time()
-        data = self.model.getData()
-        for kv in data:
-            if kv['key'] == 'state':
-                kv['value'] = 'Writing'
-                self.setData()
-                break
+        # wdoc.dataModel.testdev=time.time()
+        # data = self.model.getData()
+        # for kv in data:
+            # if kv['key'] == 'state':
+                # kv['value'] = 'Writing'
+                # self.setData()
+                # break
 
     def startDrag(self, dropAction):
         """
@@ -1220,10 +1220,10 @@ class DescriptionsQWidget(QWidget, Logger.ClassLogger):
         """
         self.dockToolbar.setObjectName("Document Properties toolbar description")
         self.dockToolbar.addAction(self.table().clearAction)
-        self.dockToolbar.addAction(self.table().setDefaultsAction)
-        self.dockToolbar.addSeparator()
-        self.dockToolbar.addAction(self.table().writingAction)
-        self.dockToolbar.addAction(self.table().executingAction)
+        # self.dockToolbar.addAction(self.table().setDefaultsAction)
+        # self.dockToolbar.addSeparator()
+        # self.dockToolbar.addAction(self.table().writingAction)
+        # self.dockToolbar.addAction(self.table().executingAction)
         self.dockToolbar.addSeparator()
         self.dockToolbar.setIconSize(QSize(16, 16))
 

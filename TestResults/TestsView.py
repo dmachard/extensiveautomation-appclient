@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -737,83 +737,83 @@ class TestsView(QWidget):
 
         layoutStats = QHBoxLayout()
         
-        self.nb_TaLabel = QLabel("0")
-        self.min_TaLabel = QLabel("0.000")
-        self.avg_TaLabel = QLabel("0.000")
-        self.max_TaLabel = QLabel("0.000")
+        # self.nb_TaLabel = QLabel("0")
+        # self.min_TaLabel = QLabel("0.000")
+        # self.avg_TaLabel = QLabel("0.000")
+        # self.max_TaLabel = QLabel("0.000")
         
-        self.nb_TuLabel = QLabel("0")
-        self.min_TuLabel = QLabel("0.000")
-        self.avg_TuLabel = QLabel("0.000")
-        self.max_TuLabel = QLabel("0.000")
+        # self.nb_TuLabel = QLabel("0")
+        # self.min_TuLabel = QLabel("0.000")
+        # self.avg_TuLabel = QLabel("0.000")
+        # self.max_TuLabel = QLabel("0.000")
 
-        self.nb_TsLabel = QLabel("0")
-        self.min_TsLabel = QLabel("0.000") 
-        self.avg_TsLabel = QLabel("0.000")
-        self.max_TsLabel = QLabel("0.000")
+        # self.nb_TsLabel = QLabel("0")
+        # self.min_TsLabel = QLabel("0.000") 
+        # self.avg_TsLabel = QLabel("0.000")
+        # self.max_TsLabel = QLabel("0.000")
 
-        self.nb_TcLabel = QLabel("0")
-        self.min_TcLabel = QLabel("0.000")
-        self.avg_TcLabel = QLabel("0.000")
-        self.max_TcLabel = QLabel("0.000")
+        # self.nb_TcLabel = QLabel("0")
+        # self.min_TcLabel = QLabel("0.000")
+        # self.avg_TcLabel = QLabel("0.000")
+        # self.max_TcLabel = QLabel("0.000")
 
-        self.nb_TpLabel = QLabel("0")
-        self.min_TpLabel = QLabel("0.000")
-        self.avg_TpLabel = QLabel("0.000")
-        self.max_TpLabel = QLabel("0.000")
+        # self.nb_TpLabel = QLabel("0")
+        # self.min_TpLabel = QLabel("0.000")
+        # self.avg_TpLabel = QLabel("0.000")
+        # self.max_TpLabel = QLabel("0.000")
 
-        self.nb_TgLabel = QLabel("0")
-        self.min_TgLabel = QLabel("0.000")
-        self.avg_TgLabel = QLabel("0.000")
-        self.max_TgLabel = QLabel("0.000")
+        # self.nb_TgLabel = QLabel("0")
+        # self.min_TgLabel = QLabel("0.000")
+        # self.avg_TgLabel = QLabel("0.000")
+        # self.max_TgLabel = QLabel("0.000")
 
 
-        layoutStats = QGridLayout() 
-        layoutStats.addWidget(QLabel(), 0, 0 )
-        layoutStats.addWidget(QLabel("NB"), 0, 1 )
-        layoutStats.addWidget(QLabel("MIN"), 0, 2 )
-        layoutStats.addWidget(QLabel("AVG"), 0, 3 )
-        layoutStats.addWidget(QLabel("MAX"), 0, 4 )
+        # layoutStats = QGridLayout() 
+        # layoutStats.addWidget(QLabel(), 0, 0 )
+        # layoutStats.addWidget(QLabel("NB"), 0, 1 )
+        # layoutStats.addWidget(QLabel("MIN"), 0, 2 )
+        # layoutStats.addWidget(QLabel("AVG"), 0, 3 )
+        # layoutStats.addWidget(QLabel("MAX"), 0, 4 )
 
-        layoutStats.addWidget(QLabel("TESTCASE"), 1, 0 )
-        layoutStats.addWidget(self.nb_TcLabel, 1, 1 )
-        layoutStats.addWidget(self.min_TcLabel, 1, 2 )
-        layoutStats.addWidget(self.avg_TcLabel, 1, 3 )
-        layoutStats.addWidget(self.max_TcLabel, 1, 4 )
+        # layoutStats.addWidget(QLabel("TESTCASE"), 1, 0 )
+        # layoutStats.addWidget(self.nb_TcLabel, 1, 1 )
+        # layoutStats.addWidget(self.min_TcLabel, 1, 2 )
+        # layoutStats.addWidget(self.avg_TcLabel, 1, 3 )
+        # layoutStats.addWidget(self.max_TcLabel, 1, 4 )
 
-        layoutStats.addWidget(QLabel("TESTABSTRACT"), 2, 0 )
-        layoutStats.addWidget(self.nb_TaLabel, 2, 1 )
-        layoutStats.addWidget(self.min_TaLabel, 2, 2 )
-        layoutStats.addWidget(self.avg_TaLabel, 2, 3 )
-        layoutStats.addWidget(self.max_TaLabel, 2, 4 )
+        # layoutStats.addWidget(QLabel("TESTABSTRACT"), 2, 0 )
+        # layoutStats.addWidget(self.nb_TaLabel, 2, 1 )
+        # layoutStats.addWidget(self.min_TaLabel, 2, 2 )
+        # layoutStats.addWidget(self.avg_TaLabel, 2, 3 )
+        # layoutStats.addWidget(self.max_TaLabel, 2, 4 )
         
-        layoutStats.addWidget(QLabel("TESTUNIT"), 3, 0 )
-        layoutStats.addWidget(self.nb_TuLabel, 3, 1 )
-        layoutStats.addWidget(self.min_TuLabel, 3, 2 )
-        layoutStats.addWidget(self.avg_TuLabel, 3, 3 )
-        layoutStats.addWidget(self.max_TuLabel, 3, 4 )
+        # layoutStats.addWidget(QLabel("TESTUNIT"), 3, 0 )
+        # layoutStats.addWidget(self.nb_TuLabel, 3, 1 )
+        # layoutStats.addWidget(self.min_TuLabel, 3, 2 )
+        # layoutStats.addWidget(self.avg_TuLabel, 3, 3 )
+        # layoutStats.addWidget(self.max_TuLabel, 3, 4 )
 
-        layoutStats.addWidget(QLabel("TESTSUITE"), 4, 0 )
-        layoutStats.addWidget(self.nb_TsLabel, 4, 1 )
-        layoutStats.addWidget(self.min_TsLabel, 4, 2 )
-        layoutStats.addWidget(self.avg_TsLabel, 4, 3 )
-        layoutStats.addWidget(self.max_TsLabel, 4, 4 )
+        # layoutStats.addWidget(QLabel("TESTSUITE"), 4, 0 )
+        # layoutStats.addWidget(self.nb_TsLabel, 4, 1 )
+        # layoutStats.addWidget(self.min_TsLabel, 4, 2 )
+        # layoutStats.addWidget(self.avg_TsLabel, 4, 3 )
+        # layoutStats.addWidget(self.max_TsLabel, 4, 4 )
 
-        layoutStats.addWidget(QLabel("TESTPLAN"), 5, 0 )
-        layoutStats.addWidget(self.nb_TpLabel, 5, 1 )
-        layoutStats.addWidget(self.min_TpLabel, 5, 2 )
-        layoutStats.addWidget(self.avg_TpLabel, 5, 3 )
-        layoutStats.addWidget(self.max_TpLabel, 5, 4 )
+        # layoutStats.addWidget(QLabel("TESTPLAN"), 5, 0 )
+        # layoutStats.addWidget(self.nb_TpLabel, 5, 1 )
+        # layoutStats.addWidget(self.min_TpLabel, 5, 2 )
+        # layoutStats.addWidget(self.avg_TpLabel, 5, 3 )
+        # layoutStats.addWidget(self.max_TpLabel, 5, 4 )
 
-        layoutStats.addWidget(QLabel("TESTGLOBAL"), 6, 0 )
-        layoutStats.addWidget(self.nb_TgLabel, 6, 1 )
-        layoutStats.addWidget(self.min_TgLabel, 6, 2 )
-        layoutStats.addWidget(self.avg_TgLabel, 6, 3 )
-        layoutStats.addWidget(self.max_TgLabel, 6, 4 )
+        # layoutStats.addWidget(QLabel("TESTGLOBAL"), 6, 0 )
+        # layoutStats.addWidget(self.nb_TgLabel, 6, 1 )
+        # layoutStats.addWidget(self.min_TgLabel, 6, 2 )
+        # layoutStats.addWidget(self.avg_TgLabel, 6, 3 )
+        # layoutStats.addWidget(self.max_TgLabel, 6, 4 )
 
         layoutStatsFinal = QHBoxLayout()
         layoutStatsFinal.addLayout(layoutSummary) 
-        layoutStatsFinal.addLayout(layoutStats) 
+        # layoutStatsFinal.addLayout(layoutStats) 
 
         self.filterBox = QGroupBox("Events Filter")
         layoutV = QVBoxLayout()
@@ -1173,40 +1173,40 @@ class TestsView(QWidget):
         self.exportDesignAction.setEnabled( False )
         self.exportStatisticsAction.setEnabled( False )
     
-        self.nbOkLabel.setText( "0" )
-        self.nbKoLabel.setText( "0.000" )
-        self.nbUndLabel.setText( "0.000" )
-        self.nbTotLabel.setText( "0.000" )
+        # self.nbOkLabel.setText( "0" )
+        # self.nbKoLabel.setText( "0.000" )
+        # self.nbUndLabel.setText( "0.000" )
+        # self.nbTotLabel.setText( "0.000" )
         
-        self.nb_TaLabel.setText( "0" )
-        self.min_TaLabel.setText( "0.000" )
-        self.avg_TaLabel.setText( "0.000" )
-        self.max_TaLabel.setText( "0.000" )
+        # self.nb_TaLabel.setText( "0" )
+        # self.min_TaLabel.setText( "0.000" )
+        # self.avg_TaLabel.setText( "0.000" )
+        # self.max_TaLabel.setText( "0.000" )
         
-        self.nb_TuLabel.setText( "0" )
-        self.min_TuLabel.setText( "0.000" )
-        self.avg_TuLabel.setText( "0.000" )
-        self.max_TuLabel.setText( "0.000" )
+        # self.nb_TuLabel.setText( "0" )
+        # self.min_TuLabel.setText( "0.000" )
+        # self.avg_TuLabel.setText( "0.000" )
+        # self.max_TuLabel.setText( "0.000" )
 
-        self.nb_TsLabel.setText( "0" )
-        self.min_TsLabel.setText( "0.000" )
-        self.avg_TsLabel.setText( "0.000" )
-        self.max_TsLabel.setText( "0.000" )
+        # self.nb_TsLabel.setText( "0" )
+        # self.min_TsLabel.setText( "0.000" )
+        # self.avg_TsLabel.setText( "0.000" )
+        # self.max_TsLabel.setText( "0.000" )
 
-        self.nb_TcLabel.setText( "0" )
-        self.min_TcLabel.setText( "0.000" )
-        self.avg_TcLabel.setText( "0.000" )
-        self.max_TcLabel.setText( "0.000" )
+        # self.nb_TcLabel.setText( "0" )
+        # self.min_TcLabel.setText( "0.000" )
+        # self.avg_TcLabel.setText( "0.000" )
+        # self.max_TcLabel.setText( "0.000" )
 
-        self.nb_TpLabel.setText( "0" )
-        self.min_TpLabel.setText( "0.000" )
-        self.avg_TpLabel.setText( "0.000" )
-        self.max_TpLabel.setText( "0.000" )
+        # self.nb_TpLabel.setText( "0" )
+        # self.min_TpLabel.setText( "0.000" )
+        # self.avg_TpLabel.setText( "0.000" )
+        # self.max_TpLabel.setText( "0.000" )
 
-        self.nb_TgLabel.setText( "0" )
-        self.min_TgLabel.setText( "0.000" )
-        self.avg_TgLabel.setText( "0.000" )
-        self.max_TgLabel.setText( "0.000" )
+        # self.nb_TgLabel.setText( "0" )
+        # self.min_TgLabel.setText( "0.000" )
+        # self.avg_TgLabel.setText( "0.000" )
+        # self.max_TgLabel.setText( "0.000" )
 
     def onPopupMenu(self, pos):
         """
@@ -1381,79 +1381,85 @@ class TestsView(QWidget):
         """
         Update statistics of testsuite
         """
-        nbTs = len(self.nb_min_avg_max_ts)
-        minTs = min(self.nb_min_avg_max_ts)
-        avgTs = sum(self.nb_min_avg_max_ts) / nbTs
-        maxTs = max(self.nb_min_avg_max_ts)
-        self.nb_TsLabel.setText( "%s" % nbTs )
-        self.min_TsLabel.setText( "%s" % minTs )
-        self.avg_TsLabel.setText( "%.3f" % avgTs )
-        self.max_TsLabel.setText( "%s" % maxTs )
+        pass
+        # nbTs = len(self.nb_min_avg_max_ts)
+        # minTs = min(self.nb_min_avg_max_ts)
+        # avgTs = sum(self.nb_min_avg_max_ts) / nbTs
+        # maxTs = max(self.nb_min_avg_max_ts)
+        # self.nb_TsLabel.setText( "%s" % nbTs )
+        # self.min_TsLabel.setText( "%s" % minTs )
+        # self.avg_TsLabel.setText( "%.3f" % avgTs )
+        # self.max_TsLabel.setText( "%s" % maxTs )
 
     def updateStatsTu (self):
         """
         Update statistics of testunit
         """
-        nbTu = len(self.nb_min_avg_max_tu)
-        minTu = min(self.nb_min_avg_max_tu)
-        avgTu = sum(self.nb_min_avg_max_tu) / nbTu
-        maxTu = max(self.nb_min_avg_max_tu)
-        self.nb_TuLabel.setText( "%s" % nbTu )
-        self.min_TuLabel.setText( "%s" % minTu )
-        self.avg_TuLabel.setText( "%.3f" % avgTu )
-        self.max_TuLabel.setText( "%s" % maxTu )
+        pass
+        # nbTu = len(self.nb_min_avg_max_tu)
+        # minTu = min(self.nb_min_avg_max_tu)
+        # avgTu = sum(self.nb_min_avg_max_tu) / nbTu
+        # maxTu = max(self.nb_min_avg_max_tu)
+        # self.nb_TuLabel.setText( "%s" % nbTu )
+        # self.min_TuLabel.setText( "%s" % minTu )
+        # self.avg_TuLabel.setText( "%.3f" % avgTu )
+        # self.max_TuLabel.setText( "%s" % maxTu )
         
     def updateStatsTa (self):
         """
         Update statistics of testabstract
         """
-        nbTa = len(self.nb_min_avg_max_ta)
-        minTa = min(self.nb_min_avg_max_ta)
-        avgTa = sum(self.nb_min_avg_max_ta) / nbTa
-        maxTa = max(self.nb_min_avg_max_ta)
-        self.nb_TaLabel.setText( "%s" % nbTa )
-        self.min_TaLabel.setText( "%s" % minTa )
-        self.avg_TaLabel.setText( "%.3f" % avgTa )
-        self.max_TaLabel.setText( "%s" % maxTa )
+        pass
+        # nbTa = len(self.nb_min_avg_max_ta)
+        # minTa = min(self.nb_min_avg_max_ta)
+        # avgTa = sum(self.nb_min_avg_max_ta) / nbTa
+        # maxTa = max(self.nb_min_avg_max_ta)
+        # self.nb_TaLabel.setText( "%s" % nbTa )
+        # self.min_TaLabel.setText( "%s" % minTa )
+        # self.avg_TaLabel.setText( "%.3f" % avgTa )
+        # self.max_TaLabel.setText( "%s" % maxTa )
         
     def updateStatsTc (self):
         """
         Update statistics of testcase
         """
-        nbTc = len(self.nb_min_avg_max_tc)
-        minTc = min(self.nb_min_avg_max_tc)
-        avgTc = sum(self.nb_min_avg_max_tc) / nbTc
-        maxTc = max(self.nb_min_avg_max_tc)
-        self.nb_TcLabel.setText( "%s" % nbTc )
-        self.min_TcLabel.setText( "%s" % minTc )
-        self.avg_TcLabel.setText( "%.3f" % avgTc )
-        self.max_TcLabel.setText( "%s" % maxTc )
+        pass
+        # nbTc = len(self.nb_min_avg_max_tc)
+        # minTc = min(self.nb_min_avg_max_tc)
+        # avgTc = sum(self.nb_min_avg_max_tc) / nbTc
+        # maxTc = max(self.nb_min_avg_max_tc)
+        # self.nb_TcLabel.setText( "%s" % nbTc )
+        # self.min_TcLabel.setText( "%s" % minTc )
+        # self.avg_TcLabel.setText( "%.3f" % avgTc )
+        # self.max_TcLabel.setText( "%s" % maxTc )
 
     def updateStatsTp (self):
         """
         Update statistics of testplan
         """
-        nbTp = len(self.nb_min_avg_max_tp)
-        minTp = min(self.nb_min_avg_max_tp)
-        avgTp = sum(self.nb_min_avg_max_tp) / nbTp
-        maxTp = max(self.nb_min_avg_max_tp)
-        self.nb_TpLabel.setText( "%s" % nbTp )
-        self.min_TpLabel.setText( "%s" % minTp )
-        self.avg_TpLabel.setText( "%.3f" % avgTp, )
-        self.max_TpLabel.setText( "%s" % maxTp )
+        pass
+        # nbTp = len(self.nb_min_avg_max_tp)
+        # minTp = min(self.nb_min_avg_max_tp)
+        # avgTp = sum(self.nb_min_avg_max_tp) / nbTp
+        # maxTp = max(self.nb_min_avg_max_tp)
+        # self.nb_TpLabel.setText( "%s" % nbTp )
+        # self.min_TpLabel.setText( "%s" % minTp )
+        # self.avg_TpLabel.setText( "%.3f" % avgTp, )
+        # self.max_TpLabel.setText( "%s" % maxTp )
 
     def updateStatsTg (self):
         """
         Update statistics of testglobal
         """
-        nbTg = len(self.nb_min_avg_max_tg)
-        minTg = min(self.nb_min_avg_max_tg)
-        avgTg = sum(self.nb_min_avg_max_tg) / nbTg
-        maxTg = max(self.nb_min_avg_max_tg)
-        self.nb_TgLabel.setText( "%s" % nbTg )
-        self.min_TgLabel.setText( "%s" % minTg )
-        self.avg_TgLabel.setText( "%.3f" % avgTg )
-        self.max_TgLabel.setText( "%s" % maxTg )
+        pass
+        # nbTg = len(self.nb_min_avg_max_tg)
+        # minTg = min(self.nb_min_avg_max_tg)
+        # avgTg = sum(self.nb_min_avg_max_tg) / nbTg
+        # maxTg = max(self.nb_min_avg_max_tg)
+        # self.nb_TgLabel.setText( "%s" % nbTg )
+        # self.min_TgLabel.setText( "%s" % minTg )
+        # self.avg_TgLabel.setText( "%.3f" % avgTg )
+        # self.max_TgLabel.setText( "%s" % maxTg )
 
     def beforeLoadTest (self):
         """

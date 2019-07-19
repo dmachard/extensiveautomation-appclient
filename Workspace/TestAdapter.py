@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -63,8 +63,10 @@ class WTestAdapter(Document.WDocument):
     Test adapter widget
     """
     TEST_ADAPTER_EDITOR = 0
-    def __init__(self, parent = None, path = None, filename = None, extension = None, 
-                        nonameId = None, remoteFile=True, repoDest=None, project=0, isLocked=False):
+    def __init__(self, parent = None, path = None, 
+                 filename = None, extension = None, 
+                 nonameId = None, remoteFile=True, 
+                 repoDest=None, project=0, isLocked=False):
         """
         Constructs WScript widget
 
@@ -104,6 +106,9 @@ class WTestAdapter(Document.WDocument):
         """
         self.srcWidget = EditorWidget( editorId=self.TEST_ADAPTER_EDITOR, 
                                        title="Adapter Definition:", parent=self )
+        self.srcWidget.hideToolbarRun()
+        self.srcWidget.hideToolbarFile()
+        
         self.srcEditor = self.srcWidget.editor
 
         layout = QVBoxLayout()

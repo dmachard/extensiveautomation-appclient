@@ -1,5 +1,5 @@
 :: -------------------------------------------------------------------
-:: Copyright (c) 2010-2018 Denis Machard
+:: Copyright (c) 2010-2019 Denis Machard
 :: This file is part of the extensive automation project
 ::
 :: This library is free software; you can redistribute it and/or
@@ -22,15 +22,12 @@
 
 set Project=%~dp0..\..\
 
-set PythonVersion=36
-set PythonPath=C:\Python%PythonVersion%\
-
 :: convert xml translations files
 :: C:\Qt\5.8\mingw53_32\bin\lrelease.exe "%Project%\Translations\us_US.ts"
 :: C:\Qt\5.8\mingw53_32\bin\lrelease.exe "%Project%\Translations\fr_FR.ts"
 
 :: build resources
 echo Building translations resources...
-%PythonPath%\python.exe -m PyQt5.pyrcc_main -o "%Project%\Translations\Translations.py" "%Project%\Translations\__resources.qrc"
+py -m PyQt5.pyrcc_main -o "%Project%\Translations\Translations.py" "%Project%\Translations\__resources.qrc"
 
 pause

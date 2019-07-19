@@ -1,1 +1,35 @@
-# extensiveautomation-appclient
+Qt application for ExtensiveAutomation
+======================================
+
+Introduction
+------------
+
+The Qt application client enable to interact with the ExtensiveAutomation server.
+
+Installation from source
+------------------------
+
+The Qt application support both Python 2 and 3. Follow this procedure to execute the application
+on Windows with Python3.
+
+1. Clone this repository on your machine
+
+        git clone https://github.com/ExtensiveAutomation/extensiveautomation-appclient.git
+   
+2. Add additional Python packages with the pip command
+
+        py -m pip install pyinstaller pylint pyqt5 qscintilla PyQtWebEngine
+
+3. Execute the client 
+
+        cd extensiveautomation-appclient/
+        py Main.py
+        
+Build portable version for Windows
+--------------------------------
+
+Portable version can be build on Windows. Follow this procedure if you want to.
+
+1. Go in the folder `Scripts/qt5/` and execute the script `MakePortable.bat`
+
+2. The output is available in the `dist` folder

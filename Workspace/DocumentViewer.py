@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -274,7 +274,7 @@ class WelcomePage(QWidget):
     """
     LinkConnect = pyqtSignal() 
     LinkDisconnect = pyqtSignal() 
-    LinkTax = pyqtSignal() 
+    # LinkTax = pyqtSignal() 
     LinkTux = pyqtSignal() 
     LinkTsx = pyqtSignal() 
     LinkTpx = pyqtSignal() 
@@ -432,15 +432,8 @@ class WelcomePage(QWidget):
         self.connectLink.setIcon(QPixmap(":/connect.png") )
         self.connectLink.onClicked = self.onConnectLinkClicked
 
-        self.onlineLink = QLabelEnhanced(self)
-        self.onlineLink.setTextLink("Online")
-        self.onlineLink.setTextDescription("Website of the automation center")
-        self.onlineLink.setIcon(QPixmap(":/http.png") )
-        self.onlineLink.onClicked = self.onOnlineLinkClicked
-        
         connectLayout.addWidget(title)
         connectLayout.addWidget(self.connectLink)
-        connectLayout.addWidget(self.onlineLink)
         connectLayout.setSpacing(0)
         connectLayout.addStretch(1)
         self.connectFrame.setLayout(connectLayout)
@@ -459,13 +452,7 @@ class WelcomePage(QWidget):
                             padding: 4px;
                             font-weight: bold;
                          } """)
-                         
-        self.taxLink = QLabelEnhanced(self)
-        self.taxLink.setTextLink("Test Abstract")
-        self.taxLink.setTextDescription("Testcase modelisation")
-        self.taxLink.setIcon(QPixmap(":/tax48.png") )
-        self.taxLink.onClicked = self.onTaxLinkClicked
-        
+
         self.tuxLink = QLabelEnhanced(self)
         self.tuxLink.setTextLink("Test Unit")
         self.tuxLink.setTextDescription("Testcase scripting")
@@ -492,7 +479,7 @@ class WelcomePage(QWidget):
         
         filesLayout = QVBoxLayout()
         filesLayout.addWidget(titleFiles)
-        filesLayout.addWidget(self.taxLink)
+        # filesLayout.addWidget(self.taxLink)
         filesLayout.addWidget(self.tuxLink)
         filesLayout.addWidget(self.tsxLink)
         filesLayout.addWidget(self.tpxLink)
@@ -567,13 +554,7 @@ class WelcomePage(QWidget):
         On basic link clicked
         """
         self.LinkSysMacro.emit()
-        
-    def onTaxLinkClicked(self, linkId=None):
-        """
-        On tax link clicked
-        """
-        self.LinkTax.emit()
-        
+
     def onTuxLinkClicked(self, linkId=None):
         """
         On tux link clicked
@@ -796,7 +777,7 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
         self.createWidgets()
         self.createActions()
         self.createConnections()
-        self.createToolbar()
+        # self.createToolbar()
 
         # add default tab
         if QtHelper.str2bool( Settings.instance().readValue( key = 'Common/welcome-page' ) ):
@@ -823,23 +804,14 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
         self.tab.setDocumentMode( False )
         self.tab.setMovable( True )
 
-        self.dockToolbar = QToolBar(self)
-        self.dockToolbar2 = QToolBar(self)
-        self.dockToolbar2.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
+        # self.dockToolbar = QToolBar(self)
+        # self.dockToolbar.setOrientation(Qt.Vertical)
 
         self.findWidget = FindReplace(self)
         self.findWidget.setDisabled(True)
         self.findWidget.hide()
-        
-        layoutBar = QHBoxLayout()
-        layoutBar.addWidget( self.dockToolbar )
-
-        layoutBar2 = QHBoxLayout()
-        layoutBar2.addWidget( self.dockToolbar2 )
 
         layout = QVBoxLayout()
-        layout.addLayout( layoutBar )
-        layout.addLayout( layoutBar2 )
         layout.addWidget( self.tab )
         layout.setContentsMargins(0,0,0,0)
 
@@ -881,10 +853,6 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
                                         tip = 'Closes the current document')
         self.closeAllTabAction = QtHelper.createAction(self, self.tr("Close All"), self.closeAllTab, 
                                         tip = 'Closes all document')
-        
-        self.newTestAbstractAction = QtHelper.createAction(self, "Test Abstract", self.newTestAbstract,
-                                        icon = QIcon(":/%s.png" % TestAbstract.TYPE), 
-                                        tip = 'Creates a new test abstract')
 
         self.newTestUnitAction = QtHelper.createAction(self, "Test Unit", self.newTestUnit,
                                         icon = QIcon(":/%s.png" % TestUnit.TYPE), 
@@ -910,6 +878,7 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
                                         icon = QIcon(":/file-lib-adp.png"), tip = 'Creates a new library')
         self.newTxtAction = QtHelper.createAction(self, "Txt", self.newTestTxt,
                                         icon = QIcon(":/file-txt.png"), tip = 'Creates a new txt')
+
 
         self.openAction = QtHelper.createAction(self, self.tr("Open"), self.openDoc,
                                         icon = QIcon(":/open-test.png"), shortcut = "Ctrl+O", tip = 'Open')
@@ -994,10 +963,7 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
                                         tip = 'Executes the current test and reduce the application' )
         self.runBackgroundAction = QtHelper.createAction(self, "Background", self.runDocumentInBackground,
                                         tip = 'Executes the current test in background')
-
-        self.runWithoutProbesAction = QtHelper.createAction(self, "Without probes", self.runDocumentWithoutProbes,
-                                        tip = 'Executes the current test without probes', 
-                                        icon=QIcon(":/test-play-without-probes.png") )
+                                        
         self.runDebugAction = QtHelper.createAction(self, "&Debug", self.runDocumentDebug,
                                         tip = 'Executes the current test with debug traces on server' )
         self.runWithoutNotifAction = QtHelper.createAction(self, "&Without notifications", self.runDocumentWithoutNotif,
@@ -1038,8 +1004,15 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
         menu1.addAction( self.checkSyntaxAction )
         menu1.addAction( self.checkDesignAction )
         self.checkAction = QtHelper.createAction(self, self.tr("Prepare"), self.prepareDocument,
-                                tip = self.tr('Prepare the current test'), icon=QIcon(":/warning.png") )
+                                tip = self.tr('Prepare the current test'), icon=QIcon(":/check-syntax.png") )
         self.checkAction.setMenu(menu1) 
+
+        menu3 = QMenu(self)
+        menu3.addAction( self.runSchedAction )
+        menu3.addAction( self.runSeveralAction )
+        self.schedAction = QtHelper.createAction(self, self.tr("Schedule"), self.schedRunDocument,
+                                tip = self.tr('Schedule a test'), icon=QIcon(":/schedule.png") )
+        self.schedAction.setMenu(menu3) 
         
         menu = QMenu(self)
         menu.addAction( self.runNowAction )
@@ -1049,17 +1022,16 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
         menu.addAction( self.runReduceAction )
         menu.addSeparator()
         menu.addAction( self.runWithoutNotifAction )
-        menu.addAction( self.runWithoutProbesAction )
         menu.addAction( self.runNoKeepTrAction )
         menu.addSeparator()
         menu.addAction( self.runDebugAction )
+        menu.addSeparator()
+        menu.addAction( self.runStepByStepAction )
+        menu.addAction( self.runBreakpointAction )
+
         self.runAction.setMenu(menu)
 
-        self.hideFindReplaceAction = QtHelper.createAction(self, self.tr("Find/Replace"), self.hideFindReplace,
-                                                icon =  QIcon(":/find.png"), 
-                                                tip = self.tr('Hide or show the find and replace window'), checkable=True)
-        self.hideFindReplaceAction.setChecked(True)
-        self.findAction = QtHelper.createAction(self, self.tr("Search Text"), self.searchText,
+        self.findAction = QtHelper.createAction(self, self.tr("Search"), self.searchText,
                                                 icon =  QIcon(":/find.png"), tip = self.tr('Search text'),
                                                 shortcut = Settings.instance().readValue( key = 'KeyboardShorcuts/search' )  )
         self.findAction.setChecked(True)
@@ -1076,7 +1048,6 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
 
         self.welcomePage.LinkConnect.connect(self.onConnectLinkClicked)
         self.welcomePage.LinkDisconnect.connect(self.onDisconnectLinkClicked)
-        self.welcomePage.LinkTax.connect(self.newTestAbstract)
         self.welcomePage.LinkTux.connect(self.newTestUnit)
         self.welcomePage.LinkTsx.connect(self.newTestSuite)
         self.welcomePage.LinkTpx.connect(self.newTestPlan)
@@ -1174,88 +1145,58 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
         """
         self.runsDialog.close()
 
-    def hideToolbars(self):
-        """
-        hide toolbars
-        """
-        self.dockToolbar.hide()
-        self.dockToolbar2.hide()
+    # def hideToolbars(self):
+        # """
+        # hide toolbars
+        # """
+        # self.dockToolbar.hide()
 
-    def showToolbars(self):
-        """
-        Show toolbars
-        """
-        self.dockToolbar.show()
-        self.dockToolbar2.show()
+    # def showToolbars(self):
+        # """
+        # Show toolbars
+        # """
+        # self.dockToolbar.show()
 
-    def hideDocumentBar(self):
-        """
-        Hide document bar
-        """
-        self.dockToolbar.hide()
+    # def hideDocumentBar(self):
+        # """
+        # Hide document bar
+        # """
+        # self.dockToolbar.hide()
        
-    def showDocumentBar(self):
-        """
-        Show document bar
-        """
-        self.dockToolbar.show()
+    # def showDocumentBar(self):
+        # """
+        # Show document bar
+        # """
+        # self.dockToolbar.show()
 
     def hideExecuteBar(self):
         """
         Hide execute bar
         """
-        self.dockToolbar2.hide()
-       
+        pass
+
     def showExecuteBar(self):
         """
         Show execute bar
         """
-        self.dockToolbar2.show()
+        pass
 
-    def createToolbar(self):
-        """
-        Toolbar creation
+    # def createToolbar(self):
+        # """
+        # Toolbar creation
             
-        ||-----|------|||------|-------|||------|------|||---------|-----------|||-----||
-        || New | Open ||| Save | SaveA ||| Undo | Redo ||| Comment | Uncomment ||| Run ||
-        ||-----|------|||------|-------|||------|------|||---------|-----------|||-----||
-        """
-        self.dockToolbar.setObjectName("File toolbar")
-        self.dockToolbar.addAction(self.newTestAbstractAction)
-        self.dockToolbar.addAction(self.newTestUnitAction)
-        self.dockToolbar.addAction(self.newTestSuiteAction)
-        self.dockToolbar.addAction(self.newTestPlanAction)
-        self.dockToolbar.addAction(self.newTestGlobalAction)
-        self.dockToolbar.addSeparator()
-        self.dockToolbar.addAction(self.newTestConfigAction)
-        self.dockToolbar.addAction(self.newTestDataAction)
-        self.dockToolbar.addSeparator()
-        self.dockToolbar.addAction(self.newAdapterAction)
-        self.dockToolbar.addAction(self.newLibraryAction)
-        self.dockToolbar.addAction(self.newTxtAction)
-        self.dockToolbar.addSeparator()
-        self.dockToolbar.addAction(self.openAction)
-        self.dockToolbar.addSeparator()
-        self.dockToolbar.addAction(self.saveAction)
-        self.dockToolbar.addAction(self.saveAllAction)
-        self.dockToolbar.addAction(self.printAction)
-        self.dockToolbar.addSeparator()
-        self.dockToolbar.addAction(self.findAction)
-        self.dockToolbar.setIconSize(QSize(16, 16))
-        
-        self.dockToolbar2.setObjectName("Run")
-        self.dockToolbar2.addAction(self.runAction)
-        self.dockToolbar2.addAction(self.runSchedAction)
-        self.dockToolbar2.addAction(self.runSeveralAction)
-        self.dockToolbar2.addSeparator()
-        self.dockToolbar2.addAction(self.runStepByStepAction)
-        self.dockToolbar2.addAction(self.runBreakpointAction)
-        self.dockToolbar2.addSeparator()
-        self.dockToolbar2.addAction(self.checkSyntaxAction)
-        self.dockToolbar2.addAction(self.checkDesignAction)
-        self.dockToolbar2.addAction(self.updateTestAction)
-        self.dockToolbar2.addSeparator()
-        self.dockToolbar2.setIconSize(QSize(16, 16))
+        # ||-----|------|||------|-------|||------|------|||---------|-----------|||-----||
+        # || New | Open ||| Save | SaveA ||| Undo | Redo ||| Comment | Uncomment ||| Run ||
+        # ||-----|------|||------|-------|||------|------|||---------|-----------|||-----||
+        # """
+        # self.dockToolbar.setObjectName("File toolbar")
+        # self.dockToolbar.addSeparator()
+        # self.dockToolbar.addAction(self.newAdapterAction)
+        # self.dockToolbar.addAction(self.newLibraryAction)
+        # self.dockToolbar.addAction(self.newTxtAction)
+        # self.dockToolbar.addSeparator()
+        # self.dockToolbar.addAction(self.findAction)
+        # self.dockToolbar.setIconSize(QSize(24, 24))
 
     def decodeData(self, b64data):
         """
@@ -1333,8 +1274,8 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
             # prepare a new view of the testplan/testglobal and load the model on it
             doc = TestPlan.PrintTreeView()
             doc.setModel(currentDocument.tp.model())
-        elif currentDocument.extension == TestAbstract.TYPE:
-            doc = currentDocument
+        # elif currentDocument.extension == TestAbstract.TYPE:
+            # doc = currentDocument
         else:
             pass
 
@@ -1348,16 +1289,16 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
         dialog.paintRequested.connect(doc.print_)
         dialog.exec_()
 
-    def initFindReplaceBarDisplay(self):
-        """
-        Init find/replace bar displya
-        """
-        if ( Settings.instance().readValue( key = 'View/findreplace-bar' ) == 'True' ):
-            self.findWidget.show()
-            self.hideFindReplaceAction.setChecked(True)
-        else:
-            self.hideFindReplaceAction.setChecked(False)
-            self.findWidget.hide()
+    # def initFindReplaceBarDisplay(self):
+        # """
+        # Init find/replace bar displya
+        # """
+        # if ( Settings.instance().readValue( key = 'View/findreplace-bar' ) == 'True' ):
+            # self.findWidget.show()
+            # self.hideFindReplaceAction.setChecked(True)
+        # else:
+            # self.hideFindReplaceAction.setChecked(False)
+            # self.findWidget.hide()
 
     def hideFindReplaceWidget(self):
         """
@@ -1365,26 +1306,26 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
         """
         self.findWidget.hide()
         
-    def hideFindReplace(self):
-        """
-        Hide find/replace
-        """
-        tabId = self.tab.currentIndex()
-        if tabId == -1: return False
-        currentDoc = self.tab.widget(tabId)
+    # def hideFindReplace(self):
+        # """
+        # Hide find/replace
+        # """
+        # tabId = self.tab.currentIndex()
+        # if tabId == -1: return False
+        # currentDoc = self.tab.widget(tabId)
         
-        if not self.hideFindReplaceAction.isChecked():
-            Settings.instance().setValue( key = 'View/findreplace-bar', value = 'False' )
-            self.findWidget.hide()
-        else:
-            Settings.instance().setValue( key = 'View/findreplace-bar', value = 'True' )
+        # if not self.hideFindReplaceAction.isChecked():
+            # Settings.instance().setValue( key = 'View/findreplace-bar', value = 'False' )
+            # self.findWidget.hide()
+        # else:
+            # Settings.instance().setValue( key = 'View/findreplace-bar', value = 'True' )
             
-            if isinstance(currentDoc, WelcomePage):
-                return
+            # if isinstance(currentDoc, WelcomePage):
+                # return
                 
-            if currentDoc.extension in [ TestUnit.TYPE, TestSuite.TYPE, TestAdapter.TYPE,
-                                          TestData.TYPE, TestLibrary.TYPE, TestTxt.TYPE  ]:
-                self.findWidget.show()
+            # if currentDoc.extension in [ TestUnit.TYPE, TestSuite.TYPE, TestAdapter.TYPE,
+                                          # TestData.TYPE, TestLibrary.TYPE, TestTxt.TYPE  ]:
+                # self.findWidget.show()
     
     def searchText(self):
         """
@@ -1402,15 +1343,15 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
             selectedText = ''
             if currentDoc.editor().hasSelectedText():
                 selectedText = currentDoc.editor().selectedText()
-            self.hideFindReplaceAction.setChecked(True)
+            # self.hideFindReplaceAction.setChecked(True)
             self.findWidget.showEnhanced(textSelected=selectedText)
         
-    def addActionToolbar(self, action):
-        """
-        Add action to toolbar
-        """
-        self.dockToolbar.addSeparator()
-        self.dockToolbar.addAction(action)
+    # def addActionToolbar(self, action):
+        # """
+        # Add action to toolbar
+        # """
+        # self.dockToolbar.addSeparator()
+        # self.dockToolbar.addAction(action)
 
     def toggleLineNumbering(self, checked):
         """
@@ -1624,14 +1565,12 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
                         
             # force to open the file
             if reply == QMessageBox.Yes: 
-                RCI.instance().openFileAdapters(projectId=0, 
-                                                 filePath="%s/%s.%s" % (path_file, name_file, ext_file), 
+                RCI.instance().openFileAdapters(filePath="%s/%s.%s" % (filePath, fileName, fileExtension), 
                                                  ignoreLock=True, 
                                                  readOnly=False)
             # force as read only
             if reply == QMessageBox.No:
-                RCI.instance().openFileAdapters(projectId=0, 
-                                                 filePath="%s/%s.%s" % (path_file, name_file, ext_file), 
+                RCI.instance().openFileAdapters(filePath="%s/%s.%s" % (filePath, fileName, fileExtension), 
                                                  ignoreLock=True, 
                                                  readOnly=True)
             # cancel the opening
@@ -1643,50 +1582,50 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
                         remoteFile=True, contentFile=content,  repoDest=UCI.REPO_ADAPTERS, newAdp=True, 
                         newLib=False, project=0, isReadOnly=isReadOnly, isLocked=isLocked)
                         
-    def openRemoteLibraryFile(self, filePath, fileName, fileExtension, fileContent, isLocked, lockedBy):
-        """
-        """
-        content = base64.b64decode(fileContent)
+    # def openRemoteLibraryFile(self, filePath, fileName, fileExtension, fileContent, isLocked, lockedBy):
+        # """
+        # """
+        # content = base64.b64decode(fileContent)
         
-        newTab = False
-        isReadOnly = False
-        if not isLocked:
-            newTab = True
-        else:
-            messageBox = QMessageBox(self)
+        # newTab = False
+        # isReadOnly = False
+        # if not isLocked:
+            # newTab = True
+        # else:
+            # messageBox = QMessageBox(self)
             
-            lockedByDecoded = base64.b64decode(lockedBy)
-            if sys.version_info > (3,): # python3 support
-                lockedByDecoded = lockedByDecoded.decode("utf8")
+            # lockedByDecoded = base64.b64decode(lockedBy)
+            # if sys.version_info > (3,): # python3 support
+                # lockedByDecoded = lockedByDecoded.decode("utf8")
 
-            msg = "User (%s) is editing this file. Edit the file anyway?\n\n" % lockedByDecoded
-            msg += "Yes = Edit the file\n"
-            msg += "No = Open as read only\n"
-            msg += "Cancel = Do nothing.\n" 
+            # msg = "User (%s) is editing this file. Edit the file anyway?\n\n" % lockedByDecoded
+            # msg += "Yes = Edit the file\n"
+            # msg += "No = Open as read only\n"
+            # msg += "Cancel = Do nothing.\n" 
 
-            reply = messageBox.warning(self, self.tr("File locked"), msg, 
-                                       QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel )
+            # reply = messageBox.warning(self, self.tr("File locked"), msg, 
+                                       # QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel )
                         
             # force to open the file
-            if reply == QMessageBox.Yes: 
-                RCI.instance().openFileLibraries(projectId=0, 
-                                                 filePath="%s/%s.%s" % (path_file, name_file, ext_file), 
-                                                 ignoreLock=True, 
-                                                 readOnly=False)
+            # if reply == QMessageBox.Yes: 
+                # RCI.instance().openFileLibraries(projectId=0, 
+                                                 # filePath="%s/%s.%s" % (filePath, fileName, fileExtension), 
+                                                 # ignoreLock=True, 
+                                                 # readOnly=False)
             # force as read only
-            if reply == QMessageBox.No: 
-                RCI.instance().openFileLibraries(projectId=int(projectId), 
-                                                 filePath="%s/%s.%s" % (path_file, name_file, ext_file), 
-                                                 ignoreLock=True, 
-                                                 readOnly=True)
+            # if reply == QMessageBox.No: 
+                # RCI.instance().openFileLibraries(projectId=int(projectId), 
+                                                 # filePath="%s/%s.%s" % (filePath, fileName, fileExtension), 
+                                                 # ignoreLock=True, 
+                                                 # readOnly=True)
             # cancel the opening
-            else:
-                newTab = False
+            # else:
+                # newTab = False
         
-        if newTab:
-            self.newTab( path = filePath, filename = fileName, extension = fileExtension, 
-                        remoteFile=True, contentFile=content,  repoDest=UCI.REPO_LIBRARIES, newAdp=False, 
-                        newLib=True, project=0, isReadOnly=isReadOnly, isLocked=isLocked)
+        # if newTab:
+            # self.newTab( path = filePath, filename = fileName, extension = fileExtension, 
+                        # remoteFile=True, contentFile=content,  repoDest=UCI.REPO_LIBRARIES, newAdp=False, 
+                        # newLib=True, project=0, isReadOnly=isReadOnly, isLocked=isLocked)
  
     def onRemoteTestFileSaved(self, filePath, fileName, fileExtension,
                                 projectId, overwriteFile, closeAfter):
@@ -1775,50 +1714,50 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
             if closeAfter:
                 self.closeTab( tabId = tabId )
                         
-    def onRemoteLibraryFileSaved(self, filePath, fileName, fileExtension,
-                                    overwriteFile, closeAfter):
-        """
-        Called when a remote file is saved
+    # def onRemoteLibraryFileSaved(self, filePath, fileName, fileExtension,
+                                    # overwriteFile, closeAfter):
+        # """
+        # Called when a remote file is saved
 
-        @param data: 
-        @type data: 
-        """
-        if len(filePath) > 0:
-            complete_path = "%s/%s.%s" % (filePath, fileName, fileExtension)
-        else:
-            complete_path = "%s.%s" % ( fileName, fileExtension)
+        # @param data: 
+        # @type data: 
+        # """
+        # if len(filePath) > 0:
+            # complete_path = "%s/%s.%s" % (filePath, fileName, fileExtension)
+        # else:
+            # complete_path = "%s.%s" % ( fileName, fileExtension)
         
-        tabId = None
+        # tabId = None
 
-        if overwriteFile:
-            tabId = self.checkAlreadyOpened(path = complete_path, 
-                                            remoteFile=True, 
-                                            repoType=UCI.REPO_LIBRARIES, 
-                                            project=0)
-        else:
-            for tid in xrange( self.tab.count() ):
-                doc = self.tab.widget(tid)
+        # if overwriteFile:
+            # tabId = self.checkAlreadyOpened(path = complete_path, 
+                                            # remoteFile=True, 
+                                            # repoType=UCI.REPO_LIBRARIES, 
+                                            # project=0)
+        # else:
+            # for tid in xrange( self.tab.count() ):
+                # doc = self.tab.widget(tid)
                 
                 # bypass the welcome page
-                if isinstance(doc, WelcomePage): continue
+                # if isinstance(doc, WelcomePage): continue
 
-                if doc.isRemote == True and doc.getPath() == complete_path and \
-                        doc.project == 0 and doc.repoDest==UCI.REPO_LIBRARIES:
-                    tabId = tid
-                    break
+                # if doc.isRemote == True and doc.getPath() == complete_path and \
+                        # doc.project == 0 and doc.repoDest==UCI.REPO_LIBRARIES:
+                    # tabId = tid
+                    # break
                 
                 # first remote save
-                if doc.isRemote == True and doc.getPath() == complete_path and \
-                        doc.repoDest==UCI.REPO_UNDEFINED:
-                    tabId = tid
-                    break
+                # if doc.isRemote == True and doc.getPath() == complete_path and \
+                        # doc.repoDest==UCI.REPO_UNDEFINED:
+                    # tabId = tid
+                    # break
 
-        if tabId is not None:
-            doc = self.tab.widget(tabId)
-            doc.setUnmodify(repoType=UCI.REPO_LIBRARIES)
+        # if tabId is not None:
+            # doc = self.tab.widget(tabId)
+            # doc.setUnmodify(repoType=UCI.REPO_LIBRARIES)
             # close the tab ?
-            if closeAfter:
-                self.closeTab( tabId = tabId )
+            # if closeAfter:
+                # self.closeTab( tabId = tabId )
   
     def remoteTestsFileRenamed(self, projectId, filePath, fileName, fileExtension, newName):
         """
@@ -1876,33 +1815,33 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
                 doc.unSaved()
                 doc.setModify()
                 
-    def remoteLibrariesFileRenamed(self, filePath, fileName, fileExtension, newName):
-        """
-        Called when a remote file is renamed
+    # def remoteLibrariesFileRenamed(self, filePath, fileName, fileExtension, newName):
+        # """
+        # Called when a remote file is renamed
 
-        @param data: 
-        @type data: 
-        """
-        if len(filePath) > 0:
-            complete_path = "%s/%s.%s" % (filePath, fileName, fileExtension)
-        else:
-            complete_path = "%s.%s" % ( fileName, fileExtension)
-        tabId = self.checkAlreadyOpened(path = complete_path, 
-                                        remoteFile=True, 
-                                        repoType=UCI.REPO_LIBRARIES, 
-                                        project=0)
-        if tabId is not None:
-            doc = self.tab.widget(tabId)
-            self.tab.setCurrentIndex(tabId)
-            buttons = QMessageBox.Yes | QMessageBox.No 
-            answer = QMessageBox.question(self, Settings.instance().readValue( key = 'Common/name' ), 
-                            self.tr("This file has been renamed.\nDo you want to update the name ?") , buttons)
-            if answer == QMessageBox.Yes:
-                doc.updateFilename( filename=newName )
-                doc.setUnmodify()
-            elif answer == QMessageBox.No:
-                doc.unSaved()
-                doc.setModify()
+        # @param data: 
+        # @type data: 
+        # """
+        # if len(filePath) > 0:
+            # complete_path = "%s/%s.%s" % (filePath, fileName, fileExtension)
+        # else:
+            # complete_path = "%s.%s" % ( fileName, fileExtension)
+        # tabId = self.checkAlreadyOpened(path = complete_path, 
+                                        # remoteFile=True, 
+                                        # repoType=UCI.REPO_LIBRARIES, 
+                                        # project=0)
+        # if tabId is not None:
+            # doc = self.tab.widget(tabId)
+            # self.tab.setCurrentIndex(tabId)
+            # buttons = QMessageBox.Yes | QMessageBox.No 
+            # answer = QMessageBox.question(self, Settings.instance().readValue( key = 'Common/name' ), 
+                            # self.tr("This file has been renamed.\nDo you want to update the name ?") , buttons)
+            # if answer == QMessageBox.Yes:
+                # doc.updateFilename( filename=newName )
+                # doc.setUnmodify()
+            # elif answer == QMessageBox.No:
+                # doc.unSaved()
+                # doc.setModify()
 
     def remoteTestsDirRenamed(self, projectId, directoryPath, directoryName, newName):
         """
@@ -1985,45 +1924,45 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
                     doc.unSaved()
                     doc.setModify()
                     
-    def remoteLibrariesDirRenamed(self, directoryPath, directoryName, newName):
-        """
-        Called when a remote directory is renamed
-        """
-        if len(directoryPath) > 0:
-            complete_old = "%s/%s" % (directoryPath, directoryName)
-            complete_new = "%s/%s" % (directoryPath, newName)
-        else:
-            complete_old = directoryName
-            complete_new = newName
+    # def remoteLibrariesDirRenamed(self, directoryPath, directoryName, newName):
+        # """
+        # Called when a remote directory is renamed
+        # """
+        # if len(directoryPath) > 0:
+            # complete_old = "%s/%s" % (directoryPath, directoryName)
+            # complete_new = "%s/%s" % (directoryPath, newName)
+        # else:
+            # complete_old = directoryName
+            # complete_new = newName
         
-        for tabId in xrange( self.tab.count() ):    
-            doc = self.tab.widget(tabId)
+        # for tabId in xrange( self.tab.count() ):    
+            # doc = self.tab.widget(tabId)
             
             # bypass the welcome page
-            if isinstance(doc, WelcomePage): 
-                continue
+            # if isinstance(doc, WelcomePage): 
+                # continue
             # end of bypass
             
-            if doc.isRemote == True and doc.getPathOnly().startswith(complete_old) and \
-                    doc.project == 0 and doc.repoDest==UCI.REPO_LIBRARIES:  
-                to_keep = doc.getPathOnly().split(complete_old)
-                if len(to_keep) > 1: to_keep = to_keep[1]
-                else: to_keep = to_keep[0]
+            # if doc.isRemote == True and doc.getPathOnly().startswith(complete_old) and \
+                    # doc.project == 0 and doc.repoDest==UCI.REPO_LIBRARIES:  
+                # to_keep = doc.getPathOnly().split(complete_old)
+                # if len(to_keep) > 1: to_keep = to_keep[1]
+                # else: to_keep = to_keep[0]
 
-                full_new_path = "%s%s" % (complete_new, to_keep)
+                # full_new_path = "%s%s" % (complete_new, to_keep)
 
-                self.tab.setCurrentIndex(tabId)
+                # self.tab.setCurrentIndex(tabId)
                 
-                msg = self.tr("The path of this file has been renamed.\nDo you want to update the path ?")
-                buttons = QMessageBox.Yes | QMessageBox.No 
-                answer = QMessageBox.question(self, Settings.instance().readValue( key = 'Common/name' ), 
-                                              msg, buttons)
-                if answer == QMessageBox.Yes:
-                    doc.updatePath( pathFilename=full_new_path )
-                    doc.setUnmodify()
-                elif answer == QMessageBox.No:
-                    doc.unSaved()
-                    doc.setModify()
+                # msg = self.tr("The path of this file has been renamed.\nDo you want to update the path ?")
+                # buttons = QMessageBox.Yes | QMessageBox.No 
+                # answer = QMessageBox.question(self, Settings.instance().readValue( key = 'Common/name' ), 
+                                              # msg, buttons)
+                # if answer == QMessageBox.Yes:
+                    # doc.updatePath( pathFilename=full_new_path )
+                    # doc.setUnmodify()
+                # elif answer == QMessageBox.No:
+                    # doc.unSaved()
+                    # doc.setModify()
                     
     def onRemoteTestFileSavedError(self, filePath, fileName, fileExtension,
                                     projectId, overwriteFile, closeAfter):
@@ -2095,40 +2034,40 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
             doc = self.tab.widget(tabId)
             doc.unSaved()
                     
-    def onRemoteLibraryFileSavedError(self, filePath, fileName, fileExtension,
-                                        overwriteFile, closeAfter):
-        """
-        Called when the save of a remote file failed
+    # def onRemoteLibraryFileSavedError(self, filePath, fileName, fileExtension,
+                                        # overwriteFile, closeAfter):
+        # """
+        # Called when the save of a remote file failed
 
-        @param data: 
-        @type data: 
-        """
-        if len(filePath) > 0:
-            complete_path = "%s/%s.%s" % (filePath, fileName, fileExtension)
-        else:
-            complete_path = "%s.%s" % (fileName, fileExtension)
+        # @param data: 
+        # @type data: 
+        # """
+        # if len(filePath) > 0:
+            # complete_path = "%s/%s.%s" % (filePath, fileName, fileExtension)
+        # else:
+            # complete_path = "%s.%s" % (fileName, fileExtension)
 
-        tabId = None # issue Issue 224
-        if overwriteFile:
-            tabId = self.checkAlreadyOpened(path = complete_path, remoteFile=True, 
-                                            repoType=UCI.REPO_LIBRARIES, project=0)
-        else:
-            for tid in xrange( self.tab.count() ):
-                doc = self.tab.widget(tid)
+        # tabId = None # issue Issue 224
+        # if overwriteFile:
+            # tabId = self.checkAlreadyOpened(path = complete_path, remoteFile=True, 
+                                            # repoType=UCI.REPO_LIBRARIES, project=0)
+        # else:
+            # for tid in xrange( self.tab.count() ):
+                # doc = self.tab.widget(tid)
                 
                 # bypass the welcome page
-                if isinstance(doc, WelcomePage): 
-                    continue
+                # if isinstance(doc, WelcomePage): 
+                    # continue
                 # end of bypass
                 
-                if doc.isRemote == True and doc.getPath() == complete_path and \
-                        doc.project == projectId  and doc.repoDest==UCI.REPO_UNDEFINED:
-                    tabId = tid
-                    break
+                # if doc.isRemote == True and doc.getPath() == complete_path and \
+                        # doc.project == projectId  and doc.repoDest==UCI.REPO_UNDEFINED:
+                    # tabId = tid
+                    # break
 
-        if tabId is not None:
-            doc = self.tab.widget(tabId)
-            doc.unSaved()
+        # if tabId is not None:
+            # doc = self.tab.widget(tabId)
+            # doc.unSaved()
 
     def updateRemoteTestOnTestglobal(self, data, parametersOnly=True, 
                                      mergeParameters=False, refreshOtherItems=False):
@@ -2336,7 +2275,7 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
         self.runDebugAction.setEnabled(False)
         self.runNowAction.setEnabled(False)
         self.runBackgroundAction.setEnabled(False)
-        self.runWithoutProbesAction.setEnabled(False)
+        # self.runWithoutProbesAction.setEnabled(False)
         self.runWithoutNotifAction.setEnabled(False)
         
         self.codeWrappingAction.setEnabled(False)
@@ -2402,7 +2341,7 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
             self.runDebugAction.setEnabled(False)
             self.runSchedAction.setEnabled(False)
             self.runBackgroundAction.setEnabled(False)
-            self.runWithoutProbesAction.setEnabled(False)
+            # self.runWithoutProbesAction.setEnabled(False)
             self.runWithoutNotifAction.setEnabled(False)
             
         elif isinstance(wdocument, TestUnit.WTestUnit):
@@ -2444,7 +2383,7 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
                 self.runDebugAction.setEnabled(True)
                 self.runSchedAction.setEnabled(True)
                 self.runBackgroundAction.setEnabled(True)
-                self.runWithoutProbesAction.setEnabled(True)
+                # self.runWithoutProbesAction.setEnabled(True)
                 self.runWithoutNotifAction.setEnabled(True)
             else:
                 self.checkSyntaxAction.setEnabled(False)
@@ -2458,7 +2397,7 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
                 self.runDebugAction.setEnabled(False)
                 self.runSchedAction.setEnabled(False)
                 self.runBackgroundAction.setEnabled(False)
-                self.runWithoutProbesAction.setEnabled(False)
+                # self.runWithoutProbesAction.setEnabled(False)
                 self.runWithoutNotifAction.setEnabled(False)
 
             self.codeWrappingAction.setEnabled(True)
@@ -2510,7 +2449,7 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
                 self.runDebugAction.setEnabled(True)
                 self.runSchedAction.setEnabled(True)
                 self.runBackgroundAction.setEnabled(True)
-                self.runWithoutProbesAction.setEnabled(True)
+                # self.runWithoutProbesAction.setEnabled(True)
                 self.runWithoutNotifAction.setEnabled(True)
             else:
                 self.checkSyntaxAction.setEnabled(False)
@@ -2524,7 +2463,7 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
                 self.runDebugAction.setEnabled(False)
                 self.runSchedAction.setEnabled(False)
                 self.runBackgroundAction.setEnabled(False)
-                self.runWithoutProbesAction.setEnabled(False)
+                # self.runWithoutProbesAction.setEnabled(False)
                 self.runWithoutNotifAction.setEnabled(False)
 
             self.codefoldingAction.setEnabled(True)
@@ -2572,7 +2511,7 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
                 self.runDebugAction.setEnabled(True)
                 self.runSchedAction.setEnabled(True)
                 self.runBackgroundAction.setEnabled(True)
-                self.runWithoutProbesAction.setEnabled(True)
+                # self.runWithoutProbesAction.setEnabled(True)
                 self.runWithoutNotifAction.setEnabled(True)
             else:
                 self.checkSyntaxAction.setEnabled(False)
@@ -2586,66 +2525,7 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
                 self.runNowAction.setEnabled(False)
                 self.runSchedAction.setEnabled(False)
                 self.runBackgroundAction.setEnabled(False)
-                self.runWithoutProbesAction.setEnabled(False)
-                self.runWithoutNotifAction.setEnabled(False)
-
-            self.codeWrappingAction.setEnabled(False)
-            self.codefoldingAction.setEnabled(False)
-            self.foldAllAction.setEnabled(False)
-            self.whitespaceVisibilityAction.setEnabled(False)
-            self.indentGuidesVisibilityAction.setEnabled(False)
-            self.linesNumberingAction.setEnabled(False)
-
-        elif isinstance(wdocument, TestAbstract.WTestAbstract):
-            self.exportAsAction.setEnabled(True)
-            if wdocument.isModified():
-                self.saveAction.setEnabled(True)
-            else:
-                self.saveAction.setEnabled(False)
-
-            self.findAction.setEnabled(False)
-            self.printAction.setEnabled(True)
-            self.commentAction.setEnabled(False)
-            self.uncommentAction.setEnabled(False)
-            self.indentAction.setEnabled(False)
-            self.unindentAction.setEnabled(False)
-
-            self.copyAction.setEnabled(False)
-            self.cutAction.setEnabled(False)
-            self.deleteAction.setEnabled(False)
-            self.pasteAction.setEnabled(False)
-            self.selectAllAction.setEnabled(False)
-
-            self.undoAction.setEnabled( False )
-            self.redoAction.setEnabled( False )
-
-            if RCI.instance().isAuthenticated():
-                self.checkSyntaxAction.setEnabled(True)
-                self.checkDesignAction.setEnabled(True)
-                self.updateTestAction.setEnabled(False)
-                self.checkAction.setEnabled(True)
-                self.runAction.setEnabled(True)
-                self.runStepByStepAction.setEnabled(True)
-                self.runBreakpointAction.setEnabled(True)
-                self.runNowAction.setEnabled(True)
-                self.runDebugAction.setEnabled(True)
-                self.runSchedAction.setEnabled(True)
-                self.runBackgroundAction.setEnabled(True)
-                self.runWithoutProbesAction.setEnabled(True)
-                self.runWithoutNotifAction.setEnabled(True)
-            else:
-                self.checkSyntaxAction.setEnabled(False)
-                self.checkDesignAction.setEnabled(False)
-                self.updateTestAction.setEnabled(False)
-                self.checkAction.setEnabled(False)
-                self.runAction.setEnabled(False)
-                self.runStepByStepAction.setEnabled(False)
-                self.runBreakpointAction.setEnabled(False)
-                self.runDebugAction.setEnabled(False)
-                self.runNowAction.setEnabled(False)
-                self.runSchedAction.setEnabled(False)
-                self.runBackgroundAction.setEnabled(False)
-                self.runWithoutProbesAction.setEnabled(False)
+                # self.runWithoutProbesAction.setEnabled(False)
                 self.runWithoutNotifAction.setEnabled(False)
 
             self.codeWrappingAction.setEnabled(False)
@@ -2689,7 +2569,7 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
             self.runDebugAction.setEnabled(False)
             self.runSchedAction.setEnabled(False)
             self.runBackgroundAction.setEnabled(False)
-            self.runWithoutProbesAction.setEnabled(False)
+            # self.runWithoutProbesAction.setEnabled(False)
             self.runWithoutNotifAction.setEnabled(False)
             
             self.codeWrappingAction.setEnabled(False)
@@ -2733,7 +2613,7 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
             self.runDebugAction.setEnabled(False)
             self.runSchedAction.setEnabled(False)
             self.runBackgroundAction.setEnabled(False)
-            self.runWithoutProbesAction.setEnabled(False)
+            # self.runWithoutProbesAction.setEnabled(False)
             self.runWithoutNotifAction.setEnabled(False)
             
             self.codeWrappingAction.setEnabled(False)
@@ -2781,7 +2661,7 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
             self.runDebugAction.setEnabled(False)
             self.runSchedAction.setEnabled(False)
             self.runBackgroundAction.setEnabled(False)
-            self.runWithoutProbesAction.setEnabled(False)
+            # self.runWithoutProbesAction.setEnabled(False)
             self.runWithoutNotifAction.setEnabled(False)
 
             self.codeWrappingAction.setEnabled(True)
@@ -2829,7 +2709,7 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
             self.runDebugAction.setEnabled(False)
             self.runSchedAction.setEnabled(False)
             self.runBackgroundAction.setEnabled(False)
-            self.runWithoutProbesAction.setEnabled(False)
+            # self.runWithoutProbesAction.setEnabled(False)
             self.runWithoutNotifAction.setEnabled(False)
 
             self.codeWrappingAction.setEnabled(True)
@@ -2877,7 +2757,7 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
             self.runDebugAction.setEnabled(False)
             self.runSchedAction.setEnabled(False)
             self.runBackgroundAction.setEnabled(False)
-            self.runWithoutProbesAction.setEnabled(False)
+            # self.runWithoutProbesAction.setEnabled(False)
             self.runWithoutNotifAction.setEnabled(False)
 
             self.codeWrappingAction.setEnabled(True)
@@ -2925,7 +2805,7 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
             self.runDebugAction.setEnabled(False)
             self.runSchedAction.setEnabled(False)
             self.runBackgroundAction.setEnabled(False)
-            self.runWithoutProbesAction.setEnabled(False)
+            # self.runWithoutProbesAction.setEnabled(False)
             self.runWithoutNotifAction.setEnabled(False)
 
             self.codeWrappingAction.setEnabled(True)
@@ -3144,9 +3024,9 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
             if isinstance(wdoc, WelcomePage):
                 self.findWidget.setDisabled(True)
                 self.findWidget.hide()
-            elif wdoc.extension == TestAbstract.TYPE:
-                self.findWidget.setDisabled(True)
-                self.findWidget.hide()
+            # elif wdoc.extension == TestAbstract.TYPE:
+                # self.findWidget.setDisabled(True)
+                # self.findWidget.hide()
             elif wdoc.extension == TestUnit.TYPE:
                 # self.findWidget.show()
                 self.findWidget.setDisabled(False)
@@ -3300,42 +3180,7 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
             
         else:
             __error__ = False
-            if extension == TestAbstract.TYPE:
-                doc = TestAbstract.WTestAbstract(self, path, filename, extension, self.nonameIdTp,
-                                                remoteFile,repoDest, project, isLocked)
-                if filename is None:
-                    doc.defaultLoad()
-                    doc.setModify()
-                    self.nonameIdTa += 1
-                else:
-                    self.BusyCursor.emit()
-                    res = doc.load(contentFile)
-                    self.ArrowCursor.emit()
-                    if not res:
-                        __error__ = True
-                        del doc
-                        QMessageBox.critical(self, self.tr("Open Failed") , self.tr("Corrupted Test Abstract file") )
-                if not __error__:
-                    tabName = self.addTag( repoType=doc.repoDest, txt=doc.getShortName(), 
-                                            addSlash=False, project=doc.project )
-
-                    # new in v17
-                    if nameLimit == 0:
-                        _tabName = tabName
-                    else:
-                        if len(tabName) > nameLimit:
-                            _tabName = "%s..." % tabName[:nameLimit]
-                        else:
-                            _tabName = tabName
-                    # end of new in v17
-                    
-                    tabId = self.tab.addTab(doc, _tabName )
-                    self.tab.setTabIcon(tabId, QIcon(":/%s.png" % TestAbstract.TYPE) )
-                    if QtHelper.str2bool( Settings.instance().readValue( key = 'TestProperties/show-on-opening' ) ): 
-                        self.ShowPropertiesTab.emit()
-                    self.setCloseButton(tabId=tabId, doc=doc)
- 
-            elif extension == TestUnit.TYPE:
+            if extension == TestUnit.TYPE:
                 doc = TestUnit.WTestUnit(self, path, filename, extension, self.nonameIdTs, 
                                             remoteFile, repoDest, project, isLocked)
                 if filename is None:
@@ -3560,7 +3405,6 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
                     self.setCloseButton(tabId=tabId, doc=doc)
 
             elif extension == TestAdapter.TYPE and newAdp:
-                # self.findWidget.show()
                 doc = TestAdapter.WTestAdapter(self, path, filename, extension, self.nonameIdTs,
                                                 remoteFile, repoDest, project=0, isLocked=isLocked)
 
@@ -3790,12 +3634,12 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
         """
         self.newTab( extension = TestTxt.TYPE, repoDest=UCI.REPO_UNDEFINED )
 
-    def newTestAbstract(self):
-        """
-        Creates one new empty TestAbstract file
-        Call the function newTab()
-        """
-        self.newTab( extension = TestAbstract.TYPE, repoDest=UCI.REPO_UNDEFINED )
+    # def newTestAbstract(self):
+        # """
+        # Creates one new empty TestAbstract file
+        # Call the function newTab()
+        # """
+        # self.newTab( extension = TestAbstract.TYPE, repoDest=UCI.REPO_UNDEFINED )
 
     def newTestUnit(self):
         """
@@ -3821,14 +3665,14 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
                         testExec=testExec, testInputs=testInputs, 
                         testOutputs=testOutputs, testAgents=testAgents )
  
-    def newTestAbstractWithContent(self, testDef=None, testInputs=None, testOutputs=None, testAgents=None):
-        """
-        Creates one new empty TestAbstract file
-        Call the function newTab()
-        """
-        self.newTab( extension = TestAbstract.TYPE, repoDest=UCI.REPO_UNDEFINED, 
-                        testDef=testDef, testInputs=testInputs,
-                        testOutputs=testOutputs, testAgents=testAgents )
+    # def newTestAbstractWithContent(self, testDef=None, testInputs=None, testOutputs=None, testAgents=None):
+        # """
+        # Creates one new empty TestAbstract file
+        # Call the function newTab()
+        # """
+        # self.newTab( extension = TestAbstract.TYPE, repoDest=UCI.REPO_UNDEFINED, 
+                        # testDef=testDef, testInputs=testInputs,
+                        # testOutputs=testOutputs, testAgents=testAgents )
                         
     def newTestUnitWithContent(self, testDef=None, testInputs=None, testOutputs=None, testAgents=None):
         """
@@ -4459,8 +4303,8 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
                                 doc = FileModelTestSuite.DataModel()
                             elif absPath.endswith(EXT_TESTUNIT):
                                 doc = FileModelTestUnit.DataModel()
-                            elif absPath.endswith(EXT_TESTABSTRACT):
-                                doc = FileModelTestAbstract.DataModel()
+                            # elif absPath.endswith(EXT_TESTABSTRACT):
+                                # doc = FileModelTestAbstract.DataModel()
                             elif absPath.endswith(EXT_TESTPLAN):
                                 doc = FileModelTestPlan.DataModel()
                             else:
@@ -4547,8 +4391,8 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
                             
                             if absPath.endswith(RCI.EXT_TESTSUITE):
                                 doc = FileModelTestSuite.DataModel()
-                            elif absPath.endswith(RCI.EXT_TESTABSTRACT):
-                                doc = FileModelTestAbstract.DataModel()
+                            # elif absPath.endswith(RCI.EXT_TESTABSTRACT):
+                                # doc = FileModelTestAbstract.DataModel()
                             else:
                                 doc = FileModelTestUnit.DataModel()
                             res = doc.load( absPath = absPath )
@@ -4722,11 +4566,11 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
         """
         self.runDocument(withoutNotif=True)
 
-    def runDocumentWithoutProbes(self):
-        """
-        Run document without probes
-        """
-        self.runDocument(withoutProbes=True)
+    # def runDocumentWithoutProbes(self):
+        # """
+        # Run document without probes
+        # """
+        # self.runDocument(withoutProbes=True)
 
     def runDocumentStepByStep(self):
         """

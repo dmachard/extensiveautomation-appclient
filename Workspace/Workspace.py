@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -32,11 +32,13 @@ if sys.version_info > (3,):
     unicode = str
     
 try:
-    from PyQt4.QtGui import (QWidget, QHBoxLayout, QSplitter, QIcon, QTabWidget)
+    from PyQt4.QtGui import (QWidget, QHBoxLayout, QSplitter, QIcon, 
+                             QTabWidget, QVBoxLayout, QFrame)
     from PyQt4.QtCore import (pyqtSignal, Qt)
 except ImportError:
     from PyQt5.QtGui import (QIcon)
-    from PyQt5.QtWidgets import (QWidget, QHBoxLayout, QSplitter, QTabWidget)
+    from PyQt5.QtWidgets import (QWidget, QHBoxLayout, QSplitter, 
+                                 QTabWidget, QVBoxLayout, QFrame)
     from PyQt5.QtCore import (pyqtSignal, Qt)
     
 try:
@@ -118,6 +120,7 @@ class WWorkspace(QWidget):
         WDocumentViewer.initialize( parent = self, iRepo=WRepositories.instance(),
                                     lRepo=WRepositories.LocalRepository, 
                                     rRepo=WRepositories.RemoteRepository )
+
         WDocumentProperties.initialize( parent = self, iRepo=WRepositories.instance(),
                                         lRepo=WRepositories.LocalRepository, 
                                         rRepo=WRepositories.RemoteRepository )
@@ -168,15 +171,22 @@ class WWorkspace(QWidget):
 
             self.vSplitter.addWidget(self.hSplitter)
         else:
-            WRepositories.instance().hideWidgetsHeader()
             WDocumentProperties.instance().hideWidgetsHeader()
             
-            self.leftTab = QTabWidget(self)
-            self.leftTab.addTab( WRepositories.instance(), QIcon(":/folders.png"), self.tr("Repositories") )
-            self.leftTab.addTab( WDocumentProperties.instance(), QIcon(":/controls.png"),  self.tr("Test Properties") )
-            self.vSplitter.addWidget( self.leftTab )
+            self.vSplitter.addWidget( WRepositories.instance() )
 
-        self.vSplitter.addWidget( WDocumentViewer.instance() )
+        hSplitter = QSplitter(self)
+        hSplitter.setOrientation(Qt.Vertical)
+        hSplitter.addWidget( WDocumentViewer.instance()  )
+        hSplitter.addWidget( WDocumentProperties.instance() )
+        hSplitter.setContentsMargins(0,0,0,0)
+        layoutMiddle = QVBoxLayout()
+        
+        middleFrame = QFrame(self)
+        layoutMiddle.setContentsMargins(0, 0, 0, 0)     
+        middleFrame.setLayout(layoutMiddle)
+        
+        self.vSplitter.addWidget( hSplitter )
         self.vSplitter.setStretchFactor(1, 1)
 
         layout.addWidget(self.vSplitter)
@@ -188,6 +198,7 @@ class WWorkspace(QWidget):
         self.hSplitter2.addWidget( WHelper.instance() )
 
         self.setLayout(layout)
+        layout.setContentsMargins(0,0,0,0)
         
     def creationConnections (self):
         """
@@ -196,8 +207,6 @@ class WWorkspace(QWidget):
          * WDocumentViewer <=> cursorPositionChanged
          * WDocumentViewer <=> focusChanged
         """
-        WRepositories.instance().local().OpenFile.connect( WDocumentViewer.instance().newTab )
-
         WDocumentViewer.instance().CursorPositionChanged.connect(self.cursorPositionChanged)
         WDocumentViewer.instance().TotalLinesChanged.connect(self.totalLinesChanged)
         WDocumentViewer.instance().FocusChanged.connect(self.focusChanged)
@@ -212,37 +221,8 @@ class WWorkspace(QWidget):
         # from testplan when the test selection changed in the tree
         WDocumentViewer.instance().PropertiesChanged.connect(self.propertiesChanged)
 
-        if WRepositories.instance().localConfigured != "Undefined":
-            if RCI.instance().isAuthenticated():
-                WDocumentViewer.instance().RefreshLocalRepository.connect(WRepositories.instance().localRepository.refreshAll)
-                WDocumentProperties.instance().RefreshLocalRepository.connect(WRepositories.instance().localRepository.refreshAll)
         WDocumentViewer.instance().RecentFile.connect(self.recentFileUpdated)
 
-        WHelper.instance().ShowAssistant.connect(self.onEnterAssistant)
-        WHelper.instance().HideAssistant.connect(self.onLeaveAssistant)
-
-        # new in v16
-        WDocumentViewer.instance().ShowPropertiesTab.connect(self.onShowPropertiesTab)
-        
-    def onShowPropertiesTab(self):
-        """
-        On show properties tabulation
-        """
-        if QtHelper.str2bool( Settings.instance().readValue( key = 'View/tab-left' ) ): 
-            self.leftTab.setCurrentIndex(TAB_PROPERTIES)  
-        
-    def onEnterAssistant(self):
-        """
-        On mouse enter in the online helper
-        """
-        pass
-
-    def onLeaveAssistant(self):
-        """
-        On mouse leave in the online helper
-        """
-        pass
-        
     def createActions (self):
         """
         Create qt actions
@@ -251,7 +231,6 @@ class WWorkspace(QWidget):
                                                         checkable=True, icon=QIcon(":/window-fit.png"), 
                                                         shortcut = Settings.instance().readValue( key = 'KeyboardShorcuts/developer' ),
                                                         tip = self.tr('Fit the document viewer to maximize the editor area') )
-        WDocumentViewer.instance().addActionToolbar(action=self.hideDeveloperModeAction)
 
     def emitBusy(self):
         """
@@ -352,32 +331,13 @@ class WWorkspace(QWidget):
             WDocumentProperties.instance().addDescriptions( wdoc = wdocument )
             WDocumentProperties.instance().addParameters( wdoc = wdocument )        
             if not isinstance(wdocument, TestData.WTestData):
-                WDocumentProperties.instance().addParametersOutput( wdoc = wdocument )
-                WDocumentProperties.instance().addProbes( wdoc = wdocument )
                 WDocumentProperties.instance().addAgents( wdoc = wdocument )
             WDocumentViewer.instance().updateActions( wdocument = wdocument )
 
             if isinstance(wdocument, TestData.WTestData):
-                WDocumentProperties.instance().disableOutputParameters()
                 WDocumentProperties.instance().disableAgents()
-                WDocumentProperties.instance().disableProbes()
             else:
-                WDocumentProperties.instance().enableOutputParameters()
-                WDocumentProperties.instance().enableProbes()
                 WDocumentProperties.instance().enableAgents()
-   
-            if not isinstance(wdocument, TestAbstract.WTestAbstract):
-                WDocumentProperties.instance().disableSteps()
-                WDocumentProperties.instance().disableAdapters()
-                WDocumentProperties.instance().disableLibraries()
-            else:
-                WDocumentProperties.instance().addSteps( wdoc = wdocument )
-                WDocumentProperties.instance().enableSteps()
-                WDocumentProperties.instance().addAdapters( wdoc = wdocument )
-                WDocumentProperties.instance().enableAdapters()
-                WDocumentProperties.instance().addLibraries( wdoc = wdocument )
-                WDocumentProperties.instance().enableLibraries()
-
             if isinstance(wdocument, TestUnit.WTestUnit) or isinstance(wdocument, TestSuite.WTestSuite):
                 WDocumentProperties.instance().enableMarkUnused()
             else:
@@ -407,16 +367,10 @@ class WWorkspace(QWidget):
         if isRoot:
             WDocumentProperties.instance().addDescriptions( wdoc = properties )
             WDocumentProperties.instance().addParameters( wdoc = properties )
-            WDocumentProperties.instance().addParametersOutput( wdoc = properties )
             WDocumentProperties.instance().addAgents( wdoc = properties )
-            WDocumentProperties.instance().addProbes( wdoc = properties )
-            WDocumentProperties.instance().probes.setEnabled(True)
         else:
             WDocumentProperties.instance().addParameters( wdoc = properties )
             WDocumentProperties.instance().addAgents( wdoc = properties )
-            WDocumentProperties.instance().addParametersOutput( wdoc = properties )
-            WDocumentProperties.instance().probes.clear()
-            WDocumentProperties.instance().probes.setEnabled(False)
 
         # new in v19
         WDocumentProperties.instance().updateCache(properties, isRoot, testId )

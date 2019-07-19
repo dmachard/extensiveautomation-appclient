@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -56,14 +56,14 @@ class Repository(RemoteRepository.Repository):
         """
         RemoteRepository.Repository.__init__(self, parent, repoType=RCI.REPO_ADAPTERS)
 
-    def addAdapters(self):
-        """
-        Add adapters
-        """
-        txt, ok = QInputDialog.getText(self, "Main adapters name", "Enter name:", QLineEdit.Normal)
-        if ok and txt:
+    # def addAdapters(self):
+        # """
+        # Add adapters
+        # """
+        # txt, ok = QInputDialog.getText(self, "Main adapters name", "Enter name:", QLineEdit.Normal)
+        # if ok and txt:
             # rest call
-            RCI.instance().addPackageAdapters(packageName=txt)
+            # RCI.instance().addPackageAdapters(packageName=txt)
             
     def addAdapter(self):
         """
@@ -76,101 +76,59 @@ class Repository(RemoteRepository.Repository):
             # rest call
             RCI.instance().addPackageAdapter(packageName=pathFolder, adapterName=txt)
             
-    def checkSyntaxAdapters(self):
-        """
-        Check the syntax of all adapters
-        """
-        RCI.instance().checkSyntaxAdapters()
+    # def checkSyntaxAdapters(self):
+        # """
+        # Check the syntax of all adapters
+        # """
+        # RCI.instance().checkSyntaxAdapters()
 
     def moreCreateActions(self):
         """
         On more create qt actions
         """
-        self.addAdaptersAction = QtHelper.createAction(self, "&Add Adapters", self.addAdapters, 
-                                    icon = QIcon(":/adapters.png"), tip = 'Create a new set of adapters' )
+        # self.addAdaptersAction = QtHelper.createAction(self, "&Add Adapters", self.addAdapters, 
+                                    # icon = QIcon(":/adapters.png"), tip = 'Create a new set of adapters' )
         self.addAdapterAction = QtHelper.createAction(self, "&Add Adapter", self.addAdapter, 
                                     icon = QIcon(":/adapters.png"), tip = 'Create new adapter' )
-        self.checkAdaptersAction = QtHelper.createAction(self, "&Check", self.checkSyntaxAdapters, 
-                                    icon = QIcon(":/adapters-check.png"), tip = 'Check syntax of all adapters' )
-        self.setAsDefaultAction = QtHelper.createAction(self, "&Set as Extra", self.setAdapterAsDefault, 
-                                    icon = None, tip = 'Set adapter as Extra' )
-        self.setAsGenericAction = QtHelper.createAction(self, "&Set as Generic", self.setAdapterAsGeneric, 
-                                    icon = None, tip = 'Set adapter as Generic' )
+        # self.checkAdaptersAction = QtHelper.createAction(self, "&Check", self.checkSyntaxAdapters, 
+                                    # icon = QIcon(":/adapters-check.png"), tip = 'Check syntax of all adapters' )
+        # self.setAsDefaultAction = QtHelper.createAction(self, "&Set as Extra", self.setAdapterAsDefault, 
+                                    # icon = None, tip = 'Set adapter as Extra' )
+        # self.setAsGenericAction = QtHelper.createAction(self, "&Set as Generic", self.setAdapterAsGeneric, 
+                                    # icon = None, tip = 'Set adapter as Generic' )
                                     
     def moreDefaultActions(self):
         """
         Reimplemented from RemoteRepository
         """
-        self.addAdaptersAction.setEnabled(False)
+        # self.addAdaptersAction.setEnabled(False)
         self.addAdapterAction.setEnabled(False)
-        self.checkAdaptersAction.setEnabled(False)
-        self.setAsDefaultAction.setEnabled(False)
-        self.setAsGenericAction.setEnabled(False)
+        # self.checkAdaptersAction.setEnabled(False)
+        # self.setAsDefaultAction.setEnabled(False)
+        # self.setAsGenericAction.setEnabled(False)
 
     def onMorePopupMenu(self, itemType):
         """
         Reimplemented from RemoteRepository
         """
-        if itemType == QTreeWidgetItem.UserType+10 : # root
-            self.menu.addSeparator()
-            self.menu.addAction( self.addAdaptersAction )
-            self.menu.addAction( self.checkAdaptersAction )
-        else:
-            self.menu.addSeparator()
-            self.menu.addAction( self.addAdapterAction )
-            self.menu.addAction( self.setAsDefaultAction )
-            self.menu.addAction( self.setAsGenericAction )
+        # if itemType == QTreeWidgetItem.UserType+10 : # root
+            # self.menu.addSeparator()
+            # self.menu.addAction( self.addAdaptersAction )
+            # self.menu.addAction( self.checkAdaptersAction )
+        # else:
+        self.menu.addSeparator()
+        self.menu.addAction( self.addAdapterAction )
+        # self.menu.addAction( self.setAsDefaultAction )
+        # self.menu.addAction( self.setAsGenericAction )
 
     def onMoreCurrentItemChanged(self, itemType):
         """
         Reimplemented from RemoteRepository
         """
-        if itemType == QTreeWidgetItem.UserType+0: # file
-            self.addAdaptersAction.setEnabled(False)
-            self.addAdapterAction.setEnabled(False)
-            self.checkAdaptersAction.setEnabled(False)
-            self.setAsDefaultAction.setEnabled(False)
-            self.setAsGenericAction.setEnabled(False)
-        elif itemType == QTreeWidgetItem.UserType+1: # dir
-            self.addAdaptersAction.setEnabled(False)
-            if self.itemCurrent.parent().isRoot:
-                self.addAdapterAction.setEnabled(True)
-                self.setAsDefaultAction.setEnabled(True)
-                self.setAsGenericAction.setEnabled(True)
-            else:
-                self.addAdapterAction.setEnabled(False)
-                self.setAsDefaultAction.setEnabled(False)
-                self.setAsGenericAction.setEnabled(False)
-            self.checkAdaptersAction.setEnabled(False)
-        elif itemType == QTreeWidgetItem.UserType+10 : #root
-            self.addAdaptersAction.setEnabled(True)
-            self.addAdapterAction.setEnabled(False)
-            self.checkAdaptersAction.setEnabled(True)
-            self.setAsDefaultAction.setEnabled(False)
-            self.setAsGenericAction.setEnabled(False)
-        else:
-            self.addAdaptersAction.setEnabled(False)
-            self.addAdapterAction.setEnabled(False)
-            self.checkAdaptersAction.setEnabled(False)
-            self.setAsDefaultAction.setEnabled(False)
-            self.setAsGenericAction.setEnabled(False)
+        self.addAdapterAction.setEnabled(False)
+        if itemType == QTreeWidgetItem.UserType+10 : #root
+            self.addAdapterAction.setEnabled(True)
 
-    def setAdapterAsDefault(self):
-        """
-        Set adapter as default
-        """
-        pathFolder = self.itemCurrent.getPath(withFileName = False, 
-                                              withFolderName=True)
-        RCI.instance().setDefaultAdapter(packageName=pathFolder)
-        
-    def setAdapterAsGeneric(self):
-        """
-        Set adapter as generic
-        """
-        pathFolder = self.itemCurrent.getPath(withFileName = False, 
-                                              withFolderName=True)
-        RCI.instance().setGenericAdapter(packageName=pathFolder)
-        
     def moveRemoteFile(self, currentName, currentPath, currentExtension, newPath):
         """
         Reimplemented from RemoteRepository

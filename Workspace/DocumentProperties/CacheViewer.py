@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -236,10 +236,10 @@ class CacheViewerQWidget(QWidget, Logger.ClassLogger):
         
         self.setMaximumHeight(350)
         
-        title = QLabel("Cache preview")
-        font = QFont()
-        font.setBold(True)
-        title.setFont(font)
+        # title = QLabel("Cache preview")
+        # font = QFont()
+        # font.setBold(True)
+        # title.setFont(font)
         
         self.cacheTable = CacheTableView(self)
         
@@ -247,7 +247,7 @@ class CacheViewerQWidget(QWidget, Logger.ClassLogger):
         self.filterText.setToolTip(self.tr("Name filter"))
         self.filterText.setPlaceholderText("Search in cache")
         
-        layout.addWidget( title )
+        # layout.addWidget( title )
         layout.addWidget(self.cacheTable)
         layout.addWidget(self.filterText)
         

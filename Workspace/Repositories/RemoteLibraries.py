@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2018 Denis Machard
+# Copyright (c) 2010-2019 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -57,14 +57,14 @@ class Repository(RemoteRepository.Repository):
         """
         RemoteRepository.Repository.__init__(self, parent, repoType=RCI.REPO_LIBRARIES)
 
-    def addLibraries(self):
-        """
-        Add libraries
-        """
-        txt, ok = QInputDialog.getText(self, "Main libraries name", "Enter name:", QLineEdit.Normal)
-        if ok and txt:
-            # rest call
-            RCI.instance().addPackageLibraries(packageName=txt)
+    # def addLibraries(self):
+        # """
+        # Add libraries
+        # """
+        # txt, ok = QInputDialog.getText(self, "Main libraries name", "Enter name:", QLineEdit.Normal)
+        # if ok and txt:
+            # # rest call
+            # RCI.instance().addPackageLibraries(packageName=txt)
             
     def addLibrary(self):
         """
@@ -76,101 +76,59 @@ class Repository(RemoteRepository.Repository):
             # rest call
             RCI.instance().addPackageLibrary(packageName=pathFolder, libraryName=txt)
             
-    def checkSyntaxLibraries(self):
-        """
-        Check syntax of all libraries
-        """
-        RCI.instance().checkSyntaxLibraries()
+    # def checkSyntaxLibraries(self):
+        # """
+        # Check syntax of all libraries
+        # """
+        # RCI.instance().checkSyntaxLibraries()
 
     def moreCreateActions(self):
         """
         On more create qt actions
         """
-        self.addLibrariesAction = QtHelper.createAction(self, "&Add Libraries", self.addLibraries, 
-                                        icon = QIcon(":/libraries.png"), tip = 'Create a new set of library' )
+        # self.addLibrariesAction = QtHelper.createAction(self, "&Add Libraries", self.addLibraries, 
+                                        # icon = QIcon(":/libraries.png"), tip = 'Create a new set of library' )
         self.addLibraryAction = QtHelper.createAction(self, "&Add Library", self.addLibrary, 
                                         icon = QIcon(":/libraries.png"), tip = 'Create new library' )
-        self.checkLibrariesAction = QtHelper.createAction(self, "&Check", self.checkSyntaxLibraries, 
-                                        icon = QIcon(":/libraries-check.png"), tip = 'Check syntax of all libraries' )
-        self.setAsDefaultAction = QtHelper.createAction(self, "&Set as Extra", self.setLibraryAsDefault, 
-                                        icon = None, tip = 'Set library as Extra' )
-        self.setAsGenericAction = QtHelper.createAction(self, "&Set as Generic", self.setLibraryAsGeneric, 
-                                        icon = None, tip = 'Set library as Generic' )
+        # self.checkLibrariesAction = QtHelper.createAction(self, "&Check", self.checkSyntaxLibraries, 
+                                        # icon = QIcon(":/libraries-check.png"), tip = 'Check syntax of all libraries' )
+        # self.setAsDefaultAction = QtHelper.createAction(self, "&Set as Extra", self.setLibraryAsDefault, 
+                                        # icon = None, tip = 'Set library as Extra' )
+        # self.setAsGenericAction = QtHelper.createAction(self, "&Set as Generic", self.setLibraryAsGeneric, 
+                                        # icon = None, tip = 'Set library as Generic' )
                                         
     def moreDefaultActions(self):
         """
         Reimplemented from RemoteRepository
         """
-        self.addLibrariesAction.setEnabled(False)
+        # self.addLibrariesAction.setEnabled(False)
         self.addLibraryAction.setEnabled(False)
-        self.checkLibrariesAction.setEnabled(False)
-        self.setAsDefaultAction.setEnabled(False)
-        self.setAsGenericAction.setEnabled(False)
+        # self.checkLibrariesAction.setEnabled(False)
+        # self.setAsDefaultAction.setEnabled(False)
+        # self.setAsGenericAction.setEnabled(False)
 
     def onMorePopupMenu(self, itemType):
         """
         Reimplemented from RemoteRepository
         """
-        if itemType == QTreeWidgetItem.UserType+10 : # root
-            self.menu.addSeparator()
-            self.menu.addAction( self.addLibrariesAction )
-            self.menu.addAction( self.checkLibrariesAction )
-        else:
-            self.menu.addSeparator()
-            self.menu.addAction( self.addLibraryAction )
-            self.menu.addAction( self.setAsDefaultAction )
-            self.menu.addAction( self.setAsGenericAction )
+        # if itemType == QTreeWidgetItem.UserType+10 : # root
+            # self.menu.addSeparator()
+            # self.menu.addAction( self.addLibrariesAction )
+            # self.menu.addAction( self.checkLibrariesAction )
+        # else:
+        self.menu.addSeparator()
+        self.menu.addAction( self.addLibraryAction )
+        # self.menu.addAction( self.setAsDefaultAction )
+        # self.menu.addAction( self.setAsGenericAction )
 
     def onMoreCurrentItemChanged(self, itemType):
         """
         Reimplemented from RemoteRepository
         """
-        if itemType == QTreeWidgetItem.UserType+0: # file
-            self.addLibraryAction.setEnabled(False)
-            self.checkLibrariesAction.setEnabled(False)
-            self.addLibrariesAction.setEnabled(False)
-            self.setAsDefaultAction.setEnabled(False)
-            self.setAsGenericAction.setEnabled(False)
-        elif itemType == QTreeWidgetItem.UserType+1: # dir
-            if self.itemCurrent.parent().isRoot:
-                self.addLibraryAction.setEnabled(True)
-                self.setAsDefaultAction.setEnabled(True)
-                self.setAsGenericAction.setEnabled(True)
-            else:
-                self.addLibraryAction.setEnabled(False)
-                self.setAsDefaultAction.setEnabled(False)
-                self.setAsGenericAction.setEnabled(False)
-            self.checkLibrariesAction.setEnabled(False)
-            self.addLibrariesAction.setEnabled(False)
-        elif itemType == QTreeWidgetItem.UserType+10 : #root
-            self.addLibraryAction.setEnabled(False)
-            self.addLibrariesAction.setEnabled(True)
-            self.setAsDefaultAction.setEnabled(False)
-            self.setAsGenericAction.setEnabled(False)
-            self.checkLibrariesAction.setEnabled(True)
-        else:
-            self.addLibraryAction.setEnabled(False)
-            self.checkLibrariesAction.setEnabled(False)
-            self.addLibrariesAction.setEnabled(False)
-            self.setAsDefaultAction.setEnabled(False)
-            self.setAsGenericAction.setEnabled(False)
+        self.addLibraryAction.setEnabled(False)
+        if itemType == QTreeWidgetItem.UserType+10 : #root
+            self.addLibraryAction.setEnabled(True)
 
-    def setLibraryAsDefault(self):
-        """
-        Set library as default
-        """
-        pathFolder = self.itemCurrent.getPath(withFileName = False, 
-                                              withFolderName=True)
-        RCI.instance().setDefaultLibrary(packageName=pathFolder)
-
-    def setLibraryAsGeneric(self):
-        """
-        Set library as default
-        """
-        pathFolder = self.itemCurrent.getPath(withFileName = False, 
-                                              withFolderName=True)
-        RCI.instance().setGenericLibrary(packageName=pathFolder)
-        
     def moveRemoteFile(self, currentName, currentPath, currentExtension, newPath):
         """
         Reimplemented from RemoteRepository
