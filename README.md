@@ -25,7 +25,7 @@ on Windows with Python3.
         cd extensiveautomation-appclient/
         py Main.py
         
-Build portable version for Windows
+Portable version for Windows
 --------------------------------
 
 Portable version can be build on Windows. Follow this procedure if you want to.
@@ -33,3 +33,18 @@ Portable version can be build on Windows. Follow this procedure if you want to.
 1. Go in the folder `Scripts/qt5/` and execute the script `MakePortable.bat`
 
 2. The output is available in the `dist` folder
+
+3. Execute the file `ExtensiveAutomationClient.exe` to open-it
+
+
+How to use the client without reverse proxy in front of the server ?
+--------------------------------------------------------------------
+
+By default, the client is configured to be used with a reverse proxy.
+It's possible to change that by update the `File\settings.ini` as follow:
+
+        [Server]
+        data-ssl=False
+        port-data=8082
+        port-api=8081
+        rest-path=/

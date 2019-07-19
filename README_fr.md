@@ -28,9 +28,27 @@ L'application cliente supporte Python2 et 3. Cette procédure explique comment e
 Version portable pour Windows
 --------------------------------
 
-Une version portable sur Windows peut être disponible. 
+Une version portable en mode exécutable sur Windows peut être générée. 
 La procédure ci-dessous explique comment.
 
 1. Allez dans le répertoire `Scripts/qt5/` et exécuter le script `MakePortable.bat`
 
 2. L'exécutable est disponible dans le répertoire `dist`
+
+3. Exécuter le fichier `ExtensiveAutomationClient.exe` pour ouvrir le client.
+
+
+
+Comment utiliser le client lourd directement avec le serveur (sans reverse proxy) ?
+--------------------------------------------------------------------
+
+Par défault, le client est configuré pour se connecter sur le serveur à travers un reverse proxy.
+Néanmoins, en modifiant manuellement la configuration il est possible de l'utiliser sans RP.
+
+Editer le fichier de configuration du client `File\settings.ini` comme ci-dessous:
+
+        [Server]
+        data-ssl=False
+        port-data=8082
+        port-api=8081
+        rest-path=/
