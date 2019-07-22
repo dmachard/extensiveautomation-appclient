@@ -41,10 +41,14 @@ How to use the client without reverse proxy in front of the server ?
 --------------------------------------------------------------------
 
 By default, the client is configured to be used with a reverse proxy.
-It's possible to change that by update the `File\settings.ini` as follow:
+It's possible to change that by updating the `File\settings.ini` as follow:
 
         [Server]
         data-ssl=False
         port-data=8082
         port-api=8081
         rest-path=/
+
+/!\ Be careful, do not provide the tcp port on the address bar of the client during the connection.
+If the tcp port is present like that `:8081` then the application automatically reconfigure
+the client in reverse proxy mode.

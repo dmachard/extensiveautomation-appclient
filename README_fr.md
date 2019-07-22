@@ -52,3 +52,6 @@ Editer le fichier de configuration du client `File\settings.ini` comme ci-dessou
         port-data=8082
         port-api=8081
         rest-path=/
+
+/!\ Au moment de la connexion depuis le client lourd, ne pas mettre de numéro de port dans 
+l'adresse. Si un port est présent, l'application remodifie automatiquement la configuration en mode reverse proxy.
