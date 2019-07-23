@@ -45,6 +45,7 @@ It's possible to change that by updating the `File\settings.ini` as follow:
 
         [Server]
         data-ssl=False
+        api-ssl=False
         port-data=8082
         port-api=8081
         rest-path=/

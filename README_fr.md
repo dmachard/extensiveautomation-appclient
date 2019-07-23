@@ -49,6 +49,7 @@ Editer le fichier de configuration du client `File\settings.ini` comme ci-dessou
 
         [Server]
         data-ssl=False
+        api-ssl=False
         port-data=8082
         port-api=8081
         rest-path=/
