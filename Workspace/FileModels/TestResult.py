@@ -192,18 +192,21 @@ class DataModel(Logger.ClassLogger):
             self.error( "uncompress testresult error: %s" % e )
             return False
         try:
-            if sys.version_info > (3,): # python3 support
-                ret = self.codecX2D.parseXml( xml = bytes2str(decompressed_data), huge_tree=True  )
-            else:
-                ret = self.codecX2D.parseXml( xml = decompressed_data, huge_tree=True  )
-
+            # try:
+                # if sys.version_info > (3,): # python3 support
+                    # ret = self.codecX2D.parseXml( xml = bytes2str(decompressed_data), huge_tree=True  )
+                # else:
+                    # ret = self.codecX2D.parseXml( xml = decompressed_data, huge_tree=True  )
+            # except Exception as e:    
+            ret = self.codecX2D.parseXml( xml = decompressed_data, huge_tree=True  )
+            
             del decompressed_data
             del read_data
             
-            if sys.version_info > (3,): # python3 support
-                tr_decoded = base64.b64decode( bytes(ret['file']['testresult'], 'utf8') ) 
-            else:
-                tr_decoded = base64.b64decode( ret['file']['testresult'] ) 
+            # if sys.version_info > (3,): # python3 support
+                # tr_decoded = base64.b64decode( bytes(ret['file']['testresult'], 'utf8') ) 
+            # else:
+            tr_decoded = base64.b64decode( ret['file']['testresult'] ) 
             
             tr_decompressed = zlib.decompress(tr_decoded)
             if sys.version_info > (3,): # python3 support

@@ -1,4 +1,9 @@
 
+20.0.1
+	Date: 31/07/2019
+	Issues Fixed
+		1. (medium) unable to open testresult
+
 20.0.0
 	Date: 20/07/2019
 	What's new
