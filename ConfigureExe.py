@@ -71,11 +71,15 @@ settings.setValue( key='TestRun/default-tab-run', value='0' )
 settings.setValue( key='TestRun/textual-selection-color', value='#ffffff' )
 settings.setValue( key='TestRun/textual-text-selection-color', value='#ff3019' )
 
-
 settings.setValue( key='Server/proxy-active', value='False' )
 settings.setValue( key='Server/proxy-web-active', value='False' )
 settings.setValue( key='Server/port-proxy-http', value='' )
 settings.setValue( key='Server/addr-proxy-http', value='' )
+settings.setValue( key='Server/rest-path', value='/rest/' )
+settings.setValue( key='Server/data-ssl', value='True' )
+settings.setValue( key='Server/api-ssl', value='True' )
+settings.setValue( key='Server/port-data', value='8080' )
+settings.setValue( key='Server/port-api', value='8080' )
 
 # Writes any unsaved changes
 settings.settings.sync()

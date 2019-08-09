@@ -692,8 +692,12 @@ class WorkspaceTab(QTabWidget):
             # extract data from drag
             data = pickle.loads( event.mimeData().data("application/x-%s-repo-openfile" % Settings.instance().readValue( key = 'Common/acronym' ).lower() ) )
             if data['repotype'] == UCI.REPO_TESTS_LOCAL:
-                instance().newTab(path = data['pathfile'], filename = data['filename'], extension = data['ext'],
-                            remoteFile=False, contentFile=None, repoDest=data['repotype'])
+                instance().newTab(path = data['pathfile'], 
+                                  filename = data['filename'], 
+                                  extension = data['ext'],
+                                  remoteFile=False, 
+                                  contentFile=None, 
+                                  repoDest=data['repotype'])
             else: 
                 # open the file from the remote repo
                 if data['repotype'] == UCI.REPO_TESTS:
@@ -3195,7 +3199,9 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
                     if not res:
                         __error__ = True
                         del doc
-                        QMessageBox.critical(self, self.tr("Open Failed") , self.tr("Corrupted Test Unit file") )
+                        QMessageBox.critical(self, 
+                                             self.tr("Open Failed") , 
+                                             self.tr("Corrupted Test Unit file") )
                 if not __error__:
                     tabName = self.addTag( repoType=doc.repoDest, txt=doc.getShortName(), 
                                             addSlash=False, project=doc.project )

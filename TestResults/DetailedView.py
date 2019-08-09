@@ -25,7 +25,7 @@
 Detailed view module
 """
 import sys
-
+import base64
 # unicode = str with python3
 if sys.version_info > (3,):
     unicode = str
@@ -732,9 +732,17 @@ class ImageView(QWidget):
         Set the image
         """
         if sys.version_info > (3,):
+            
             if isinstance(content, str): # convert to bytes
                 content = content.encode()
                 
+            # new in v20.1
+            if isinstance(content, bytes):
+                try:
+                    content = base64.decodebytes(content)    
+                except Exception as e:
+                    pass
+                    
         image = QImage()
         ret = image.loadFromData(content)
         if image.isNull():

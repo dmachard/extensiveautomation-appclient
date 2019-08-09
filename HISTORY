@@ -1,4 +1,33 @@
 
+20.0.1
+	Date: 31/07/2019
+	Issues Fixed
+		1. (medium) unable to open testresult
+
+20.0.0
+	Date: 20/07/2019
+	What's new
+		1. (medium) Built with python to 3.7.3 and pyqt to 5.12.0
+		2. (minor) Clean the summary view in testresult
+		3. (major) New interface user improvement (toolbars)
+		4. (minor) No more display none test parameters by default
+		5. (medium) Nw shorcuts to execute a test
+		6. (major) New method to provide user password to the server side
+		7. (medium) Repositories tab removed from the server explorer part
+		8. (minor) Adapters, libraries and toolbox release notes removed from the server explorer part
+		9. (minor) Testplan: user interface more simple
+		10. (medium) New default filter applied during test analysing
+		11. (major) No more probes pages in the server explorer part
+		12. (medium) Snapshot function removed, please to use git/svn instead of
+		13. (major) Test abstract file deprecated
+		14. (medium) Default port changed to 8080 for server api connection
+		15. (major) Build: no more setup file provided, use the portable version
+		16. (major) local repositories removed
+	Issues Fixed
+		1. (minor) Fix bad product name in menu
+		2. (major) Test abstract: pointer button missing on toolbar
+		3. (medium) Python editor: bad font size for line number margin
+        
 19.0.0
 	Date: 05/08/2018
 	What's new

@@ -1448,9 +1448,9 @@ class WArchives(QWidget, Logger.ClassLogger):
         self.saveAction = QtHelper.createAction(self, "&Save", self.saveFile, 
                                                     tip = 'Save the selected test result', 
                                                     icon = QIcon(":/save-test.png"))
-        self.zipAction = QtHelper.createAction(self, "&Create package", self.createPkg, 
-                                                tip = 'Create a package of the selected directory', 
-                                                icon = QIcon(":/file-zip-logs.png") )
+        # self.zipAction = QtHelper.createAction(self, "&Create package", self.createPkg, 
+                                                # tip = 'Create a package of the selected directory', 
+                                                # icon = QIcon(":/file-zip-logs.png") )
         self.refreshAction = QtHelper.createAction(self, "&Partial", self.partialRefreshRepo, 
                                                     tip = 'Refresh partial results', tooltip='Partial refresh', 
                                                     icon = QIcon(":/act-half-refresh.png") )
@@ -1796,7 +1796,7 @@ class WArchives(QWidget, Logger.ClassLogger):
         self.emptyAction.setEnabled(False)
         self.openAction.setEnabled(False)
         self.saveAction.setEnabled(False)
-        self.zipAction.setEnabled(False)
+        # self.zipAction.setEnabled(False)
         self.refreshAction.setEnabled(False)
         self.fullRefreshAction.setEnabled(False)
 
@@ -1936,7 +1936,7 @@ class WArchives(QWidget, Logger.ClassLogger):
                 self.exportTestReportAction.setEnabled(True)
                 self.exportTestDesignAction.setEnabled(True)
                 
-                self.zipAction.setEnabled(False)
+                # self.zipAction.setEnabled(False)
                 
                 # new in v12
                 self.deleteTrAction.setEnabled(False)
@@ -1949,7 +1949,7 @@ class WArchives(QWidget, Logger.ClassLogger):
                 self.collapseAllAction.setEnabled(False)
                 self.openAction.setEnabled(False)
                 self.saveAction.setEnabled(True)
-                self.zipAction.setEnabled(False)
+                # self.zipAction.setEnabled(False)
                 self.exportTestVerdictAction.setEnabled(False)
                 self.exportTestReportAction.setEnabled(False)
                 self.exportTestDesignAction.setEnabled(False)
@@ -1970,7 +1970,7 @@ class WArchives(QWidget, Logger.ClassLogger):
                 self.exportTestDesignAction.setEnabled(False)
 
                 if currentItem.typeItem == TYPE_ITEM_FOLDER_TEST: # sub dir
-                    self.zipAction.setEnabled(True)
+                    # self.zipAction.setEnabled(True)
                     self.deleteTrAction.setEnabled(True)
                     
                     # new in v12.2
@@ -1980,7 +1980,7 @@ class WArchives(QWidget, Logger.ClassLogger):
                         self.resetPreview()
                         
                 else:
-                    self.zipAction.setEnabled(False)  
+                    # self.zipAction.setEnabled(False)  
                     self.deleteTrAction.setEnabled(True)
 
                     # new in v12
@@ -1992,7 +1992,7 @@ class WArchives(QWidget, Logger.ClassLogger):
                 self.collapseAllAction.setEnabled(True)
                 self.openAction.setEnabled(False)
                 self.saveAction.setEnabled(False)
-                self.zipAction.setEnabled(False)
+                # self.zipAction.setEnabled(False)
                 self.exportTestVerdictAction.setEnabled(False)
                 self.exportTestReportAction.setEnabled(False)
                 self.exportTestDesignAction.setEnabled(False)
@@ -2050,7 +2050,8 @@ class WArchives(QWidget, Logger.ClassLogger):
                     if self.itemCurrent.child(i).type() ==  QTreeWidgetItem.UserType+2:
                         trxDetected = True
                 if trxDetected:
-                    self.menu.addAction( self.zipAction )
+                    pass
+                    # self.menu.addAction( self.zipAction )
                 else:
                     self.menu.addAction( "Partial load...", self.loadCache)
                 self.menu.addSeparator()

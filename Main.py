@@ -32,7 +32,7 @@ Main module
 from __future__ import print_function 
 
 # define the current version
-__VERSION__ = '20.0.1'
+__VERSION__ = '20.1.0'
 # name of the main developer
 __AUTHOR__ = 'Denis Machard'
 # email of the main developer
@@ -42,7 +42,7 @@ __BEGIN__="2010"
 # year of the latest build
 __END__="2019"
 # date and time of the buid
-__BUILDTIME__="31/07/2019 13:26:24"
+__BUILDTIME__="08/08/2019 13:40:46"
 # Redirect stdout and stderr to log file only on production
 REDIRECT_STD=True
 # disable warning from qt framework on production 
@@ -154,7 +154,6 @@ import inspect
 import UserClientInterface as UCI
 import RestClientInterface as RCI
 import Workspace as WWorkspace
-# from Workspace.Repositories.LocalRepository import Repository
 import TestResults
 import ServerExplorer as WServerExplorer
 from Resources import Resources
@@ -1146,7 +1145,6 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
         self.newMenu = self.fileMenu.addMenu(self.tr("&New..."))
         if not WORKSPACE_OFFLINE:
             self.newMenu.setEnabled(False)
-        # self.newMenu.addAction( WWorkspace.WDocumentViewer.instance().newTestAbstractAction )
         self.newMenu.addAction( WWorkspace.WDocumentViewer.instance().newTestUnitAction )
         self.newMenu.addAction( WWorkspace.WDocumentViewer.instance().newTestSuiteAction )
         self.newMenu.addAction( WWorkspace.WDocumentViewer.instance().newTestPlanAction )
@@ -1156,8 +1154,6 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
         self.newMenu.addAction( WWorkspace.WDocumentViewer.instance().newTestDataAction )
         self.newMenu.addSeparator()
         self.newMenu.addAction( WWorkspace.WDocumentViewer.instance().newAdapterAction )
-        # self.newMenu.addAction( WWorkspace.WDocumentViewer.instance().newLibraryAction )
-        # self.newMenu.addAction( WWorkspace.WDocumentViewer.instance().newTxtAction )
 
         self.fileMenu.addSeparator()
         # sub new menu
@@ -1194,13 +1190,6 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
         # sub menu of view
         self.viewToolbarsMenu = self.viewMenu.addMenu(self.tr("&Toolbars..."))
         self.viewToolbarsMenu.addAction( self.hideStatusBarAction )
-        # self.initStatusBarDisplay()
-        # self.viewToolbarsMenu.addAction( self.hideDocumentBarAction )
-        # self.initDocumentBarDisplay()
-        # self.viewToolbarsMenu.addAction( self.hideExecuteBarAction )
-        # self.initExecuteBarDisplay()
-        # self.viewToolbarsMenu.addSeparator()
-        # self.viewToolbarsMenu.addAction( WWorkspace.WDocumentViewer.instance().hideFindReplaceAction )
         self.viewMenu.addSeparator()
         self.viewMenu.addAction( WWorkspace.instance().hideDeveloperModeAction )
         self.viewMenu.addSeparator()
@@ -1267,8 +1256,8 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
         self.archivesMenu.addAction( WServerExplorer.Archives.instance().collapseAllAction )
         self.archivesMenu.addSeparator()
         self.refreshArchivesMenu = self.archivesMenu.addMenu(self.tr("&Results..."))
-        self.refreshArchivesMenu.addAction( WServerExplorer.Archives.instance().zipAction )
-        self.refreshArchivesMenu.addSeparator()
+        # self.refreshArchivesMenu.addAction( WServerExplorer.Archives.instance().zipAction )
+        # self.refreshArchivesMenu.addSeparator()
         self.refreshArchivesMenu.addAction( WServerExplorer.Archives.instance().openAction )
         self.refreshArchivesMenu.addAction( WServerExplorer.Archives.instance().saveAction )
         self.refreshArchivesMenu.addSeparator()
@@ -1277,9 +1266,6 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
         self.refreshArchivesMenu.addAction( WServerExplorer.Archives.instance().exportTestDesignAction )
         self.archivesMenu.addSeparator()
         self.archivesMenu.addAction( WServerExplorer.Archives.instance().emptyAction )
-        # self.archivesMenu.addSeparator()
-        # self.archivesMenu.addAction( WServerExplorer.Repositories.instance().backupArchivesAction )
-        # self.archivesMenu.addAction( WServerExplorer.Repositories.instance().deleteAllBackupsArchivesAction )
 
         # recorder menu
         self.recorderMenu = self.menuBar().addMenu(self.tr("&Test Conception"))
@@ -1311,20 +1297,8 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
         self.repositoriesMenu = self.menuBar().addMenu(self.tr("&Repositories"))
 
         # sub menu of tests menu
-        # self.localTestsMenu = self.repositoriesMenu.addMenu( self.tr("&Local Tests...") )
-        # self.localTestsMenu.addAction( WWorkspace.WRepositories.instance().local().refreshAction )
-        # self.localTestsMenu.addSeparator()
-        # self.localTestsMenu.addAction( WWorkspace.WRepositories.instance().local().addDirAction )
-        # self.localTestsMenu.addAction( WWorkspace.WRepositories.instance().local().delFileAction )
-        # self.localTestsMenu.addAction( WWorkspace.WRepositories.instance().local().delDirAction )
-        # self.localTestsMenu.addAction( WWorkspace.WRepositories.instance().local().renameAction )
-
-        # sub menu of tests menu
         self.remoteTestsMenu = self.repositoriesMenu.addMenu( self.tr("&Remote Tests...") )
         self.remoteTestsMenu.addAction( WWorkspace.WRepositories.instance().remote().refreshRemoteAction )
-        # self.remoteTestsMenu.addSeparator()
-        # self.remoteTestsMenu.addAction( WServerExplorer.Repositories.instance().backupAction )
-        # self.remoteTestsMenu.addAction( WServerExplorer.Repositories.instance().deleteAllBackupsAction )
         self.remoteTestsMenu.addSeparator()
         self.remoteTestsMenu.addAction( WWorkspace.WRepositories.instance().remote().openFileAction )
         self.remoteTestsMenu.addSeparator()
@@ -1350,13 +1324,8 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
         self.repositoriesMenu.addSeparator()
         self.adaptersMenu = self.repositoriesMenu.addMenu( QIcon(":/repository-adapters.png"), self.tr("&Adapters...") )
         self.adaptersMenu.addAction( WWorkspace.WRepositories.instance().remoteAdapter().refreshRemoteAction )
-        # self.adaptersMenu.addSeparator()
-        # self.adaptersMenu.addAction( WServerExplorer.Repositories.instance().backupAdaptersAction )
-        # self.adaptersMenu.addAction( WServerExplorer.Repositories.instance().deleteAllBackupsAdaptersAction )
         self.adaptersMenu.addSeparator()
         self.adaptersMenu.addAction( WWorkspace.WRepositories.instance().remoteAdapter().addAdapterAction )
-        # self.adaptersMenu.addAction( WWorkspace.WRepositories.instance().remoteAdapter().checkAdaptersAction )
-        # self.adaptersMenu.addAction( WWorkspace.WRepositories.instance().remoteAdapter().setAsDefaultAction )
         self.adaptersMenu.addSeparator()
         self.adaptersMenu.addAction( WWorkspace.WRepositories.instance().remoteAdapter().openFileAction )
         self.adaptersMenu.addSeparator()
@@ -1374,43 +1343,9 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
         self.adaptersMenu.addSeparator()
         self.adaptersMenu.addAction( WWorkspace.WRepositories.instance().remoteAdapter().openPropertiesAction )
 
-        # self.repositoriesMenu.addAction( WWorkspace.WHelper.instance().generateAdaptersAction )
-        # self.repositoriesMenu.addSeparator()
-
-        # sub menu of repositories
-        # self.librariesMenu = self.repositoriesMenu.addMenu( QIcon(":/repository-libraries.png"), self.tr("&Libraries...") )
-        # self.librariesMenu.addAction( WWorkspace.WRepositories.instance().remoteLibrary().refreshRemoteAction )
-        # self.librariesMenu.addSeparator()
-        # self.librariesMenu.addAction( WServerExplorer.Repositories.instance().backupLibrariesAction )
-        # self.librariesMenu.addAction( WServerExplorer.Repositories.instance().deleteAllBackupsLibrariesAction )
-        # self.librariesMenu.addSeparator()
-        # self.librariesMenu.addAction( WWorkspace.WRepositories.instance().remoteLibrary().addLibraryAction )
-        # self.librariesMenu.addAction( WWorkspace.WRepositories.instance().remoteLibrary().checkLibrariesAction )
-        # self.librariesMenu.addAction( WWorkspace.WRepositories.instance().remoteLibrary().setAsDefaultAction )
-        # self.librariesMenu.addSeparator()
-        # self.librariesMenu.addAction( WWorkspace.WRepositories.instance().remoteLibrary().openFileAction )
-        # self.librariesMenu.addSeparator()
-        # self.librariesMenu.addAction( WWorkspace.WRepositories.instance().remoteLibrary().addDirAction )
-        # self.librariesMenu.addAction( WWorkspace.WRepositories.instance().remoteLibrary().delDirAction )
-        # self.librariesMenu.addAction( WWorkspace.WRepositories.instance().remoteLibrary().delAllDirAction )
-        # self.librariesMenu.addAction( WWorkspace.WRepositories.instance().remoteLibrary().renameAction )
-        # self.librariesMenu.addSeparator()
-        # self.librariesMenu.addAction( WWorkspace.WRepositories.instance().remoteLibrary().duplicateDirAction )
-        # self.librariesMenu.addAction( WWorkspace.WRepositories.instance().remoteLibrary().duplicateFileAction )
-        # self.librariesMenu.addAction( WWorkspace.WRepositories.instance().remoteLibrary().duplicateFileAction )
-        # self.librariesMenu.addAction( WWorkspace.WRepositories.instance().remoteLibrary().deleteFileAction )
-        # self.librariesMenu.addAction( WWorkspace.WRepositories.instance().remoteLibrary().moveFileAction )
-        # self.librariesMenu.addAction( WWorkspace.WRepositories.instance().remoteLibrary().moveFolderAction )
-        # self.librariesMenu.addSeparator()
-        # self.librariesMenu.addAction( WWorkspace.WRepositories.instance().remoteLibrary().openPropertiesAction )
-
-        # self.repositoriesMenu.addAction( WWorkspace.WHelper.instance().generateLibrariesAction )
-
         # plugins
         self.toolsMenu = self.menuBar().addMenu(self.tr("&Shortcuts"))
         self.toolsMenu.addSeparator()
-        # self.toolsMenu.addAction( self.gotoHomepageAction )
-        # self.toolsMenu.addSeparator()
 
         # plugins menu
         self.pluginsMenu = self.menuBar().addMenu(self.tr("&Plugins"))
@@ -1420,8 +1355,6 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
         self.serverMenu = self.menuBar().addMenu( self.tr("Get &Started") )
         self.serverMenu.addAction( WServerExplorer.instance().connectAction )
         self.serverMenu.addAction( WServerExplorer.instance().disconnectAction )
-        # self.serverMenu.addSeparator()
-        # self.serverMenu.addAction( WServerExplorer.instance().checkUpdateAction )
 
         # help menu
         self.helpMenu = self.menuBar().addMenu("&?")
@@ -1473,17 +1406,6 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
         self.networkCaptureMenu.addSeparator()
         self.networkCaptureMenu.addAction( WRecorder.instance().startHttpAction )
         self.networkCaptureMenu.setEnabled(False)
-            
-        # self.recorderMenu.addSeparator()
-        # self.docsMenu = self.recorderMenu.addMenu( self.tr("&Documentations") )
-        # self.docsMenu.addAction( WWorkspace.WHelper.instance().reloadAllAction )
-        # self.docsMenu.addSeparator()
-        # self.docsMenu.addAction( WWorkspace.WHelper.instance().rebuildCacheAction )
-        # self.docsMenu.addAction( WWorkspace.WHelper.instance().prepareAssistantAction )
-
-        # self.adapsMenu = self.recorderMenu.addMenu( self.tr("&Adapters") )
-        # self.adapsMenu.addAction( WWorkspace.WHelper.instance().generateAllAction )
-        # self.adapsMenu.addAction( WWorkspace.WHelper.instance().generateAdapterWsdlAction )
 
     def initToolsList(self):
         """
@@ -1796,28 +1718,6 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
         Maximize window
         """
         self.showMaximized()
-        
-    # def initDocumentBarDisplay(self):
-        # """
-        # Init the document bar 
-        # """
-        # if ( Settings.instance().readValue( key = 'View/document-bar' ) == 'True' ):
-            # WWorkspace.WDocumentViewer.instance().showDocumentBar()
-            # self.hideDocumentBarAction.setChecked(True)
-        # else:
-            # self.hideDocumentBarAction.setChecked(False)
-            # WWorkspace.WDocumentViewer.instance().hideDocumentBar()
-
-    # def initExecuteBarDisplay(self):
-        # """
-        # Init execute bar
-        # """
-        # if ( Settings.instance().readValue( key = 'View/execute-bar' ) == 'True' ):
-            # WWorkspace.WDocumentViewer.instance().showExecuteBar()
-            # self.hideExecuteBarAction.setChecked(True)
-        # else:
-            # self.hideExecuteBarAction.setChecked(False)
-            # WWorkspace.WDocumentViewer.instance().hideExecuteBar()
 
     def hideStatusBar(self):
         """
@@ -1903,15 +1803,7 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
         """
         settingsDialog = Settings.SettingsDialog( self )
         if settingsDialog.exec_() == QDialog.Accepted:
-            # WWorkspace.WRepositories.instance().localRepoPath = Settings.instance().readValue( key = 'Repositories/local-repo' )
-            # WWorkspace.WRepositories.instance().localRepository.repositoryPath = Settings.instance().readValue( key = 'Repositories/local-repo' )
-            # if isinstance(WWorkspace.WRepositories.instance().localRepository, Repository):
-                # WWorkspace.WRepositories.instance().localRepoIsPresent()
-                # if Settings.instance().readValue( key = 'Repositories/local-repo' ) == "Undefined":
-                    # WWorkspace.WRepositories.instance().cleanLocalRepo()
-                # else:
-                    # WWorkspace.WRepositories.instance().initLocalRepo()
-            
+
             # update checkbox state of the test editor according to the configuration
             WWorkspace.WDocumentViewer.instance().codeWrappingAction.setChecked( 
                     QtHelper.str2bool( Settings.instance().readValue( key = 'Editor/code-wrapping' ) )
@@ -2043,8 +1935,7 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
         RCI.instance().ResetStatistics.connect(self.onStatisticsResetted)
         
         RCI.instance().RefreshContext.connect( WServerExplorer.instance().onRefreshContextServer)
-        # RCI.instance().RefreshUsages.connect( WServerExplorer.instance().onRefreshStatsServer)
-        
+ 
         RCI.instance().TasksWaiting.connect(WServerExplorer.instance().onRefreshTasksWaiting)
         RCI.instance().TasksRunning.connect(WServerExplorer.instance().onRefreshTasksRunning)
         RCI.instance().TasksHistory.connect(WServerExplorer.instance().onRefreshTasksHistory)
@@ -2053,40 +1944,27 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
         RCI.instance().TestKilled.connect(self.onTestKilled)
         RCI.instance().TestsKilled.connect(self.onTestsKilled)
         
-        # RCI.instance().RefreshRunningProbes.connect( WServerExplorer.instance().onRefreshRunningProbes )
         RCI.instance().RefreshRunningAgents.connect( WServerExplorer.instance().onRefreshRunningAgents )
         RCI.instance().RefreshHelper.connect(WWorkspace.WHelper.instance().onRefresh)
-        # RCI.instance().RefreshStatsTests.connect( WServerExplorer.instance().onRefreshStatsRepo )
-        # RCI.instance().RefreshStatsAdapters.connect(WServerExplorer.instance().onRefreshStatsRepoAdapters )
-        # RCI.instance().RefreshStatsLibraries.connect( WServerExplorer.instance().onRefreshStatsRepoLibraries )
-        # RCI.instance().RefreshStatsResults.connect( WServerExplorer.instance().onRefreshStatsRepoArchives)
-        # RCI.instance().RefreshDefaultProbes.connect( WServerExplorer.instance().onRefreshDefaultProbes )
-        # RCI.instance().RefreshDefaultAgents.connect( WServerExplorer.instance().onRefreshDefaultAgents )
-        
+
         RCI.instance().OpenTestFile.connect(WWorkspace.WDocumentViewer.instance().openRemoteTestFile)
         RCI.instance().OpenAdapterFile.connect(WWorkspace.WDocumentViewer.instance().openRemoteAdapterFile)
-        # RCI.instance().OpenLibraryFile.connect(WWorkspace.WDocumentViewer.instance().openRemoteLibraryFile)
-        
+
         RCI.instance().FileTestsUploaded.connect(WWorkspace.WDocumentViewer.instance().onRemoteTestFileSaved)
         RCI.instance().FileAdaptersUploaded.connect(WWorkspace.WDocumentViewer.instance().onRemoteAdapterFileSaved)
-        # RCI.instance().FileLibrariesUploaded.connect(WWorkspace.WDocumentViewer.instance().onRemoteLibraryFileSaved)
         RCI.instance().FileTestsUploadError.connect(WWorkspace.WDocumentViewer.instance().onRemoteTestFileSavedError)
         RCI.instance().FileAdaptersUploadError.connect(WWorkspace.WDocumentViewer.instance().onRemoteAdapterFileSavedError)
-        # RCI.instance().FileLibrariesUploadError.connect(WWorkspace.WDocumentViewer.instance().onRemoteLibraryFileSavedError)
-         
+        
         RCI.instance().FolderTestsRenamed.connect(WWorkspace.WDocumentViewer.instance().remoteTestsDirRenamed)
         RCI.instance().FolderAdaptersRenamed.connect(WWorkspace.WDocumentViewer.instance().remoteAdaptersDirRenamed)
-        # RCI.instance().FolderLibrariesRenamed.connect(WWorkspace.WDocumentViewer.instance().remoteLibrariesDirRenamed)
         
         RCI.instance().FileTestsRenamed.connect( WWorkspace.WDocumentViewer.instance().remoteTestsFileRenamed)
         RCI.instance().FileAdaptersRenamed.connect( WWorkspace.WDocumentViewer.instance().remoteAdaptersFileRenamed)
-        # RCI.instance().FileLibrariesRenamed.connect( WWorkspace.WDocumentViewer.instance().remoteLibrariesFileRenamed)
         
         RCI.instance().GetFileRepo.connect(self.onGetFileRepo)
         
         RCI.instance().RefreshTestsRepo.connect( self.onRefreshTestsRepo )
         RCI.instance().RefreshAdaptersRepo.connect( self.onRefreshAdaptersRepo ) 
-        # RCI.instance().RefreshLibrariesRepo.connect( self.onRefreshLibrariesRepo ) 
         
         # new in v19
         RCI.instance().FindTestFileUsage.connect( self.onFindTestFileUsage )
@@ -2619,19 +2497,6 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
                     else:
                         QMessageBox.warning(self, self.tr("Open file") , 
                                             self.tr("Connect you to the test center!") )
-                           
-                # elif tplFile['type']==UCI.REPO_TESTS_LOCAL or tplFile['type']==UCI.REPO_UNDEFINED :
-                    # if UCI.RIGHTS_DEVELOPER in RCI.instance().userRights:
-                        # QMessageBox.warning(self, self.tr("Authorization") , 
-                                            # self.tr("You are not authorized to do that!") )
-                    # else:
-                    # extension = str(tplFile['file']).rsplit(".", 1)[1]
-                    # tmp = str(tplFile['file']).rsplit("/", 1)
-                    # path = tmp[0]
-                    # filename = tmp[1].rsplit(".", 1)[0]
-                    # WWorkspace.WDocumentViewer.instance().newTab( path = path, filename = filename, 
-                                                                  # extension = extension, 
-                                                                  # repoDest=tplFile['type'])
                 else:
                     self.error('type unkwnown')
 
@@ -2766,8 +2631,7 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
 
         self.pluginsMenu.setEnabled(True)
         self.mainTab.setTabEnabled( self.TAB_SERVER, True )
-
-        # self.gotoHomepageAction.setEnabled(True)
+        
         WWorkspace.WDocumentViewer.instance().updateConnectLink(connected=True)
         WWorkspace.WDocumentViewer.instance().updateMacroLink()
 
@@ -2793,7 +2657,6 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
             self.openAllRecentFilesAction.setEnabled(True)
             self.emptyRecentFilesListAction.setEnabled(True)
 
-        # WWorkspace.Repositories.instance().initLocalRepo()
         WWorkspace.WDocumentViewer.instance().runSeveralAction.setEnabled(True)
         if not WWorkspace.WDocumentViewer.instance().isEmpty():
             WWorkspace.WDocumentViewer.instance().setCurrentActions()
@@ -2811,7 +2674,6 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
         WWorkspace.WDocumentViewer.instance().newLibraryAction.setEnabled(True)
         WWorkspace.WDocumentViewer.instance().newTxtAction.setEnabled(True)
         WWorkspace.WDocumentViewer.instance().newTestConfigAction.setEnabled(True)
-        # WWorkspace.WDocumentViewer.instance().newTestAbstractAction.setEnabled(True)
         WWorkspace.WDocumentViewer.instance().newTestUnitAction.setEnabled(True)
         WWorkspace.WDocumentViewer.instance().newTestSuiteAction.setEnabled(True)
         WWorkspace.WDocumentViewer.instance().newTestPlanAction.setEnabled(True)
@@ -2825,7 +2687,6 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
             WWorkspace.WDocumentViewer.instance().newLibraryAction.setEnabled(False)
             WWorkspace.WDocumentViewer.instance().newTxtAction.setEnabled(False)
             WWorkspace.WDocumentViewer.instance().newTestConfigAction.setEnabled(True)
-            # WWorkspace.WDocumentViewer.instance().newTestAbstractAction.setEnabled(False)
             WWorkspace.WDocumentViewer.instance().newTestUnitAction.setEnabled(False)
             WWorkspace.WDocumentViewer.instance().newTestSuiteAction.setEnabled(False)
             WWorkspace.WDocumentViewer.instance().newTestPlanAction.setEnabled(False)
@@ -2874,7 +2735,6 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
         self.newMenu.setEnabled(False)
         self.openMenu.setEnabled(True)
         
-        # self.gotoHomepageAction.setEnabled(False)
         WWorkspace.WDocumentViewer.instance().updateConnectLink(connected=False)
                 
         self.pluginsMenu.setEnabled(False)
@@ -2892,7 +2752,6 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
             WWorkspace.WHelper.instance().onReset()
 
         if WWorkspace.WDocumentViewer.instance() is not None:
-            # WWorkspace.Repositories.instance().cleanLocalRepo()
 
             WWorkspace.WDocumentViewer.instance().runSeveralAction.setEnabled(False)
             WWorkspace.WDocumentViewer.instance().hideRunDialogs()
@@ -2911,7 +2770,6 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
             #
             WWorkspace.WDocumentViewer.instance().newTestConfigAction.setEnabled(False)
             WWorkspace.WDocumentViewer.instance().newTestUnitAction.setEnabled(False)
-            # WWorkspace.WDocumentViewer.instance().newTestAbstractAction.setEnabled(False)
             WWorkspace.WDocumentViewer.instance().newTestSuiteAction.setEnabled(False)
             WWorkspace.WDocumentViewer.instance().newTestPlanAction.setEnabled(False)
             WWorkspace.WDocumentViewer.instance().newTestGlobalAction.setEnabled(False)
@@ -2960,10 +2818,7 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
                         'stats',
                         'users', 
                         'users-stats',
-                        # 'probes', 
-                        # 'probes-default',
                         'agents', 
-                        # 'agents-default',
                         'task-running', 
                         'task-waiting', 
                         'task-history', 
@@ -3051,7 +2906,6 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
                     WWorkspace.WDocumentViewer.instance().newTxtAction.setEnabled(True)
                     
                     WWorkspace.WDocumentViewer.instance().newTestUnitAction.setEnabled(True)
-                    # WWorkspace.WDocumentViewer.instance().newTestAbstractAction.setEnabled(True)
                     WWorkspace.WDocumentViewer.instance().newTestSuiteAction.setEnabled(True)
                     WWorkspace.WDocumentViewer.instance().newTestPlanAction.setEnabled(True)
                     WWorkspace.WDocumentViewer.instance().newTestGlobalAction.setEnabled(True)
@@ -3073,7 +2927,6 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
                     WWorkspace.WDocumentViewer.instance().newTxtAction.setEnabled(False)
                     WWorkspace.WDocumentViewer.instance().newTestConfigAction.setEnabled(False)
                     WWorkspace.WDocumentViewer.instance().newTestUnitAction.setEnabled(False)
-                    # WWorkspace.WDocumentViewer.instance().newTestAbstractAction.setEnabled(False)
                     WWorkspace.WDocumentViewer.instance().newTestSuiteAction.setEnabled(False)
                     WWorkspace.WDocumentViewer.instance().newTestPlanAction.setEnabled(False)
                     WWorkspace.WDocumentViewer.instance().newTestGlobalAction.setEnabled(False)
@@ -3087,7 +2940,6 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
             WWorkspace.WDocumentViewer.instance().runSchedAction.setEnabled(False)
             
             WWorkspace.WDocumentViewer.instance().newTestUnitAction.setEnabled(False)
-            # WWorkspace.WDocumentViewer.instance().newTestAbstractAction.setEnabled(False)
             WWorkspace.WDocumentViewer.instance().newTestSuiteAction.setEnabled(False)
             WWorkspace.WDocumentViewer.instance().newTestPlanAction.setEnabled(False)
             WWorkspace.WDocumentViewer.instance().newTestGlobalAction.setEnabled(False)
@@ -3113,7 +2965,6 @@ class MainApplication(QMainWindow, Logger.ClassLogger):
             self.openAllRecentFilesAction.setEnabled(False)
             self.emptyRecentFilesListAction.setEnabled(False)
             WWorkspace.WDocumentViewer.instance().newTestUnitAction.setEnabled(False)
-            # WWorkspace.WDocumentViewer.instance().newTestAbstractAction.setEnabled(False)
             WWorkspace.WDocumentViewer.instance().newTestSuiteAction.setEnabled(False)
             WWorkspace.WDocumentViewer.instance().newTestPlanAction.setEnabled(False)
             WWorkspace.WDocumentViewer.instance().newTestGlobalAction.setEnabled(False)

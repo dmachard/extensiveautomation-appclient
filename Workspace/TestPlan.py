@@ -2932,55 +2932,55 @@ class WTestPlan(Document.WDocument):
         Add a test file
         """
         # import test from local
-        if Settings.instance().readValue( key = 'Repositories/local-repo' ) != "Undefined":
-            return self.addTestFromLocal(insertTest=insertTest, 
-                                         updatePath=updatePath)
+        # if Settings.instance().readValue( key = 'Repositories/local-repo' ) != "Undefined":
+            # return self.addTestFromLocal(insertTest=insertTest, 
+                                         # updatePath=updatePath)
         
         # import test from remote
-        else:
-            return self.addTestFromRemote(insertTest=insertTest, 
-                                          updatePath=updatePath)
+        # else:
+        return self.addTestFromRemote(insertTest=insertTest, 
+                                      updatePath=updatePath)
 
-    def addTestFromLocal(self, insertTest=False, updatePath=False):
-        """
-        """
-        answer = QMessageBox.question(self, 
-                                      Settings.instance().readValue( key = 'Common/name' ), 
-                                      self.tr("Import test from local repository") , 
-                                      QMessageBox.Yes | QMessageBox.No)
-        if answer == QMessageBox.Yes:
-            if self.testGlobal:
-                typeFile = [ TYPE,  TestSuite.TYPE, TestUnit.TYPE,  TestAbstract.TYPE ]
-                hideTpx = False
-            else:
-                typeFile=[ TestSuite.TYPE, TestUnit.TYPE, TestAbstract.TYPE ]
-                hideTpx = True
+    # def addTestFromLocal(self, insertTest=False, updatePath=False):
+        # """
+        # """
+        # answer = QMessageBox.question(self, 
+                                      # Settings.instance().readValue( key = 'Common/name' ), 
+                                      # self.tr("Import test from local repository") , 
+                                      # QMessageBox.Yes | QMessageBox.No)
+        # if answer == QMessageBox.Yes:
+            # if self.testGlobal:
+                # typeFile = [ TYPE,  TestSuite.TYPE, TestUnit.TYPE,  TestAbstract.TYPE ]
+                # hideTpx = False
+            # else:
+                # typeFile=[ TestSuite.TYPE, TestUnit.TYPE, TestAbstract.TYPE ]
+                # hideTpx = True
 
-            dialog = self.lRepo.SaveOpenToRepoDialog( self , "", 
-                                                      type = self.lRepo.MODE_OPEN,
-                                                      typeFile=typeFile, 
-                                                      multipleSelection=True )
-            dialog.hideFiles(hideTsx=False, hideTpx=hideTpx, 
-                             hideTcx=True, hideTdx=True, 
-                             hideTux=False, hidePng=True, 
-                             hideTgx=True, hideTax=False)
-            if dialog.exec_() == QDialog.Accepted:
-                if updatePath:
-                    return (dialog.getSelection(), 
-                            FROM_LOCAL_REPO, 
-                            self.itemCurrent, 
-                            None,
-                            False,
-                            False)
-                else:
-                    self.addSubItems( files = dialog.getSelection(), 
-                                      fromType = FROM_LOCAL_REPO, 
-                                      parentTs=self.itemCurrent, 
-                                      insertTest=insertTest )
-                    return None
-        else:
-            return self.addTestFromRemote(insertTest=insertTest, 
-                                          updatePath=updatePath)
+            # dialog = self.lRepo.SaveOpenToRepoDialog( self , "", 
+                                                      # type = self.lRepo.MODE_OPEN,
+                                                      # typeFile=typeFile, 
+                                                      # multipleSelection=True )
+            # dialog.hideFiles(hideTsx=False, hideTpx=hideTpx, 
+                             # hideTcx=True, hideTdx=True, 
+                             # hideTux=False, hidePng=True, 
+                             # hideTgx=True, hideTax=False)
+            # if dialog.exec_() == QDialog.Accepted:
+                # if updatePath:
+                    # return (dialog.getSelection(), 
+                            # FROM_LOCAL_REPO, 
+                            # self.itemCurrent, 
+                            # None,
+                            # False,
+                            # False)
+                # else:
+                    # self.addSubItems( files = dialog.getSelection(), 
+                                      # fromType = FROM_LOCAL_REPO, 
+                                      # parentTs=self.itemCurrent, 
+                                      # insertTest=insertTest )
+                    # return None
+        # else:
+            # return self.addTestFromRemote(insertTest=insertTest, 
+                                          # updatePath=updatePath)
         
     def addTestFromRemote(self, insertTest=False, updatePath=False):
         """
