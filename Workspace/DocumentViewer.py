@@ -2864,6 +2864,10 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
          * undefined
          * unknown
         """
+        # remove slash
+        while txt.startswith("/"):
+            txt = txt[1:]
+            
         # add fix to support & in filename, ampersand is used 
         # as a shortcut for the tab by pyqt
         txt = txt.replace("&", "&&")
@@ -2888,7 +2892,7 @@ class WDocumentViewer(QWidget, Logger.ClassLogger):
             if repoType == UCI.REPO_TESTS_LOCAL:
                 ret = "%s:%s" % (repo,  txt) 
             else:
-                ret = "%s:/%s" % (repo, txt) 
+                ret = "%s:/%s" % (repo, txt)
         else:
             ret = "%s: %s" % (repo, txt) 
         return ret

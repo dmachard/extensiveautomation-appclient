@@ -32,7 +32,7 @@ Main module
 from __future__ import print_function 
 
 # define the current version
-__VERSION__ = '20.1.0'
+__VERSION__ = '20.1.1'
 # name of the main developer
 __AUTHOR__ = 'Denis Machard'
 # email of the main developer
@@ -44,7 +44,7 @@ __END__="2019"
 # date and time of the buid
 __BUILDTIME__="08/08/2019 13:40:46"
 # Redirect stdout and stderr to log file only on production
-REDIRECT_STD=True
+REDIRECT_STD=False
 # disable warning from qt framework on production 
 QT_WARNING_MODE=False
 # workspace offline, for dev only

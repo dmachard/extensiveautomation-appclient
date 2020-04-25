@@ -245,7 +245,8 @@ class DataModel(GenericModel.GenericModel):
             self.fixPyXML( data = self.properties['properties']['agents'], key = 'agent' )
 
             # prepare xml structure
-            xmlDataList = [ '<?xml version="1.0" encoding="utf-8" ?>' ]
+            #xmlDataList = [ '<?xml version="1.0" encoding="utf-8" ?>' ]
+            xmlDataList = [  ]
             xmlDataList.append( '<file>')
             if sys.version_info > (3,): # python3 support
                 xmlDataList.append( bytes2str(self.codecD2X.parseDict( dico = self.properties )) )
