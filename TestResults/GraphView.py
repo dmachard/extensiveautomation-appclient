@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -29,18 +29,12 @@ import sys
 # unicode = str with python3
 if sys.version_info > (3,):
     unicode = str
-    
-try:
-    from PyQt4.QtGui import (QGraphicsLineItem, QColor, QGraphicsRectItem, QGraphicsTextItem, 
-                            QPen, QBrush, QCursor, QWidget, QGraphicsScene, QGraphicsView, QPainter, 
-                            QVBoxLayout, QTextEdit, QSplitter)
-    from PyQt4.QtCore import (Qt)
-except ImportError:
-    from PyQt5.QtGui import (QColor, QPen, QBrush, QCursor, QPainter)
-    from PyQt5.QtWidgets import (QGraphicsLineItem, QGraphicsRectItem, QGraphicsTextItem, 
-                                QWidget, QGraphicsScene, QGraphicsView, QVBoxLayout, 
-                                QTextEdit, QSplitter)
-    from PyQt5.QtCore import (Qt)
+
+from PyQt5.QtGui import (QColor, QPen, QBrush, QCursor, QPainter)
+from PyQt5.QtWidgets import (QGraphicsLineItem, QGraphicsRectItem, QGraphicsTextItem, 
+                            QWidget, QGraphicsScene, QGraphicsView, QVBoxLayout, 
+                            QTextEdit, QSplitter)
+from PyQt5.QtCore import (Qt)
 
 from Libs import QtHelper, Logger
 import Settings

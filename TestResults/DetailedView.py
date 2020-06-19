@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -30,23 +30,13 @@ import base64
 if sys.version_info > (3,):
     unicode = str
     long = int
-    
-try:
-    from PyQt4.QtGui import (QTextEdit, QDialogButtonBox, QVBoxLayout, QTreeWidgetItem, 
-                            QColor, QTreeWidget, QTreeView, QWidget, QLabel, QFont, QDialog, 
-                            QIcon, QToolBar, QPalette, QSizePolicy, QScrollArea, QPixmap, 
-                            QFileDialog, QImage, QHBoxLayout, QSplitter, QTabWidget, QTableWidget, 
-                            QAbstractItemView, QApplication, QMenu, QBrush)
-    from PyQt4.QtCore import (Qt, pyqtSignal, QSize)
-    if sys.version_info < (3,):
-        from PyQt4.QtCore import (QString)
-except ImportError:
-    from PyQt5.QtGui import (QColor, QFont, QIcon, QPalette, QPixmap, QImage, QBrush)
-    from PyQt5.QtWidgets import (QTextEdit, QDialogButtonBox, QVBoxLayout, QTreeWidgetItem, 
-                                QTreeWidget, QTreeView, QWidget, QLabel, QDialog, QToolBar, 
-                                QSizePolicy, QScrollArea, QFileDialog, QHBoxLayout, QSplitter, 
-                                QTabWidget, QTableWidget, QAbstractItemView, QApplication, QMenu)
-    from PyQt5.QtCore import (Qt, pyqtSignal, QSize)
+
+from PyQt5.QtGui import (QColor, QFont, QIcon, QPalette, QPixmap, QImage, QBrush)
+from PyQt5.QtWidgets import (QTextEdit, QDialogButtonBox, QVBoxLayout, QTreeWidgetItem, 
+                            QTreeWidget, QTreeView, QWidget, QLabel, QDialog, QToolBar, 
+                            QSizePolicy, QScrollArea, QFileDialog, QHBoxLayout, QSplitter, 
+                            QTabWidget, QTableWidget, QAbstractItemView, QApplication, QMenu)
+from PyQt5.QtCore import (Qt, pyqtSignal, QSize)
     
 from Libs import QtHelper, Logger
 import Settings

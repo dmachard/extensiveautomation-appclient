@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -36,19 +36,12 @@ try:
     xrange
 except NameError: # support python3
     xrange = range
-    
-try:
-    from PyQt4.QtGui import (QIcon, QMenu, QToolBar, QLineEdit, QRegExpValidator, QSizePolicy, 
-                            QIntValidator, QProgressBar, QGroupBox, QRadioButton, QHBoxLayout, 
-                            QVBoxLayout, QGridLayout, QLabel, QTextEdit, QTextCursor, 
-                            QMessageBox, QFileDialog)
-    from PyQt4.QtCore import (Qt, QRegExp, QSize)
-except ImportError:
-    from PyQt5.QtGui import (QIcon, QRegExpValidator, QIntValidator, QTextCursor)
-    from PyQt5.QtWidgets import (QMenu, QToolBar, QLineEdit, QSizePolicy, QProgressBar, 
-                                QGroupBox, QRadioButton, QHBoxLayout, QVBoxLayout, QGridLayout, 
-                                QLabel, QTextEdit, QMessageBox, QFileDialog)
-    from PyQt5.QtCore import (Qt, QRegExp, QSize)
+
+from PyQt5.QtGui import (QIcon, QRegExpValidator, QIntValidator, QTextCursor)
+from PyQt5.QtWidgets import (QMenu, QToolBar, QLineEdit, QSizePolicy, QProgressBar, 
+                            QGroupBox, QRadioButton, QHBoxLayout, QVBoxLayout, QGridLayout, 
+                            QLabel, QTextEdit, QMessageBox, QFileDialog)
+from PyQt5.QtCore import (Qt, QRegExp, QSize)
     
 from Libs import QtHelper, Logger
 

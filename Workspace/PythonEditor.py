@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -30,24 +30,14 @@ try:
     xrange
 except NameError: # support python3
     xrange = range
-    
-try:
-    from PyQt4.QtGui import (QWidget, QLabel, QFont, QVBoxLayout, QFrame, QColor, QIcon, QTextCursor,
-                            QKeySequence, QMenu, QLineEdit, QGridLayout, QCheckBox, QHBoxLayout,
-                            QGroupBox, QComboBox, QSizePolicy, QToolBar)
-    from PyQt4.QtCore import (pyqtSignal, Qt, QRegExp, QThread, QRect, QSize)
-    from PyQt4.Qsci import (QsciLexerPython, QsciScintilla, QsciLexerXML, QsciLexerProperties,
-                            QsciAPIs )
-    if sys.version_info < (3,):
-        from PyQt4.QtCore import (QString)
-except ImportError:
-    from PyQt5.QtGui import (QFont, QColor, QIcon, QKeySequence, QTextCursor)
-    from PyQt5.QtWidgets import (QWidget, QLabel, QVBoxLayout, QFrame, QMenu, QLineEdit, QGroupBox,
-                                QGridLayout, QCheckBox, QHBoxLayout, QSizePolicy, QComboBox,
-                                QToolBar)
-    from PyQt5.QtCore import (pyqtSignal, Qt, QRegExp, QThread, QRect, QSize)
-    from PyQt5.Qsci import (QsciLexerPython, QsciScintilla, QsciLexerXML, QsciLexerProperties,
-                            QsciAPIs )
+
+from PyQt5.QtGui import (QFont, QColor, QIcon, QKeySequence, QTextCursor)
+from PyQt5.QtWidgets import (QWidget, QLabel, QVBoxLayout, QFrame, QMenu, QLineEdit, QGroupBox,
+                            QGridLayout, QCheckBox, QHBoxLayout, QSizePolicy, QComboBox,
+                            QToolBar)
+from PyQt5.QtCore import (pyqtSignal, Qt, QRegExp, QThread, QRect, QSize)
+from PyQt5.Qsci import (QsciLexerPython, QsciScintilla, QsciLexerXML, QsciLexerProperties,
+                        QsciAPIs )
     
 import math
 import re

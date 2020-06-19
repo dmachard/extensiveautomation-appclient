@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -33,36 +33,20 @@ import re
 # unicode = str with python3
 if sys.version_info > (3,):
     unicode = str
-    
-try:
-    from PyQt4.QtGui import (QFont, QIcon, QPixmap, QImage, QColor, QItemDelegate, QLineEdit,
-                            QComboBox, QDoubleValidator, QIntValidator, QDialog, QDateEdit, QPlainTextEdit,
+
+from PyQt5.QtGui import (QFont, QIcon, QPixmap, QImage, QColor, QDoubleValidator, 
+                        QIntValidator, QDrag, QClipboard, QRegExpValidator,
+                        QSyntaxHighlighter, QTextCharFormat, QBrush, QPalette)
+from PyQt5.QtWidgets import (QItemDelegate, QLineEdit, QComboBox, QDialog, QDateEdit, QPlainTextEdit,
                             QTimeEdit, QDateTimeEdit, QAbstractItemDelegate, QLabel, QHBoxLayout, 
                             QTextEdit, QDialogButtonBox, QVBoxLayout, QMessageBox, QListView, 
-                            QSortFilterProxyModel, QListWidgetItem, QPushButton, QListWidget, 
-                            QGridLayout, QTableView, QDrag, QAbstractItemView, QFrame, QApplication, 
-                            QMenu, QFileDialog, QWidget, QToolBar, QClipboard, QRegExpValidator,
-                            QSyntaxHighlighter, QTextCharFormat, QBrush, QPalette, QCheckBox,
-                            QCompleter, QStyleOptionButton, QStyle, QToolButton, QAction)
-    from PyQt4.QtCore import (QVariant, QAbstractTableModel, QModelIndex, Qt, 
-                                QDate, QTime, QDateTime, 
-                                QAbstractListModel, QRegExp, pyqtSignal, 
-                                QMimeData, QByteArray, QBuffer, 
-                                QIODevice, QFile, QSize)
-except ImportError:
-    from PyQt5.QtGui import (QFont, QIcon, QPixmap, QImage, QColor, QDoubleValidator, 
-                            QIntValidator, QDrag, QClipboard, QRegExpValidator,
-                            QSyntaxHighlighter, QTextCharFormat, QBrush, QPalette)
-    from PyQt5.QtWidgets import (QItemDelegate, QLineEdit, QComboBox, QDialog, QDateEdit, QPlainTextEdit,
-                                QTimeEdit, QDateTimeEdit, QAbstractItemDelegate, QLabel, QHBoxLayout, 
-                                QTextEdit, QDialogButtonBox, QVBoxLayout, QMessageBox, QListView, 
-                                QListWidgetItem, QPushButton, QListWidget, QCheckBox, QStyle,
-                                QGridLayout, QTableView, QAbstractItemView, QFrame, QApplication, 
-                                QMenu, QFileDialog, QWidget, QToolBar, QCompleter, QStyleOptionButton,
-                                QToolButton, QAction)
-    from PyQt5.QtCore import (QVariant, QAbstractTableModel, QModelIndex, Qt, QDate, QTime, QDateTime, 
-                            QAbstractListModel, QRegExp, pyqtSignal, QMimeData, QByteArray, QBuffer, 
-                            QIODevice, QFile, QSize, QSortFilterProxyModel)
+                            QListWidgetItem, QPushButton, QListWidget, QCheckBox, QStyle,
+                            QGridLayout, QTableView, QAbstractItemView, QFrame, QApplication, 
+                            QMenu, QFileDialog, QWidget, QToolBar, QCompleter, QStyleOptionButton,
+                            QToolButton, QAction)
+from PyQt5.QtCore import (QVariant, QAbstractTableModel, QModelIndex, Qt, QDate, QTime, QDateTime, 
+                        QAbstractListModel, QRegExp, pyqtSignal, QMimeData, QByteArray, QBuffer, 
+                        QIODevice, QFile, QSize, QSortFilterProxyModel)
                             
 from Libs import QtHelper, Logger
 

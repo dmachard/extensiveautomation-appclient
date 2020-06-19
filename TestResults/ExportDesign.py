@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -32,22 +32,13 @@ import codecs
 # unicode = str with python3
 if sys.version_info > (3,):
     unicode = str
-    
-try:
-    from PyQt4.QtGui import (QWidget, QToolBar, QVBoxLayout, QFont, QIcon, 
-                            QPrinter, QPrintDialog, QHBoxLayout, 
-                            QDialog, QTextDocument, QFileDialog, 
-                            QDialogButtonBox, QTabWidget, QGroupBox,
-                            QTextEdit)
-    from PyQt4.QtCore import (Qt, QSize, QByteArray)
-    from PyQt4.QtWebKit import (QWebView)
-except ImportError:
-    from PyQt5.QtGui import (QFont, QIcon, QTextDocument)
-    from PyQt5.QtWidgets import (QWidget, QToolBar, QVBoxLayout, QGroupBox, QHBoxLayout,
-                                QDialog, QFileDialog, QDialogButtonBox, QTabWidget, QTextEdit)
-    from PyQt5.QtCore import (Qt, QSize, QByteArray)
-    from PyQt5.QtWebEngineWidgets import QWebEngineView as QWebView
-    from PyQt5.QtPrintSupport import (QPrinter, QPrintDialog)
+
+from PyQt5.QtGui import (QFont, QIcon, QTextDocument)
+from PyQt5.QtWidgets import (QWidget, QToolBar, QVBoxLayout, QGroupBox, QHBoxLayout,
+                            QDialog, QFileDialog, QDialogButtonBox, QTabWidget, QTextEdit)
+from PyQt5.QtCore import (Qt, QSize, QByteArray)
+from PyQt5.QtWebEngineWidgets import QWebEngineView as QWebView
+from PyQt5.QtPrintSupport import (QPrinter, QPrintDialog)
     
 import UserClientInterface as UCI
 from Libs import QtHelper, Logger

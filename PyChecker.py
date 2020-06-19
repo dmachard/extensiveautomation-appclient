@@ -3,7 +3,7 @@
 
 # -------------------------------------------------------------------
 # This file is part of the extensive automation project
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

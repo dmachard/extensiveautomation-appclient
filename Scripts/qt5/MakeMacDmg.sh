@@ -1,4 +1,4 @@
-#!/bin/bash
+ #!/bin/bash
 
 # -------------------------------------------------------------------
 # Copyright (c) 2018 Denys Bortovets
@@ -20,7 +20,7 @@
 # MA 02110-1301 USA
 # -------------------------------------------------------------------
 
-VERSION=20.0.0
+VERSION=21.0.0
 
 echo "Build App Client for Mac"
 python3 ../../BuildMac.py py2app

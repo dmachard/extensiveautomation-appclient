@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -29,18 +29,12 @@ import sys
 # unicode = str with python3
 if sys.version_info > (3,):
     unicode = str
-    
-try:
-    from PyQt4.QtGui import (QLabel, QLineEdit, QIntValidator, QVBoxLayout, QRadioButton, 
-                            QDateTimeEdit, QGroupBox, QGridLayout, QHBoxLayout, QIcon, QPushButton, 
-                            QMessageBox, QWidget, QComboBox, QCheckBox, QButtonGroup, QStackedWidget, QFrame)
-    from PyQt4.QtCore import (QDateTime, Qt, QTime, QDate, QRect)
-except ImportError:
-    from PyQt5.QtGui import (QIntValidator, QIcon)
-    from PyQt5.QtWidgets import (QLabel, QLineEdit, QVBoxLayout, QRadioButton, QDateTimeEdit, 
-                                QGroupBox, QGridLayout, QHBoxLayout, QPushButton, QMessageBox, 
-                                QWidget, QComboBox, QCheckBox, QButtonGroup, QStackedWidget, QFrame)
-    from PyQt5.QtCore import (QDateTime, Qt, QTime, QDate, QRect)
+
+from PyQt5.QtGui import (QIntValidator, QIcon)
+from PyQt5.QtWidgets import (QLabel, QLineEdit, QVBoxLayout, QRadioButton, QDateTimeEdit, 
+                            QGroupBox, QGridLayout, QHBoxLayout, QPushButton, QMessageBox, 
+                            QWidget, QComboBox, QCheckBox, QButtonGroup, QStackedWidget, QFrame)
+from PyQt5.QtCore import (QDateTime, Qt, QTime, QDate, QRect)
     
 from Libs import QtHelper, Logger
 import UserClientInterface as UCI

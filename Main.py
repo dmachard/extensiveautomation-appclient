@@ -1,9 +1,8 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
 # This file is part of the extensive automation project
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -32,7 +31,7 @@ Main module
 from __future__ import print_function 
 
 # define the current version
-__VERSION__ = '20.1.1'
+__VERSION__ = '21.0.0'
 # name of the main developer
 __AUTHOR__ = 'Denis Machard'
 # email of the main developer
@@ -40,11 +39,11 @@ __EMAIL__ = 'd.machard@gmail.com'
 # project start in year
 __BEGIN__="2010"
 # year of the latest build
-__END__="2019"
+__END__="2020"
 # date and time of the buid
-__BUILDTIME__="08/08/2019 13:40:46"
+__BUILDTIME__="19/06/2020 11:02:51"
 # Redirect stdout and stderr to log file only on production
-REDIRECT_STD=False
+REDIRECT_STD=True
 # disable warning from qt framework on production 
 QT_WARNING_MODE=False
 # workspace offline, for dev only
@@ -60,9 +59,9 @@ import uuid
 import shutil
 import base64 
 
-if sys.platform == "win32":
-    import sip
-    sip.setdestroyonexit(False)
+# if sys.platform == "win32":
+    # import sip
+    # sip.setdestroyonexit(False)
 
 from Libs import QtHelper, Logger
 
@@ -110,30 +109,18 @@ if not os.path.exists(settingsFile):
 # For Unix systems, this is the lowercased OS name as returned
 # by uname -s with the first part of the version as returned by uname -r
 if sys.platform in [ "win32", "linux2", "linux", "darwin" ]:
-    try:
-        from PyQt4.QtGui import (QMainWindow, QApplication, QMessageBox, QTabWidget, QIcon, QToolButton, 
-                                QAction, qApp, QDesktopServices, QFileDialog, QSystemTrayIcon, QDialog, 
-                                QMenu, QWidget, QCursor, QTabBar, QColor, QPixmap, QSplashScreen, 
-                                QProgressBar, QLabel, QFont, QVBoxLayout, QPushButton, QDesktopWidget)
-        from PyQt4.QtCore import (QDateTime, QtDebugMsg, QtWarningMsg, QtCriticalMsg, QtFatalMsg, 
-                                QThread, pyqtSignal, QT_VERSION_STR, PYQT_VERSION_STR, QSettings, 
-                                QFile, Qt, QTimer, QSize, QUrl, QIODevice, QT_VERSION_STR, QEvent,
-                                qInstallMsgHandler, QTranslator, QLibraryInfo, QObject, QProcess,
-                                QByteArray, QLocale )
-        from PyQt4.QtNetwork import (QUdpSocket, QHostAddress, QSslSocket)
-    except ImportError:
-        from PyQt5.QtGui import (QIcon, QDesktopServices, QCursor, QColor, QPixmap, QFont)
-        from PyQt5.QtWidgets import (QMainWindow, QApplication, QMessageBox, QTabWidget, 
-                                QToolButton, QAction, qApp, QFileDialog, QSystemTrayIcon, 
-                                QDialog, QMenu, QWidget, QTabBar, QSplashScreen,  QDesktopWidget,
-                                QProgressBar, QLabel, QVBoxLayout, QPushButton)
-        from PyQt5.QtCore import (QDateTime, QtDebugMsg, QtWarningMsg, QtCriticalMsg, QtFatalMsg, 
-                                QThread, pyqtSignal, QT_VERSION_STR, PYQT_VERSION_STR, QSettings, 
-                                QFile, Qt, QTimer, QSize, QUrl, QIODevice, QT_VERSION_STR, 
-                                QTranslator, QLibraryInfo, QObject, QProcess, QEvent, QByteArray,
-                                QLocale, QCoreApplication )
-        from PyQt5.QtCore import qInstallMessageHandler as qInstallMsgHandler
-        from PyQt5.QtNetwork import (QUdpSocket, QHostAddress, QSslSocket)
+    from PyQt5.QtGui import (QIcon, QDesktopServices, QCursor, QColor, QPixmap, QFont)
+    from PyQt5.QtWidgets import (QMainWindow, QApplication, QMessageBox, QTabWidget, 
+                            QToolButton, QAction, qApp, QFileDialog, QSystemTrayIcon, 
+                            QDialog, QMenu, QWidget, QTabBar, QSplashScreen,  QDesktopWidget,
+                            QProgressBar, QLabel, QVBoxLayout, QPushButton)
+    from PyQt5.QtCore import (QDateTime, QtDebugMsg, QtWarningMsg, QtCriticalMsg, QtFatalMsg, 
+                            QThread, pyqtSignal, QT_VERSION_STR, PYQT_VERSION_STR, QSettings, 
+                            QFile, Qt, QTimer, QSize, QUrl, QIODevice, QT_VERSION_STR, 
+                            QTranslator, QLibraryInfo, QObject, QProcess, QEvent, QByteArray,
+                            QLocale, QCoreApplication )
+    from PyQt5.QtCore import qInstallMessageHandler as qInstallMsgHandler
+    from PyQt5.QtNetwork import (QUdpSocket, QHostAddress, QSslSocket)
 else:
     print('os not supported')
     sys.exit(-1)
@@ -3387,8 +3374,8 @@ if __name__ == '__main__':
     progress = QProgressBar(splash)
     progress.setAlignment(Qt.AlignCenter)
     progress.setMaximum(nbEvents)
-    progress.setGeometry( splash.width()/10, 7.5*splash.height()/10, 
-                            8*splash.width()/10, splash.height()/10)
+    progress.setGeometry( int(splash.width()/10), int(7.5*splash.height()/10), 
+                          int(8*splash.width()/10), int(splash.height()/10) )
 
     qlabel = QLabel(splash)
     qfont = QFont()
@@ -3396,8 +3383,8 @@ if __name__ == '__main__':
     qlabel.setAlignment(Qt.AlignRight)
     qlabel.setText(__VERSION__)
     qlabel.setFont(qfont)
-    qlabel.setGeometry( splash.width()/10, 6*splash.height()/10, 
-                        7.8*splash.width()/10, splash.height()/10)
+    qlabel.setGeometry( int(splash.width()/10), int(6*splash.height()/10), 
+                        int(7.8*splash.width()/10), int(splash.height()/10) )
 
     
     splash.setMask(splash_pix.mask())

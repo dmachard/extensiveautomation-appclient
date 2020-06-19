@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -36,18 +36,12 @@ if sys.version_info > (3,):
     unicode = str
 
 USE_PYQT5 = False    
-try:
-    from PyQt4.QtGui import (QHBoxLayout, QVBoxLayout, QComboBox, QTreeWidget, QFrame, 
+from PyQt5.QtGui import (QIcon)
+from PyQt5.QtWidgets import (QHBoxLayout, QVBoxLayout, QComboBox, QTreeWidget, QFrame, 
                             QHeaderView, QListWidget, QPushButton, QCheckBox, QRadioButton, 
-                            QDateTimeEdit, QTreeWidgetItem, QListWidgetItem, QIcon)
-    from PyQt4.QtCore import (pyqtSignal, Qt, QDateTime)
-except ImportError:
-    from PyQt5.QtGui import (QIcon)
-    from PyQt5.QtWidgets import (QHBoxLayout, QVBoxLayout, QComboBox, QTreeWidget, QFrame, 
-                                QHeaderView, QListWidget, QPushButton, QCheckBox, QRadioButton, 
-                                QDateTimeEdit, QTreeWidgetItem, QListWidgetItem)
-    from PyQt5.QtCore import (pyqtSignal, Qt, QDateTime)
-    USE_PYQT5 = True    
+                            QDateTimeEdit, QTreeWidgetItem, QListWidgetItem)
+from PyQt5.QtCore import (pyqtSignal, Qt, QDateTime)
+USE_PYQT5 = True    
     
 from Libs import QtHelper, Logger
 import UserClientInterface as UCI

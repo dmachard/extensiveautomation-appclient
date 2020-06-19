@@ -1,5 +1,5 @@
 :: -------------------------------------------------------------------
-:: Copyright (c) 2010-2019 Denis Machard
+:: Copyright (c) 2010-2020 Denis Machard
 :: This file is part of the extensive automation project
 ::
 :: This library is free software; you can redistribute it and/or
@@ -28,6 +28,7 @@ set Path_Python=py
 set Tool_PyInstaller=%Path_Python%\Scripts\pyinstaller.exe
 
 :: make resources
+echo Build resources...
 py -m PyQt5.pyrcc_main -o "%Path_Project%\Resources\Resources.py" "%Path_Project%\Resources\__resources.qrc"
 
 :: build the project

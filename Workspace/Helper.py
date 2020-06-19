@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -41,20 +41,13 @@ except NameError: # support python3
 # unicode = str with python3
 if sys.version_info > (3,):
     unicode = str
-    
-try:
-    from PyQt4.QtGui import (QTreeWidgetItem, QTreeWidget, QDrag, QTreeView, QWidget, QLabel, QFont, 
-                            QTextEdit, QVBoxLayout, QLineEdit, QComboBox, QPushButton, QGridLayout, 
-                            QHBoxLayout, QCheckBox, QFileDialog, QMessageBox, QToolBar, QTabWidget, 
-                            QIcon, QSplitter, QMenu, QDialog, QFrame)
-    from PyQt4.QtCore import (QMimeData, Qt, pyqtSignal, QSize, QFile, QIODevice, QByteArray)
-except ImportError:
-    from PyQt5.QtGui import (QDrag, QFont, QIcon)
-    from PyQt5.QtWidgets import (QTreeWidgetItem, QTreeWidget, QTreeView, QWidget, QLabel, 
-                                QTextEdit, QVBoxLayout, QLineEdit, QComboBox, QPushButton, 
-                                QGridLayout, QHBoxLayout, QCheckBox, QFileDialog, QMessageBox, 
-                                QToolBar, QTabWidget, QSplitter, QMenu, QDialog, QFrame)
-    from PyQt5.QtCore import (QMimeData, Qt, pyqtSignal, QSize, QFile, QIODevice, QByteArray)
+
+from PyQt5.QtGui import (QDrag, QFont, QIcon)
+from PyQt5.QtWidgets import (QTreeWidgetItem, QTreeWidget, QTreeView, QWidget, QLabel, 
+                            QTextEdit, QVBoxLayout, QLineEdit, QComboBox, QPushButton, 
+                            QGridLayout, QHBoxLayout, QCheckBox, QFileDialog, QMessageBox, 
+                            QToolBar, QTabWidget, QSplitter, QMenu, QDialog, QFrame)
+from PyQt5.QtCore import (QMimeData, Qt, pyqtSignal, QSize, QFile, QIODevice, QByteArray)
     
 import Settings
 from Libs import QtHelper, Logger

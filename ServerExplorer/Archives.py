@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -37,29 +37,18 @@ try:
     xrange
 except NameError: # support python3
     xrange = range
-    
-try:
-    from PyQt4.QtGui import (QTreeWidgetItem, QIcon, QFont, QBrush, QTreeWidget, QColor,
-                            QTreeView, QWidget, QToolBar, QVBoxLayout, QPrinter, QPrintDialog, 
-                            QDialog, QFileDialog, QLabel, QPalette, QSizePolicy, QScrollArea, 
-                            QPixmap, QImage, QTextEdit, QMessageBox, QHBoxLayout, QTabWidget, 
-                            QStyle, QComboBox, QSplitter, QFrame, QMenu, QApplication,
-                            QGroupBox, QCheckBox, QTextDocument)
-    from PyQt4.QtCore import (Qt, QSize, QFile, QIODevice, QTextStream, QByteArray)
-    from PyQt4.QtWebKit import (QWebView, QWebSettings)
-    from PyQt4.QtNetwork import (QNetworkProxy)
-except ImportError:
-    from PyQt5.QtGui import (QIcon, QFont, QBrush, QColor, QPalette, QPixmap, QImage, QTextDocument)
-    from PyQt5.QtWidgets import (QTreeWidgetItem, QTreeWidget, QTreeView, QWidget, QToolBar,
-                                QVBoxLayout, QDialog, QFileDialog, QLabel, 
-                                QSizePolicy, QScrollArea, QTextEdit, QMessageBox, QHBoxLayout, 
-                                QTabWidget, QStyle, QComboBox, QSplitter, QFrame, QMenu, QApplication,
-                                QGroupBox, QCheckBox)
-    from PyQt5.QtCore import (Qt, QSize, QFile, QIODevice, QTextStream, QByteArray)
-    from PyQt5.QtWebEngineWidgets import QWebEngineView as QWebView
-    from PyQt5.QtWebEngineWidgets import QWebEngineSettings as QWebSettings
-    from PyQt5.QtPrintSupport import (QPrinter, QPrintDialog)
-    from PyQt5.QtNetwork import (QNetworkProxy)
+
+from PyQt5.QtGui import (QIcon, QFont, QBrush, QColor, QPalette, QPixmap, QImage, QTextDocument)
+from PyQt5.QtWidgets import (QTreeWidgetItem, QTreeWidget, QTreeView, QWidget, QToolBar,
+                            QVBoxLayout, QDialog, QFileDialog, QLabel, 
+                            QSizePolicy, QScrollArea, QTextEdit, QMessageBox, QHBoxLayout, 
+                            QTabWidget, QStyle, QComboBox, QSplitter, QFrame, QMenu, QApplication,
+                            QGroupBox, QCheckBox)
+from PyQt5.QtCore import (Qt, QSize, QFile, QIODevice, QTextStream, QByteArray)
+from PyQt5.QtWebEngineWidgets import QWebEngineView as QWebView
+from PyQt5.QtWebEngineWidgets import QWebEngineSettings as QWebSettings
+from PyQt5.QtPrintSupport import (QPrinter, QPrintDialog)
+from PyQt5.QtNetwork import (QNetworkProxy)
 
 import RestClientInterface as RCI
 import UserClientInterface as UCI

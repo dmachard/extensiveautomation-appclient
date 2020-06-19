@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -28,27 +28,16 @@ Helper for qt
 import sys
 
 IS_QT5 = False
-try:
-	from PyQt4.QtGui import (QColor, QToolButton, QApplication, QTextEdit, QCompleter, QWidget, QPlainTextEdit,
-							QLineEdit, QPushButton, QHBoxLayout, QLabel, QDialog, QIcon, QCursor,
-							QDesktopWidget, QVBoxLayout, QSizePolicy, QMovie, QProgressBar, 
-							QPixmap, QAction, QPainter, QRadialGradient, QTransform, QFrame,
-                            QTextCursor, QStringListModel)
-	from PyQt4.QtCore import (Qt, pyqtSignal, QVariant, QSize, QPointF, QRect)
-	from PyQt4.Qsci import (QsciScintilla, QsciLexerPython, QsciLexerXML, 
-                            QsciLexerBash, QsciLexerJSON, QsciAPIs)
-	if sys.version_info < (3,): from PyQt4.QtCore import (QString)
-except ImportError:
-	from PyQt5.QtGui import (QColor, QIcon, QMovie, QPixmap, QPainter, QRadialGradient, 
-                             QTransform, QCursor, QTextCursor,  )
-	from PyQt5.QtWidgets import (QToolButton, QApplication, QTextEdit, QCompleter, 
-                                QWidget, QLineEdit, QPlainTextEdit,
-                                QPushButton, QHBoxLayout, QLabel, QDialog, QDesktopWidget, 
-                                QVBoxLayout, QSizePolicy, QProgressBar, QAction, QFrame)
-	from PyQt5.QtCore import (Qt, pyqtSignal, QVariant, QSize, QPointF, QRect, QStringListModel)
-	from PyQt5.Qsci import (QsciScintilla, QsciLexerPython, QsciLexerXML, 
-                            QsciLexerBash, QsciLexerJSON, QsciAPIs)
-	IS_QT5 = True
+from PyQt5.QtGui import (QColor, QIcon, QMovie, QPixmap, QPainter, QRadialGradient, 
+                         QTransform, QCursor, QTextCursor,  )
+from PyQt5.QtWidgets import (QToolButton, QApplication, QTextEdit, QCompleter, 
+                            QWidget, QLineEdit, QPlainTextEdit,
+                            QPushButton, QHBoxLayout, QLabel, QDialog, QDesktopWidget, 
+                            QVBoxLayout, QSizePolicy, QProgressBar, QAction, QFrame)
+from PyQt5.QtCore import (Qt, pyqtSignal, QVariant, QSize, QPointF, QRect, QStringListModel)
+from PyQt5.Qsci import (QsciScintilla, QsciLexerPython, QsciLexerXML, 
+                        QsciLexerBash, QsciLexerJSON, QsciAPIs)
+IS_QT5 = True
 	
 import os
 import imp

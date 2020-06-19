@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -30,12 +30,9 @@ import json
 # unicode = str with python3
 if sys.version_info > (3,):
     unicode = str
-    
-try:
-    from PyQt4.QtGui import (QMessageBox, QIcon, QLabel, QVBoxLayout)
-except ImportError:
-    from PyQt5.QtGui import (QIcon)
-    from PyQt5.QtWidgets import (QMessageBox, QLabel, QVBoxLayout)
+
+from PyQt5.QtGui import (QIcon)
+from PyQt5.QtWidgets import (QMessageBox, QLabel, QVBoxLayout)
 
 from Libs import QtHelper, Logger
 import json

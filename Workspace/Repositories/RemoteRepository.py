@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -37,22 +37,14 @@ except NameError: # support python3
     xrange = range
     
 USE_PYQT5 = False
-try:
-    from PyQt4.QtGui import (QDialog, QPushButton, QLabel, QFont, QComboBox, QVBoxLayout, QHBoxLayout, 
-                            QTreeWidget, QFrame, QHeaderView, QAbstractItemView, QLineEdit, QMessageBox, 
-                            QTreeWidgetItem, QDialogButtonBox, QDrag, QTreeView, QFormLayout, QStyle, 
-                            QPixmap, QWidget, QIcon, QMenu, QToolBar, QInputDialog, QCheckBox,
-                            QDesktopWidget)
-    from PyQt4.QtCore import (pyqtSignal, Qt, QRect, QMimeData, QSize, QObject, QEvent)
-except ImportError:
-    from PyQt5.QtGui import (QFont, QDrag, QPixmap, QIcon)
-    from PyQt5.QtWidgets import (QDialog, QPushButton, QLabel, QComboBox, QVBoxLayout,
-                                QHBoxLayout, QTreeWidget, QFrame, QHeaderView, QAbstractItemView, 
-                                QLineEdit, QMessageBox, QTreeWidgetItem, QDialogButtonBox, QCheckBox,
-                                QTreeView, QFormLayout, QStyle, QWidget, QMenu, QToolBar, 
-                                QInputDialog, QDesktopWidget)
-    from PyQt5.QtCore import (pyqtSignal, Qt, QRect, QMimeData, QSize, QObject, QEvent)
-    USE_PYQT5 = True
+from PyQt5.QtGui import (QFont, QDrag, QPixmap, QIcon)
+from PyQt5.QtWidgets import (QDialog, QPushButton, QLabel, QComboBox, QVBoxLayout,
+                            QHBoxLayout, QTreeWidget, QFrame, QHeaderView, QAbstractItemView, 
+                            QLineEdit, QMessageBox, QTreeWidgetItem, QDialogButtonBox, QCheckBox,
+                            QTreeView, QFormLayout, QStyle, QWidget, QMenu, QToolBar, 
+                            QInputDialog, QDesktopWidget)
+from PyQt5.QtCore import (pyqtSignal, Qt, QRect, QMimeData, QSize, QObject, QEvent)
+USE_PYQT5 = True
     
 from Libs import QtHelper, Logger
 import Settings

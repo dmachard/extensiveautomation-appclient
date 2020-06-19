@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -37,20 +37,13 @@ try:
     xrange
 except NameError: # support python3
     xrange = range
-    
-try:
-    from PyQt4.QtGui import (QWidget, QTabWidget, QIcon, QLabel, QFont, QVBoxLayout, 
-                            QMessageBox, QDialog, QFileDialog, QTableView,
-                            QSortFilterProxyModel, QLineEdit, QAbstractItemView)
-    from PyQt4.QtCore import (pyqtSignal, QAbstractTableModel, QModelIndex,
-                              QVariant, Qt, QRegExp)
-except ImportError:
-    from PyQt5.QtGui import (QIcon, QFont)
-    from PyQt5.QtWidgets import (QWidget, QTabWidget, QLabel, QVBoxLayout, QMessageBox, 
-                                QDialog, QFileDialog, QTableView, QLineEdit,
-                                QAbstractItemView)
-    from PyQt5.QtCore import (pyqtSignal, QAbstractTableModel, QSortFilterProxyModel,
-                              QModelIndex ,QVariant, Qt, QRegExp)
+
+from PyQt5.QtGui import (QIcon, QFont)
+from PyQt5.QtWidgets import (QWidget, QTabWidget, QLabel, QVBoxLayout, QMessageBox, 
+                            QDialog, QFileDialog, QTableView, QLineEdit,
+                            QAbstractItemView)
+from PyQt5.QtCore import (pyqtSignal, QAbstractTableModel, QSortFilterProxyModel,
+                          QModelIndex ,QVariant, Qt, QRegExp)
     
 from Libs import QtHelper, Logger
 

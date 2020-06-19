@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -35,24 +35,15 @@ try:
     xrange
 except NameError: # support python3
     xrange = range
-    
-try:
-    from PyQt4.QtGui import (QWidget, QKeySequence, QPixmap, QDialog, QApplication, QCursor, 
-                            QIcon, QToolBar, QGroupBox, QLineEdit, QDoubleValidator, QComboBox, 
-                            QGridLayout, QLabel, QFrame, QVBoxLayout, QIntValidator, QHBoxLayout, 
-                            QRadioButton, QButtonGroup, QSlider, QSizePolicy, QTabWidget, QFont, QDialogButtonBox,
-                            QCheckBox, QSplitter, QMessageBox, QDesktopWidget, QValidator, QPushButton)
-    from PyQt4.QtCore import (QFile, QIODevice, QTextStream, Qt, QSize, QUrl, QByteArray, QBuffer,
-                                pyqtSignal)
-except ImportError:
-    from PyQt5.QtGui import (QKeySequence, QPixmap, QCursor, QIcon, QDoubleValidator, 
-                                QIntValidator, QValidator, QFont)
-    from PyQt5.QtWidgets import (QWidget, QDialog, QApplication, QToolBar, QGroupBox, QLineEdit, 
-                                QComboBox, QGridLayout, QLabel, QFrame, QVBoxLayout, QHBoxLayout, 
-                                QRadioButton, QButtonGroup, QSlider, QSizePolicy, QTabWidget, 
-                                QCheckBox, QSplitter, QMessageBox, QPushButton, QDialogButtonBox)
-    from PyQt5.QtCore import (QFile, QIODevice, QTextStream, Qt, QSize, QUrl, QByteArray, QBuffer,
-                                pyqtSignal)
+
+from PyQt5.QtGui import (QKeySequence, QPixmap, QCursor, QIcon, QDoubleValidator, 
+                            QIntValidator, QValidator, QFont)
+from PyQt5.QtWidgets import (QWidget, QDialog, QApplication, QToolBar, QGroupBox, QLineEdit, 
+                            QComboBox, QGridLayout, QLabel, QFrame, QVBoxLayout, QHBoxLayout, 
+                            QRadioButton, QButtonGroup, QSlider, QSizePolicy, QTabWidget, 
+                            QCheckBox, QSplitter, QMessageBox, QPushButton, QDialogButtonBox)
+from PyQt5.QtCore import (QFile, QIODevice, QTextStream, Qt, QSize, QUrl, QByteArray, QBuffer,
+                            pyqtSignal)
         
 from Libs import QtHelper, Logger
 import Settings

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -43,21 +43,13 @@ try:
     xrange
 except NameError: # support python3
     xrange = range
-    
-try:
-    from PyQt4.QtGui import (QStyledItemDelegate, QTreeView, QMessageBox, QToolBar,QVBoxLayout, 
-                            QTreeWidget, QAbstractItemView, QFrame, QLabel, QFont, QIcon, QMenu, 
-                            QInputDialog, QLineEdit, QTreeWidgetItem, QApplication, QDialog, 
-                            QFileDialog, QClipboard, QGroupBox, QHBoxLayout, QColor, QDialogButtonBox,
-                            QBrush)
-    from PyQt4.QtCore import (Qt, QSize, QRect, QMimeData, QByteArray, pyqtSignal)
-except ImportError:
-    from PyQt5.QtGui import (QFont, QIcon, QClipboard, QColor, QBrush)
-    from PyQt5.QtWidgets import (QStyledItemDelegate, QTreeView, QMessageBox, QToolBar, QDialogButtonBox,
-                                QVBoxLayout, QTreeWidget, QAbstractItemView, QFrame, QLabel, 
-                                QMenu, QInputDialog, QLineEdit, QTreeWidgetItem, QApplication, 
-                                QDialog, QFileDialog, QGroupBox, QHBoxLayout)
-    from PyQt5.QtCore import (Qt, QSize, QRect, QMimeData, QByteArray, pyqtSignal)
+
+from PyQt5.QtGui import (QFont, QIcon, QClipboard, QColor, QBrush)
+from PyQt5.QtWidgets import (QStyledItemDelegate, QTreeView, QMessageBox, QToolBar, QDialogButtonBox,
+                            QVBoxLayout, QTreeWidget, QAbstractItemView, QFrame, QLabel, 
+                            QMenu, QInputDialog, QLineEdit, QTreeWidgetItem, QApplication, 
+                            QDialog, QFileDialog, QGroupBox, QHBoxLayout)
+from PyQt5.QtCore import (Qt, QSize, QRect, QMimeData, QByteArray, pyqtSignal)
     
 from Libs import QtHelper, Logger
 

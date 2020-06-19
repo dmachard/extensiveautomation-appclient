@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -30,14 +30,10 @@ import sys
 # unicode = str with python3
 if sys.version_info > (3,):
     unicode = str
-    
-try:
-    from PyQt4.QtGui import (QWidget, QFrame, QTabWidget, QIcon, QLabel, QFont, QVBoxLayout)
-    from PyQt4.QtCore import (QRect)
-except ImportError:
-    from PyQt5.QtGui import (QIcon, QFont)
-    from PyQt5.QtWidgets import (QWidget, QFrame, QTabWidget, QLabel, QVBoxLayout)
-    from PyQt5.QtCore import (QRect)
+
+from PyQt5.QtGui import (QIcon, QFont)
+from PyQt5.QtWidgets import (QWidget, QFrame, QTabWidget, QLabel, QVBoxLayout)
+from PyQt5.QtCore import (QRect)
     
 from Libs import QtHelper, Logger
 

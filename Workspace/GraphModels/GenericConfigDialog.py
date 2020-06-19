@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -34,19 +34,13 @@ try:
     xrange
 except NameError: # support python3
     xrange = range
-    
-try:
-    from PyQt4.QtGui import (QLabel, QFrame, QSizePolicy, QTabWidget, QVBoxLayout, QGridLayout, 
-                            QRadioButton, QTextEdit, QLineEdit, QComboBox, QFont, QButtonGroup, QIntValidator, 
-                            QDoubleValidator, QDialogButtonBox)
-    from PyQt4.QtCore import (pyqtSignal)
-except ImportError:
-    from PyQt5.QtGui import (QFont, QIntValidator, QDoubleValidator)
-    from PyQt5.QtWidgets import (QLabel, QFrame, QSizePolicy, QTabWidget, QVBoxLayout, 
-                                QGridLayout, QRadioButton, QTextEdit, QLineEdit, QComboBox, 
-                                QButtonGroup, QDialogButtonBox)
-    from PyQt5.QtCore import (pyqtSignal)
-    
+
+from PyQt5.QtGui import (QFont, QIntValidator, QDoubleValidator)
+from PyQt5.QtWidgets import (QLabel, QFrame, QSizePolicy, QTabWidget, QVBoxLayout, 
+                            QGridLayout, QRadioButton, QTextEdit, QLineEdit, QComboBox, 
+                            QButtonGroup, QDialogButtonBox)
+from PyQt5.QtCore import (pyqtSignal)
+
 from Libs import QtHelper, Logger
 
 try:

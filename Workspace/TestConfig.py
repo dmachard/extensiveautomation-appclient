@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -35,13 +35,9 @@ if sys.version_info > (3,):
 import zlib
 import base64
 
-try:
-    from PyQt4.QtGui import (QToolBar, QLabel, QFont, QVBoxLayout, QGroupBox, QHBoxLayout)
-    from PyQt4.QtCore import (QSize, Qt)
-except ImportError:
-    from PyQt5.QtGui import (QFont)
-    from PyQt5.QtWidgets import (QToolBar, QLabel, QVBoxLayout, QGroupBox, QHBoxLayout)
-    from PyQt5.QtCore import (QSize, Qt)
+from PyQt5.QtGui import (QFont)
+from PyQt5.QtWidgets import (QToolBar, QLabel, QVBoxLayout, QGroupBox, QHBoxLayout)
+from PyQt5.QtCore import (QSize, Qt)
     
 from Libs import QtHelper, Logger
 

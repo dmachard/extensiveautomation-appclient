@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -35,16 +35,11 @@ try:
     xrange
 except NameError: # support python3
     xrange = range
-    
-try:
-    from PyQt4.QtGui import (QDialogButtonBox, QHBoxLayout, QLabel, QFont, QComboBox, 
-                            QTextEdit, QButtonGroup, QRadioButton, QVBoxLayout, QPushButton, 
-                            QDialog)
-except ImportError:
-    from PyQt5.QtGui import (QFont)
-    from PyQt5.QtWidgets import (QDialogButtonBox, QHBoxLayout, QLabel, QComboBox, 
-                                QTextEdit, QButtonGroup, QRadioButton, QVBoxLayout, 
-                                QPushButton, QDialog)
+
+from PyQt5.QtGui import (QFont)
+from PyQt5.QtWidgets import (QDialogButtonBox, QHBoxLayout, QLabel, QComboBox, 
+                            QTextEdit, QButtonGroup, QRadioButton, QVBoxLayout, 
+                            QPushButton, QDialog)
 
 from Libs import QtHelper, Logger
 

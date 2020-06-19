@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -53,8 +53,6 @@ settings.setValue( key='Server/addr-list', value='' )
 settings.setValue( key='Server/last-addr', value='' )
 settings.setValue( key='Server/last-username', value='tester' )
 settings.setValue( key='Server/last-pwd', value='07EAFA158B30DCE5D39958C3F14318C9' )
-settings.setValue( key='Server/port-data', value='8080' )
-settings.setValue( key='Server/port-api', value='8080' )
 
 settings.setValue( key='Editor/code-folding', value='True' )
 settings.setValue( key='Editor/find-wrap', value='True' )
@@ -75,11 +73,11 @@ settings.setValue( key='Server/proxy-active', value='False' )
 settings.setValue( key='Server/proxy-web-active', value='False' )
 settings.setValue( key='Server/port-proxy-http', value='' )
 settings.setValue( key='Server/addr-proxy-http', value='' )
-settings.setValue( key='Server/rest-path', value='/rest/' )
-settings.setValue( key='Server/data-ssl', value='True' )
-settings.setValue( key='Server/api-ssl', value='True' )
-settings.setValue( key='Server/port-data', value='8080' )
-settings.setValue( key='Server/port-api', value='8080' )
+settings.setValue( key='Server/rest-path', value='/' )
+settings.setValue( key='Server/data-ssl', value='False' )
+settings.setValue( key='Server/api-ssl', value='False' )
+settings.setValue( key='Server/port-data', value='8082' )
+settings.setValue( key='Server/port-api', value='8081' )
 
 # Writes any unsaved changes
 settings.settings.sync()

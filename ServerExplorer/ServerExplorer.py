@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -27,25 +27,18 @@ Handle all plugins
 """
 
 import sys
+import re
 
 # unicode = str with python3
 if sys.version_info > (3,):
     unicode = str
- 
-try:
-    from PyQt4.QtGui import (QWidget, QVBoxLayout, QProgressBar, QFont, QHBoxLayout, QLabel, 
-                            QComboBox, QSizePolicy, QLineEdit, QIntValidator, QCheckBox, QGridLayout, 
-                            QFrame, QPushButton, QMessageBox, QTabWidget, QIcon, QDialog)
-    from PyQt4.QtCore import (pyqtSignal, Qt, QRect, QUrl, QByteArray, QObject, QFile)
-    from PyQt4.QtNetwork import (QHttp, QNetworkProxy, QHttpRequestHeader, 
-                                QNetworkAccessManager, QNetworkRequest )
-except ImportError:
-    from PyQt5.QtGui import (QFont, QIntValidator, QIcon)
-    from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QProgressBar, QHBoxLayout, QLabel, 
-                                QComboBox, QSizePolicy, QLineEdit, QCheckBox, QGridLayout, 
-                                QFrame, QPushButton, QMessageBox, QTabWidget, QDialog)
-    from PyQt5.QtCore import (pyqtSignal, Qt, QRect, QUrl, QByteArray, QObject, QFile)
-    from PyQt5.QtNetwork import (QNetworkProxy, QNetworkAccessManager, QNetworkRequest)
+
+from PyQt5.QtGui import (QFont, QIntValidator, QIcon)
+from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QProgressBar, QHBoxLayout, QLabel, 
+                            QComboBox, QSizePolicy, QLineEdit, QCheckBox, QGridLayout, 
+                            QFrame, QPushButton, QMessageBox, QTabWidget, QDialog)
+from PyQt5.QtCore import (pyqtSignal, Qt, QRect, QUrl, QByteArray, QObject, QFile)
+from PyQt5.QtNetwork import (QNetworkProxy, QNetworkAccessManager, QNetworkRequest)
     
 import UserClientInterface as UCI
 import RestClientInterface as RCI
@@ -105,6 +98,10 @@ NETWORK_ERRORS[301] = "The Network Access API cannot honor the request because t
 NETWORK_ERRORS[302] = "The requested operation is invalid for this protocol."
 NETWORK_ERRORS[399] = "A breakdown in protocol was detected (parsing error, invalid or unexpected responses."
 
+def sanitize_url(url):
+    """sanitize url, remove double slash"""
+    return re.sub(r"([^:]/)(/)+", r"\1", url)
+    
 class RestNetworkHandler(QObject, Logger.ClassLogger):
     """
     Webservice network handler
@@ -314,10 +311,11 @@ class RestNetworkHandler(QObject, Logger.ClassLogger):
         
         uri, request, postData = req
         try:
-            url   = QUrl("%s://%s:%s/%s/%s" % (self.WsScheme.lower(), self.WsAddress, 
-                                                self.WsPort, self.WsWebpath, uri) )
+            url = "%s://%s:%s/%s/%s" % (self.WsScheme.lower(), self.WsAddress, 
+                                                self.WsPort, self.WsWebpath, uri) 
+            url = sanitize_url(url)
             
-            req   = QNetworkRequest (url)
+            req   = QNetworkRequest ( QUrl(url) )
             if request == "POST":
                 if sys.version_info > (3,):
                     req.setRawHeader( b"Host", bytes(self.WsHostname, 'utf8') )

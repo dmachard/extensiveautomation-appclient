@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -35,17 +35,11 @@ try:
 except NameError: # support python3
     xrange = range
     
-try:
-    from PyQt4.QtGui import (QTreeWidgetItem, QIcon, QBrush, QWidget, QTabWidget, QVBoxLayout, 
-                            QHBoxLayout, QGroupBox, QFrame, QTreeWidget, QAbstractItemView, QColor,
-                            QToolBar, QSplitter, QLabel, QFormLayout, QDialog, QMessageBox, QMenu)
-    from PyQt4.QtCore import (Qt, QSize)
-except ImportError:
-    from PyQt5.QtGui import (QIcon, QBrush, QColor)
-    from PyQt5.QtWidgets import (QTreeWidgetItem, QWidget, QTabWidget, QVBoxLayout, QHBoxLayout, 
-                                QGroupBox, QFrame, QTreeWidget, QAbstractItemView, QToolBar, 
-                                QSplitter, QLabel, QFormLayout, QDialog, QMessageBox, QMenu)
-    from PyQt5.QtCore import (Qt, QSize)
+from PyQt5.QtGui import (QIcon, QBrush, QColor)
+from PyQt5.QtWidgets import (QTreeWidgetItem, QWidget, QTabWidget, QVBoxLayout, QHBoxLayout, 
+                            QGroupBox, QFrame, QTreeWidget, QAbstractItemView, QToolBar, 
+                            QSplitter, QLabel, QFormLayout, QDialog, QMessageBox, QMenu)
+from PyQt5.QtCore import (Qt, QSize)
     
 import time
 

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -46,13 +46,9 @@ except NameError: # support python3
 # unicode = str with python3
 if sys.version_info > (3,):
     unicode = str
-    
-try:
-    from PyQt4.QtGui import (QDialog)
-    from PyQt4.QtCore import (QObject, pyqtSignal, QTimer, QFile, QIODevice)
-except ImportError:
-    from PyQt5.QtWidgets import (QDialog)
-    from PyQt5.QtCore import (QObject, pyqtSignal, QTimer, QFile, QIODevice)
+
+from PyQt5.QtWidgets import (QDialog)
+from PyQt5.QtCore import (QObject, pyqtSignal, QTimer, QFile, QIODevice)
 
 from Libs import PyBlowFish, QtHelper, Logger
 import Libs.NetLayerLib.ClientAgent as NetLayerLib

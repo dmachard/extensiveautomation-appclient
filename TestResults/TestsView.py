@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -29,20 +29,13 @@ import sys
 # unicode = str with python3
 if sys.version_info > (3,):
     unicode = str
-    
-try:
-    from PyQt4.QtGui import (QTreeWidgetItem, QIcon, QWidget, QPushButton, QVBoxLayout, QLabel, 
-                            QLineEdit, QHBoxLayout, QTreeWidget, QToolBar, QFrame, QFormLayout, 
-                            QGridLayout, QGroupBox, QComboBox, QCheckBox, QTabWidget, QProgressBar, 
-                            QMenu, QDialog, QBrush, QColor, QMovie, QSizePolicy, QPixmap)
-    from PyQt4.QtCore import (QTimer, QSize, pyqtSignal, Qt, QRect, QRegExp)
-except ImportError:
-    from PyQt5.QtGui import (QIcon, QBrush, QColor, QMovie, QPixmap )
-    from PyQt5.QtWidgets import (QTreeWidgetItem, QWidget, QPushButton, QVBoxLayout, 
-                                QLabel, QLineEdit, QHBoxLayout, QTreeWidget, QToolBar, QFrame, 
-                                QFormLayout, QGridLayout, QGroupBox, QComboBox, QCheckBox,
-                                QTabWidget, QProgressBar, QMenu, QDialog, QSizePolicy)
-    from PyQt5.QtCore import (QTimer, QSize, pyqtSignal, Qt, QRect, QRegExp)
+
+from PyQt5.QtGui import (QIcon, QBrush, QColor, QMovie, QPixmap )
+from PyQt5.QtWidgets import (QTreeWidgetItem, QWidget, QPushButton, QVBoxLayout, 
+                            QLabel, QLineEdit, QHBoxLayout, QTreeWidget, QToolBar, QFrame, 
+                            QFormLayout, QGridLayout, QGroupBox, QComboBox, QCheckBox,
+                            QTabWidget, QProgressBar, QMenu, QDialog, QSizePolicy)
+from PyQt5.QtCore import (QTimer, QSize, pyqtSignal, Qt, QRect, QRegExp)
     
 from Libs import QtHelper, Logger
 

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -33,20 +33,13 @@ try:
     xrange
 except NameError: # support python3
     xrange = range
-    
-try:
-    from PyQt4.QtGui import (QPixmap, QImage, QBrush, QFont, QItemDelegate, QApplication, 
-                            QStyleOptionButton, QStyle, QCheckBox, QTableView, QAbstractItemView, 
-                            QFrame, QIcon, QMenu, QMessageBox, QColor, QClipboard)
-    from PyQt4.QtCore import (QVariant, QAbstractTableModel, QModelIndex, Qt, pyqtSignal, 
-                            QMimeData, QByteArray)
-except ImportError:
-    from PyQt5.QtGui import (QPixmap, QImage, QBrush, QFont, QIcon, QColor, QClipboard)
-    from PyQt5.QtWidgets import (QItemDelegate, QApplication, QStyleOptionButton, QStyle, 
-                                QCheckBox, QTableView, QAbstractItemView, QFrame, QMenu, 
-                                QMessageBox)
-    from PyQt5.QtCore import (QVariant, QAbstractTableModel, QModelIndex, Qt, pyqtSignal, 
-                            QMimeData, QByteArray)
+
+from PyQt5.QtGui import (QPixmap, QImage, QBrush, QFont, QIcon, QColor, QClipboard)
+from PyQt5.QtWidgets import (QItemDelegate, QApplication, QStyleOptionButton, QStyle, 
+                            QCheckBox, QTableView, QAbstractItemView, QFrame, QMenu, 
+                            QMessageBox)
+from PyQt5.QtCore import (QVariant, QAbstractTableModel, QModelIndex, Qt, pyqtSignal, 
+                        QMimeData, QByteArray)
                             
 from Libs import QtHelper, Logger
 

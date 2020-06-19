@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -29,21 +29,14 @@ import sys
 # unicode = str with python3
 if sys.version_info > (3,):
     unicode = str
-    
-try:
-    from PyQt4.QtGui import (QColor, QItemDelegate, QDialog, QLineEdit, QDialogButtonBox, 
-                            QLabel, QGridLayout, QRadioButton, QTextEdit, QComboBox, QVBoxLayout, 
-                            QTableView, QSortFilterProxyModel, QFrame, QAbstractItemView, QIcon, 
+
+from PyQt5.QtGui import (QColor, QIcon)
+from PyQt5.QtWidgets import (QItemDelegate, QDialog, QLineEdit, QDialogButtonBox, QLabel, 
+                            QGridLayout, QRadioButton, QTextEdit, QComboBox, QVBoxLayout, 
+                            QTableView, QFrame, QAbstractItemView, 
                             QMenu, QMessageBox, QWidget, QToolBar)
-    from PyQt4.QtCore import (QVariant, QAbstractTableModel, QModelIndex, Qt, pyqtSignal, QSize)
-except ImportError:
-    from PyQt5.QtGui import (QColor, QIcon)
-    from PyQt5.QtWidgets import (QItemDelegate, QDialog, QLineEdit, QDialogButtonBox, QLabel, 
-                                QGridLayout, QRadioButton, QTextEdit, QComboBox, QVBoxLayout, 
-                                QTableView, QFrame, QAbstractItemView, 
-                                QMenu, QMessageBox, QWidget, QToolBar)
-    from PyQt5.QtCore import (QVariant, QAbstractTableModel, QModelIndex, Qt, pyqtSignal, QSize,
-                              QSortFilterProxyModel)
+from PyQt5.QtCore import (QVariant, QAbstractTableModel, QModelIndex, Qt, pyqtSignal, QSize,
+                          QSortFilterProxyModel)
     
 from Libs import QtHelper, Logger
 

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -29,20 +29,13 @@ import sys
 # unicode = str with python3
 if sys.version_info > (3,):
     unicode = str
-    
-try:
-    from PyQt4.QtGui import (QWidget, QToolBar, QVBoxLayout, QFont, QIcon, QPrinter, 
-                            QPrintDialog, QDialog, QTextDocument, QFileDialog, 
+
+from PyQt5.QtGui import (QFont, QIcon, QTextDocument)
+from PyQt5.QtWidgets import (QWidget, QToolBar, QVBoxLayout, QDialog, QFileDialog, 
                             QDialogButtonBox, QTabWidget)
-    from PyQt4.QtCore import (Qt, QSize)
-    from PyQt4.Qsci import (QsciScintilla, QsciLexerXML)
-except ImportError:
-    from PyQt5.QtGui import (QFont, QIcon, QTextDocument)
-    from PyQt5.QtWidgets import (QWidget, QToolBar, QVBoxLayout, QDialog, QFileDialog, 
-                                QDialogButtonBox, QTabWidget)
-    from PyQt5.QtCore import (Qt, QSize)
-    from PyQt5.Qsci import (QsciScintilla, QsciLexerXML)
-    from PyQt5.QtPrintSupport import (QPrinter, QPrintDialog)
+from PyQt5.QtCore import (Qt, QSize)
+from PyQt5.Qsci import (QsciScintilla, QsciLexerXML)
+from PyQt5.QtPrintSupport import (QPrinter, QPrintDialog)
     
 import UserClientInterface as UCI
 from Libs import QtHelper, Logger

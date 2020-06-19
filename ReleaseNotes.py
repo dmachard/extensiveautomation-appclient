@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -25,15 +25,10 @@
 Releases notes dialog
 """
 
-try:
-    from PyQt4.QtGui import (QTreeWidgetItem, QFont, QColor, QIcon, QDialog, QVBoxLayout, QLabel, QTreeWidget, 
-                            QFrame, QAbstractItemView, QPalette, QBrush, QHBoxLayout, QPushButton)
-    from PyQt4.QtCore import (Qt, QSize)
-except ImportError:
-    from PyQt5.QtGui import (QFont, QColor, QIcon, QPalette, QBrush)
-    from PyQt5.QtWidgets import (QTreeWidgetItem, QDialog, QVBoxLayout, QLabel, QTreeWidget, 
-                                QFrame, QAbstractItemView, QHBoxLayout, QPushButton)
-    from PyQt5.QtCore import (Qt, QSize)
+from PyQt5.QtGui import (QFont, QColor, QIcon, QPalette, QBrush)
+from PyQt5.QtWidgets import (QTreeWidgetItem, QDialog, QVBoxLayout, QLabel, QTreeWidget, 
+                            QFrame, QAbstractItemView, QHBoxLayout, QPushButton)
+from PyQt5.QtCore import (Qt, QSize)
     
 import sys
 

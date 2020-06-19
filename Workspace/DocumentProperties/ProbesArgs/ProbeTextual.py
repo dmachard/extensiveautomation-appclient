@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -34,14 +34,10 @@ try:
     xrange
 except NameError: # support python3
     xrange = range
-    
-try:
-    from PyQt4.QtGui import (QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, 
-                            QListWidget, QPushButton, QIcon)
-except ImportError:
-    from PyQt5.QtGui import (QIcon)
-    from PyQt5.QtWidgets import (QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, 
-                                QListWidget, QPushButton)
+
+from PyQt5.QtGui import (QIcon)
+from PyQt5.QtWidgets import (QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, 
+                            QListWidget, QPushButton)
 
 from Libs import QtHelper, Logger
 

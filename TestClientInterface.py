@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -46,10 +46,7 @@ except NameError: # support python3
 if sys.version_info > (3,):
     unicode = str
     
-try:
-    from PyQt4.QtCore import (QObject, pyqtSignal)
-except ImportError:
-    from PyQt5.QtCore import (QObject, pyqtSignal)
+from PyQt5.QtCore import (QObject, pyqtSignal)
     
 from Libs import PyBlowFish, QtHelper, Logger
 import Libs.NetLayerLib.ClientAgent as NetLayerLib

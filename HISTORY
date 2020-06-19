@@ -1,8 +1,12 @@
 
-20.0.1
-	Date: 31/07/2019
+20.1.0
+	Date: 10/08/2019
+	What's new
+		1. (minor) create test results zip feature removed
+		2. (minor) update default template for adapter to support new ea pip package
+		3. (minor) cleanup on settings file.
 	Issues Fixed
-		1. (medium) unable to open testresult
+		1. (minor) a second tab is opened from testplan/testglobal, it should not	
 
 20.0.0
 	Date: 20/07/2019
@@ -27,7 +31,8 @@
 		1. (minor) Fix bad product name in menu
 		2. (major) Test abstract: pointer button missing on toolbar
 		3. (medium) Python editor: bad font size for line number margin
-        
+        4. (medium) unable to open testresult
+
 19.0.0
 	Date: 05/08/2018
 	What's new

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -34,25 +34,15 @@ try:
     xrange
 except NameError: # support python3
     xrange = range
-    
-try:
-    from PyQt4.QtGui import (QGraphicsRectItem, QGraphicsLineItem, QPolygonF, QGraphicsItem, 
-                            QPen, QColor, QBrush, QPainterPathStroker, QGraphicsPolygonItem, 
-                            QPainterPath, QMessageBox, QDialog, QGraphicsScene, QFont, QWidget, 
-                            QToolBar, QGraphicsView, QPainter, QToolButton, QIcon, QButtonGroup, 
-                            QComboBox, QLabel, QVBoxLayout, QApplication, QMenu, QGroupBox, QHBoxLayout,
-                            QClipboard, QFrame)
-    from PyQt4.QtCore import (Qt, QRectF, QLineF, QPointF, pyqtSignal, QSize, QPoint, 
-                                QMimeData, QByteArray, QSizeF, )
-except ImportError:
-    from PyQt5.QtGui import (QPolygonF, QPen, QColor, QBrush, QPainterPathStroker, 
-                            QPainterPath, QFont, QPainter, QIcon, QClipboard)
-    from PyQt5.QtWidgets import (QGraphicsRectItem, QGraphicsLineItem, QGraphicsItem, 
-                                QGraphicsPolygonItem, QMessageBox, QDialog, QGraphicsScene, QFrame,
-                                QWidget, QToolBar, QGraphicsView, QToolButton, QButtonGroup,
-                                QComboBox, QLabel, QVBoxLayout, QApplication, QMenu, QGroupBox, QHBoxLayout)
-    from PyQt5.QtCore import (Qt, QRectF, QLineF, QPointF, pyqtSignal, QSize, QPoint, 
-                                QMimeData, QByteArray, QSizeF)
+
+from PyQt5.QtGui import (QPolygonF, QPen, QColor, QBrush, QPainterPathStroker, 
+                        QPainterPath, QFont, QPainter, QIcon, QClipboard)
+from PyQt5.QtWidgets import (QGraphicsRectItem, QGraphicsLineItem, QGraphicsItem, 
+                            QGraphicsPolygonItem, QMessageBox, QDialog, QGraphicsScene, QFrame,
+                            QWidget, QToolBar, QGraphicsView, QToolButton, QButtonGroup,
+                            QComboBox, QLabel, QVBoxLayout, QApplication, QMenu, QGroupBox, QHBoxLayout)
+from PyQt5.QtCore import (Qt, QRectF, QLineF, QPointF, pyqtSignal, QSize, QPoint, 
+                            QMimeData, QByteArray, QSizeF)
                                 
 from Libs import QtHelper, Logger
 import Settings

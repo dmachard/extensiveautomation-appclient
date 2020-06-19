@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------
-# Copyright (c) 2010-2019 Denis Machard
+# Copyright (c) 2010-2020 Denis Machard
 # This file is part of the extensive automation project
 #
 # This library is free software; you can redistribute it and/or
@@ -37,19 +37,12 @@ except NameError: # support python3
     xrange = range
     
 USE_PYQT5 = False
-try:
-    from PyQt4.QtGui import (QDialog, QLabel, QFont, QPushButton, QVBoxLayout, QAbstractItemView, 
-                            QHBoxLayout, QLineEdit, QTreeWidgetItem, QMessageBox, QTreeWidget, QDrag, 
-                            QWidget, QIcon, QStyle, QMenu, QToolBar, QFrame, QHeaderView, QInputDialog,
-                            QKeySequence)
-    from PyQt4.QtCore import (QMimeData, Qt, pyqtSignal, QSize)
-except ImportError:
-    from PyQt5.QtGui import (QFont, QDrag, QIcon, QKeySequence)
-    from PyQt5.QtWidgets import (QDialog, QLabel, QPushButton, QVBoxLayout, QAbstractItemView, 
-                                QHBoxLayout, QLineEdit, QTreeWidgetItem, QMessageBox, QTreeWidget, 
-                                QWidget, QStyle, QMenu, QToolBar, QFrame, QHeaderView, QInputDialog)
-    from PyQt5.QtCore import (QMimeData, Qt, pyqtSignal, QSize)
-    USE_PYQT5 = True
+from PyQt5.QtGui import (QFont, QDrag, QIcon, QKeySequence)
+from PyQt5.QtWidgets import (QDialog, QLabel, QPushButton, QVBoxLayout, QAbstractItemView, 
+                            QHBoxLayout, QLineEdit, QTreeWidgetItem, QMessageBox, QTreeWidget, 
+                            QWidget, QStyle, QMenu, QToolBar, QFrame, QHeaderView, QInputDialog)
+from PyQt5.QtCore import (QMimeData, Qt, pyqtSignal, QSize)
+USE_PYQT5 = True
     
 from Libs import QtHelper, Logger
 import Settings
