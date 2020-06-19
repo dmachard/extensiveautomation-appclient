@@ -11,7 +11,7 @@ Connexion au serveur
 ------------------------
 
 Télécharger le zip de la dernière [release](https://github.com/ExtensiveAutomation/extensiveautomation-appclient/releases)
-et suivre le [Guide d'utilisation](https://extensiveautomation.readthedocs.io/fr/v21.4/user/getting_started.html#connexion-du-client-au-serveur)
+et suivre le [Guide d'utilisation](https://extensiveautomation.readthedocs.io/fr/v21.4/user/getting_started.html#connexion-du-client-au-serveur).
 
 Installation depuis les sources
 ------------------------
