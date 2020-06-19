@@ -9,8 +9,8 @@ The Qt application client enable to interact with the ExtensiveAutomation server
 Connection to the server
 ------------------------
 
-Download the latest zip of the (release)[https://github.com/ExtensiveAutomation/extensiveautomation-appclient/releases]
-And then follow the (user guide)[https://extensiveautomation.readthedocs.io/en/latest/user/getting_started.html#connection-to-the-server]
+Download the latest zip of the [release](https://github.com/ExtensiveAutomation/extensiveautomation-appclient/releases)
+And then follow the [user guide](https://extensiveautomation.readthedocs.io/en/latest/user/getting_started.html#connection-to-the-server)
 
 Installation from source
 ------------------------
