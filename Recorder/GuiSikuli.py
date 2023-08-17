@@ -463,7 +463,7 @@ class WSikuliX(QWidget, Logger.ClassLogger):
         self.thresholdSlider.setSingleStep(1)
         self.thresholdSlider.setMinimum(0)
         self.thresholdSlider.setMaximum(100)
-        self.thresholdSlider.setValue( float(self.DEFAULT_SIMILAR_VALUE)*100 )   
+        self.thresholdSlider.setValue( int(float(self.DEFAULT_SIMILAR_VALUE)*100) )   
         self.thresholdSlider.setMinimumWidth(150)
         
         self.similarGroup = QGroupBox(self.tr("with similarity of"))
@@ -552,7 +552,7 @@ class WSikuliX(QWidget, Logger.ClassLogger):
         self.thresholdSlider2.setSingleStep(1)
         self.thresholdSlider2.setMinimum(0)
         self.thresholdSlider2.setMaximum(100)
-        self.thresholdSlider2.setValue( float(self.DEFAULT_SIMILAR_VALUE)*100 )   
+        self.thresholdSlider2.setValue( int(float(self.DEFAULT_SIMILAR_VALUE)*100) )   
         self.thresholdSlider2.setMinimumWidth(150)
         
         self.similarGroup2 = QGroupBox(self.tr("with similarity of"))
