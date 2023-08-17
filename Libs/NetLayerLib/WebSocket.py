@@ -129,7 +129,10 @@ class WebSocketCodec(object):
 
         sha1 = hashlib.sha1()
         sha1.update(value)
-        encoded = base64.encodestring(sha1.digest())
+        if sys.version_info >= (3,10):
+            encoded = base64.encodebytes(sha1.digest())
+        else:
+            encoded = base64.encodestring(sha1.digest())
         encoded = encoded.strip().lower()
         return encoded
     
@@ -209,7 +212,10 @@ class WebSocketCodec(object):
                     value = (key + GUID).encode('utf-8')
                     sha1 = hashlib.sha1()
                     sha1.update(value)
-                    hashed = base64.encodestring(sha1.digest()).strip().lower()
+                    if sys.version_info >= (3,10):
+                        hashed = base64.encodebytes(sha1.digest()).strip().lower()
+                    else:
+                        hashed = base64.encodestring(sha1.digest()).strip().lower()
                     if hashed == v:
                         wsAccept = True
                     else:
