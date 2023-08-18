@@ -31,7 +31,7 @@ Main module
 from __future__ import print_function 
 
 # define the current version
-__VERSION__ = '21.0.0'
+__VERSION__ = '21.1.0'
 # name of the main developer
 __AUTHOR__ = 'Denis Machard'
 # email of the main developer
@@ -39,7 +39,7 @@ __EMAIL__ = 'd.machard@gmail.com'
 # project start in year
 __BEGIN__="2010"
 # year of the latest build
-__END__="2020"
+__END__="2023"
 # date and time of the buid
 __BUILDTIME__="19/06/2020 11:02:51"
 # Redirect stdout and stderr to log file only on production

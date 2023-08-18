@@ -1,10 +1,5 @@
 
-21.0.0
-	Date: 20/06/2020
+21.1.0
+	Date: 18/08/2023
 	What's new
-		1. (major) client no more configured by default to support reverse proxy on server side 
-		2. (minor) update to support python3.8.3
-		3. (minor) update to support Qt5.15
-		4. (major) no more support of Qt4
-		5. (major) no more support of Python2
-		6. (major) no more support for 32bits version
+		1. (medium) update to support python 3.10
